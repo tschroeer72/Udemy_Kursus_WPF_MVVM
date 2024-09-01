@@ -1,0 +1,28 @@
+﻿<Window x:Class="Kursprojekt.View.Windows.MainView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Kursprojekt.View.Windows"
+        xmlns:vm="clr-namespace:Kursprojekt.ViewModel"
+        mc:Ignorable="d"
+        d:DataContext="{d:DesignInstance Type=vm:MainViewModel}"
+        Title="MainView" Height="450" Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Border Grid.Row="0">
+            <Label Content="{Binding Titel}" FontSize="30"/>
+        </Border>
+        
+        <StackPanel Grid.Row="1" Orientation="Horizontal">
+            <Button Content="Change Title" FontSize="30"/>
+            <TextBox Width="200" FontSize="30"/>
+            <TextBlock Width="200" FontSize="30"/>
+        </StackPanel>
+    </Grid>
+</Window>
