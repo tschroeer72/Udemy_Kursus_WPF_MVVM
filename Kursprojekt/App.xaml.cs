@@ -9,6 +9,13 @@ namespace Kursprojekt
     /// </summary>
     public partial class App : Application
     {
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            MainWindow mainView = new();
+            mainView.Show();
+
+            base.OnStartup(e);
+        }
     }
 
 }
