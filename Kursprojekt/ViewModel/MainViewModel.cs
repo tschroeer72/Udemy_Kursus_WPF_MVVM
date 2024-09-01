@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 
 namespace Kursprojekt.ViewModel;
 
@@ -7,9 +8,20 @@ public partial class MainViewModel //: ObservableObject (Alternative 1)
 {
     public MainViewModel()
     {
-        Titel = "MainView";
+        Titel = "Main";
+        FilterText = "Filter";
     }
 
     [ObservableProperty]
     string titel = "";
+
+    [ObservableProperty]
+    string filterText = "";
+
+    [RelayCommand]
+    void ChangeTitel()
+    {
+        Titel = "MainView";
+        var text = FilterText;
+    }
 }

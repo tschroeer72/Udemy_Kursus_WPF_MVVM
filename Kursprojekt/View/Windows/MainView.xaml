@@ -20,9 +20,11 @@
         </Border>
         
         <StackPanel Grid.Row="1" Orientation="Horizontal">
-            <Button Content="Change Title" FontSize="30"/>
-            <TextBox Width="200" FontSize="30"/>
-            <TextBlock Width="200" FontSize="30"/>
+            <Button Content="Change Title" FontSize="30"
+                    Command="{Binding ChangeTitelCommand}"/>
+            <TextBox Text="{Binding FilterText, UpdateSourceTrigger=PropertyChanged}" Width="200" FontSize="30"
+                     />
+            <TextBlock Text="{Binding FilterText, UpdateSourceTrigger=PropertyChanged}" Width="200" FontSize="30"/>
         </StackPanel>
     </Grid>
 </Window>
