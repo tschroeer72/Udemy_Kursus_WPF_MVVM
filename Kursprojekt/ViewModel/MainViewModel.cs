@@ -24,4 +24,11 @@ public partial class MainViewModel //: ObservableObject (Alternative 1)
         Titel = "MainView";
         var text = FilterText;
     }
+
+    [RelayCommand]
+    void TextChanged(object param)
+    {
+        var text = FilterText;
+        var p = param;
+    }
 }
