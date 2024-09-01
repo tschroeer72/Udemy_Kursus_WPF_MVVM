@@ -1,4 +1,5 @@
-﻿using Kursprojekt.View.Windows;
+﻿using Kursprojekt.View.Pages;
+using Kursprojekt.View.Windows;
 using Kursprojekt.ViewModel;
 using Microsoft.Extensions.DependencyInjection;
 using System.Windows;
@@ -23,6 +24,12 @@ public partial class App : Application
     {
         services.AddSingleton<MainView>();
         services.AddSingleton<MainViewModel>();
+
+        services.AddSingleton<HomeView>();
+        services.AddSingleton<HomeViewModel>();
+
+        services.AddSingleton<AdminView>();
+        services.AddSingleton<AdminViewModel>();
     }
 
     protected override void OnStartup(StartupEventArgs e)
@@ -33,10 +40,11 @@ public partial class App : Application
         var mainView = _ServiceProvider.GetService<MainView>();
         if(mainView == null)
         {
-            MessageBox.Show("Problem im _ServiceProvider");
+            MessageBox.Show("Problem im ServiceProvider");
             Current.Shutdown();
         }
 
+        mainView!.ServiceProvider = _ServiceProvider;
         mainView!.Show();
 
         base.OnStartup(e);

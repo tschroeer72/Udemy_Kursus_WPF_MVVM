@@ -15,38 +15,30 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="50"/>
-            <RowDefinition Height="50"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Border Grid.Row="0">
-            <Label Content="{Binding Titel}" FontSize="30"/>
-        </Border>
-        
-        <StackPanel Grid.Row="1" Orientation="Horizontal">
-            <Button Content="Change Title" FontSize="30"
-                    Command="{Binding ChangeTitelCommand}"/>
-            <TextBox Text="{Binding FilterText, UpdateSourceTrigger=PropertyChanged}" 
-                     Width="200" 
-                     FontSize="30">
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="TextChanged">
-                        <i:InvokeCommandAction Command="{Binding TextChangedCommand}"
-                                               CommandParameter="Hallo">                            
-                        </i:InvokeCommandAction>
-                        <i:ChangePropertyAction TargetName="txtbTest" 
-                                                PropertyName="Foreground" 
-                                                Value="red">                            
-                        </i:ChangePropertyAction>
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
-            </TextBox>
-            <TextBlock x:Name="txtbTest" 
-                       Text="{Binding FilterText, UpdateSourceTrigger=PropertyChanged}" 
-                       Width="200" 
-                       FontSize="30"
-                       Foreground="Teal"/>
-            <ListBox></ListBox>
+        <StackPanel Grid.Row="0" Orientation="Horizontal">
+            <Button x:Name="BtnHome"
+                    Content="Home" FontSize="30"
+                    Command="{Binding OpenPageCommand}"
+                    CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}}">                
+            </Button>
+            <Button x:Name="BtnAdmin"
+                    Content="Admin" FontSize="30"
+                    Command="{Binding OpenPageCommand}"
+                    CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}}">                
+            </Button>
         </StackPanel>
+        
+        <Grid Grid.Row="1">
+            <mw:MetroAnimatedTabControl>
+                <mw:MetroTabItem Name="tpItem">
+                    <Grid x:Name="PagePlace">
+                        
+                    </Grid>
+                </mw:MetroTabItem>
+            </mw:MetroAnimatedTabControl>
+        </Grid>
     </Grid>
 </mw:MetroWindow>

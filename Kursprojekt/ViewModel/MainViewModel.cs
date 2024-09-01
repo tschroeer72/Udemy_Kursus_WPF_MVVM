@@ -1,34 +1,21 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Kursprojekt.ViewModel;
 
-[INotifyPropertyChanged] //(Alternative 2)
-public partial class MainViewModel //: ObservableObject (Alternative 1)
+public partial class MainViewModel : BaseViewModel  
 {
+    public event EventHandler? EventOpenPage;
+
     public MainViewModel()
     {
         Titel = "Main";
-        FilterText = "Filter";
-    }
-
-    [ObservableProperty]
-    string titel = "";
-
-    [ObservableProperty]
-    string filterText = "";
-
-    [RelayCommand]
-    void ChangeTitel()
-    {
-        Titel = "MainView";
-        var text = FilterText;
     }
 
     [RelayCommand]
-    void TextChanged(object param)
+    void OpenPage(object oParam)
     {
-        var text = FilterText;
-        var p = param;
+        EventOpenPage?.Invoke(oParam, EventArgs.Empty);
     }
 }
