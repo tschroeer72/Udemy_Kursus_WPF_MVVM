@@ -1,4 +1,5 @@
-﻿using Kursprojekt.ViewModel;
+﻿using Kursprojekt.View.Services;
+using Kursprojekt.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,4 +31,19 @@ public partial class AdminView : UserControl
         DataContext = AdminViewModel;
     }
 
+    private void OpenPage(object sender, RoutedEventArgs e)
+    {
+        if (sender is Button objButton)
+        {
+            switch (objButton.Name)
+            {
+                case "BtnUser":
+                    ViewManager.ShowUnderPageOn<AppUserView>(AnimatedContentControl);
+                    break;
+                case "BtnRole":
+                    ViewManager.ShowUnderPageOn<RoleView>(AnimatedContentControl);
+                    break;
+            }
+        }
+    }
 }

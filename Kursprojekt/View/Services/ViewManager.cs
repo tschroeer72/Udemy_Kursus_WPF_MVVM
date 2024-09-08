@@ -1,4 +1,5 @@
 ﻿using Kursprojekt.View.Pages;
+using Kursprojekt.View.UserControls;
 using Kursprojekt.View.Windows;
 using Kursprojekt.ViewModel;
 using Microsoft.Extensions.DependencyInjection;
@@ -70,5 +71,26 @@ public class ViewManager
         }
 
         Show(GoBackPage);
+    }
+
+    public static void ShowUnderPageOn<T>(AnimatedContentControl animatedContentControl) where T : UserControl
+    {
+        try
+        {
+            var pageService = ServiceProvider?.GetService<T>();
+            if (pageService == null) return;
+            if (pageService is UserControl ucPage)
+            {
+                animatedContentControl.PagePlace.Content = null;
+                animatedContentControl.PagePlace.Content = ucPage;
+
+                animatedContentControl.MetroTabItem.IsSelected = false;
+                animatedContentControl.MetroTabItem.IsSelected = true;
+            }
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show(ex.ToString());
+        }
     }
 }

@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Kursprojekt.View.Pages"
+             xmlns:uc="clr-namespace:Kursprojekt.View.UserControls"
              xmlns:vm="clr-namespace:Kursprojekt.ViewModel"
              mc:Ignorable="d" 
              d:DataContext="{d:DesignInstance Type=vm:AdminViewModel}"
@@ -14,6 +15,31 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Label Grid.Row="0" Content="{Binding Titel}" FontSize="30"/>
+        <Grid Grid.Row="0">
+            <Grid HorizontalAlignment="Left">
+                <Label Grid.Row="0" 
+                   Content="{Binding Titel}"
+                   FontSize="30"                   
+                   MinWidth="100">                
+                </Label>
+            </Grid>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button x:Name="BtnUser"
+                        Margin="20 0"
+                        Content="User" FontSize="30"
+                        Click="OpenPage">
+                </Button>
+                <Button x:Name="BtnRole"
+                        Content="Rolle" FontSize="30"
+                        Click="OpenPage">
+                </Button>
+            </StackPanel>
+        </Grid>
+        
+        <Grid Grid.Row="1">
+            <uc:AnimatedContentControl x:Name="AnimatedContentControl">
+
+            </uc:AnimatedContentControl>
+        </Grid>
     </Grid>
 </UserControl>

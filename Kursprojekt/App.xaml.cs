@@ -31,6 +31,12 @@ public partial class App : Application
 
         services.AddSingleton<AdminView>();
         services.AddSingleton<AdminViewModel>();
+
+        services.AddSingleton<RoleView>();
+        services.AddSingleton<RoleViewModel>();
+
+        services.AddSingleton<AppUserView>();
+        services.AddSingleton<AppUserViewModel>();
     }
 
     protected override void OnStartup(StartupEventArgs e)
