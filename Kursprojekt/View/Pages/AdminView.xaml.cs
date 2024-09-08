@@ -33,7 +33,7 @@ public partial class AdminView : UserControl
 
     private void OpenPage(object sender, RoutedEventArgs e)
     {
-        if (sender is Button objButton)
+        if (sender is RadioButton objButton)
         {
             switch (objButton.Name)
             {

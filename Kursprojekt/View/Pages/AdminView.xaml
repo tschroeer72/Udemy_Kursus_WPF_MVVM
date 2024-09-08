@@ -18,22 +18,26 @@
 
         <Grid Grid.Row="0">
             <Grid HorizontalAlignment="Left">
-                <Label Grid.Row="0" 
-                   Content="{Binding Titel}"
-                   FontSize="30"                   
-                   MinWidth="100">                
-                </Label>
+                <TextBlock Text="{Binding Titel}"
+                           Style="{StaticResource TitelTxtBxStyle}">
+                </TextBlock>
             </Grid>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                <Button x:Name="BtnUser"
-                        Margin="20 0"
-                        Content="User" FontSize="30"
-                        Click="OpenPage">
-                </Button>
-                <Button x:Name="BtnRole"
-                        Content="Rolle" FontSize="30"
-                        Click="OpenPage">
-                </Button>
+                <RadioButton x:Name="BtnUser"
+                             GroupName="grpMnuAdmin"
+                             Style="{StaticResource BtnUnderPageMenuStyle}"
+                             Margin="20 0"
+                             Content="User" FontSize="30"
+                             Width="100"
+                             Click="OpenPage">
+                </RadioButton>
+                <RadioButton x:Name="BtnRole"
+                             GroupName="grpMnuAdmin"
+                             Style="{StaticResource BtnUnderPageMenuStyle}"
+                             Content="Rolle" FontSize="30"
+                             Width="100"
+                             Click="OpenPage">
+                </RadioButton>
             </StackPanel>
         </Grid>
         

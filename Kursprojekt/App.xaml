@@ -158,10 +158,8 @@
                                             Background="{StaticResource AppColorCyan}"
                                             BorderThickness="0" BorderBrush="White">
                                         <Border.Effect>
-                                            <DropShadowEffect Color="{StaticResource AppCyanColor}" 
-                                                              Direction="-90" ShadowDepth="2"/>
+                                            <DropShadowEffect Color="{StaticResource AppCyanColor}" Direction="-90" ShadowDepth="2"/>
                                         </Border.Effect>
-
                                         <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                     </Border>
 
@@ -242,7 +240,6 @@
                 <Setter Property="Margin" Value="4 0"/>
                 <Setter Property="FontWeight" Value="ExtraBold"/>
             </Style>
-
 
             <!--TextBox-->
             <Style TargetType="TextBox" BasedOn="{StaticResource MaterialDesignFloatingHintTextBox}">
