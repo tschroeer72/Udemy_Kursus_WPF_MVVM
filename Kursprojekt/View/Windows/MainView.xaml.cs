@@ -30,7 +30,7 @@ public partial class MainView : MetroWindow
 
     private void OpenPage(object? oSender)
     {
-        if (oSender is Button objButton)
+        if (oSender is RadioButton objButton)
         {
             switch (objButton.Name)
             {

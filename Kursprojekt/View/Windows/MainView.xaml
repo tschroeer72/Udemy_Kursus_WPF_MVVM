@@ -148,32 +148,43 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <StackPanel x:Name="TitleBar"
-                    Grid.Row="0" 
-                    Height="50"
-                    Orientation="Horizontal">
-            <Button x:Name="BtnHome"
-                    Content="Home" FontSize="30"
-                    Command="{Binding OpenPageCommand}"
-                    CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}}">                
-            </Button>
-            <Button x:Name="BtnVerwaltung"
-                    Content="Verwaltung" FontSize="30"
-                    Margin="10 0"
-                    Command="{Binding OpenPageCommand}"
-                    CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}}">
-            </Button>
-            <Button x:Name="BtnAdmin"
-                    Content="Admin" FontSize="30"
-                    Command="{Binding OpenPageCommand}"
-                    CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}}">                
-            </Button>
-        </StackPanel>
+        <Grid Grid.Row="0">
+            <StackPanel x:Name="TitleBar"
+                        Grid.Row="0" 
+                        Height="38"
+                        Orientation="Horizontal"
+                        HorizontalAlignment="Center">
+                <RadioButton x:Name="BtnHome" GroupName="grpTitleBar"
+                             Style="{StaticResource BtnMainMenuStyle}"
+                             Content="Home" FontSize="30"
+                             Width="210" Height="44"
+                             Command="{Binding OpenPageCommand}"
+                             CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}}">                
+                </RadioButton>
+                <RadioButton x:Name="BtnVerwaltung" GroupName="grpTitleBar"
+                             Style="{StaticResource BtnMainMenuStyle}"
+                             Content="Verwaltung" FontSize="30"
+                             Width="210" Height="44"
+                             Margin="10 0"
+                             Command="{Binding OpenPageCommand}"
+                             CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}}">
+                </RadioButton>
+                <RadioButton x:Name="BtnAdmin" GroupName="grpTitleBar"
+                             Style="{StaticResource BtnMainMenuStyle}"
+                             Content="Admin" FontSize="30"
+                             Width="210" Height="44"
+                             Command="{Binding OpenPageCommand}"
+                             CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}}">
+                </RadioButton>
+            </StackPanel>
+        </Grid>
         
-        <Grid Grid.Row="1">
+        <Border Grid.Row="1"
+                BorderThickness="0 1 0 0"
+                BorderBrush="{StaticResource AppColorCyan}">
             <uc:AnimatedContentControl x:Name="AnimatedContentControl">
                 
             </uc:AnimatedContentControl>
-        </Grid>
+        </Border>
     </Grid>
 </mw:MetroWindow>
