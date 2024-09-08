@@ -12,11 +12,20 @@
 
                 <!-- MaterialDesign-->
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml" />
-                <!--<ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />-->
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.Cyan.xaml" />
             </ResourceDictionary.MergedDictionaries>
+
+            <!--SolidColorBrush-->
+            <SolidColorBrush x:Key="AppColorCyan"      Color="#FF038F9E"/>
+            <SolidColorBrush x:Key="AppColorCyanHover" Color="#FF89F0F3"/>
+            <!--Color-->
+            <Color x:Key="AppCyanColor">#FF038F9E</Color>
+            <Color x:Key="AppCyanHoverColor">#FF89F0F3</Color>
+            <Color x:Key="AppWhiteColor">#FFFDFDFD</Color>
+            <!--#endregion-->
+
+
         </ResourceDictionary>
-        
-        
     </Application.Resources>
 </Application>

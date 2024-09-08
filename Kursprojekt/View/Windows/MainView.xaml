@@ -11,7 +11,136 @@
                 xmlns:mw="http://metro.mahapps.com/winfx/xaml/controls"
                 mc:Ignorable="d"
                 d:DataContext="{d:DesignInstance Type=vm:MainViewModel}"
-                Title="MainView" Height="450" Width="800">
+                Title="Rooms" 
+                SnapsToDevicePixels="True"
+                UseLayoutRounding="True"   
+                Height="900" 
+                MinHeight="900"
+                Width="1500"     
+                MinWidth="1500" 
+                BorderThickness="1"
+                TitleBarHeight="36"   
+                TitleForeground="Transparent"
+                FontFamily="{StaticResource MaterialDesignFont}"
+                WindowStartupLocation="CenterScreen"        
+                SaveWindowPosition="True"                
+                UseNoneWindowStyle="False"
+                WindowTitleBrush="{DynamicResource AppColorCyan}"
+                NonActiveWindowTitleBrush="{DynamicResource AppColorCyan}"
+                NonActiveBorderBrush="{DynamicResource AppColorCyan}"
+                Background="{DynamicResource MaterialDesignPaper}"
+                ResizeMode="CanResizeWithGrip">
+
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding GetInitialDataCommand}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    
+    <mw:MetroWindow.LeftWindowCommands>
+        <mw:WindowCommands ShowLastSeparator="False">
+            <TextBlock Text="Rooms" Margin="2 0"
+                       VerticalAlignment="Center"
+                       FontSize="32" FontFamily="Forte">
+            </TextBlock>
+        </mw:WindowCommands>
+    </mw:MetroWindow.LeftWindowCommands>
+
+    <mw:MetroWindow.RightWindowCommands>
+        <mw:WindowCommands  ShowLastSeparator="False">
+            <StackPanel x:Name="UserPanel"
+                        Orientation="Horizontal"
+                        VerticalAlignment="Center">
+                <Label Name="LblUsermail" Content="t.schroeer@web.de"
+                       FontSize="18"
+                       FontWeight="Bold"                       
+                       FontFamily="Roboto"
+                       Foreground="White"
+                       VerticalAlignment="Bottom">
+                </Label>
+
+                <Menu Margin="0 -4 0 2" >
+                    <MenuItem Padding="4" Cursor="Hand">
+                        <MenuItem.Header>
+                            <md:PackIcon Kind="User"
+                                         Height="40" Width="40"
+                                         Foreground="White"/>
+                        </MenuItem.Header>
+
+                        <MenuItem Name="MeuBtnLogout"
+                                  Height="50" 
+                                  Background="White"
+                                  FontWeight="ExtraBold"
+                                  Cursor="Hand">
+                            <MenuItem.Header>
+                                <StackPanel Orientation="Horizontal">
+                                    <Label Content="Abmelden" 
+                                           Foreground="{StaticResource AppColorCyan}"
+                                           FontSize="20" FontWeight="ExtraBold"
+                                           VerticalContentAlignment="Center">
+                                    </Label>
+                                    <md:PackIcon Kind="LogoutVariant"
+                                                 Height="40" Width="40"
+                                                 Foreground="{StaticResource AppColorCyan}"/>
+                                </StackPanel>
+                            </MenuItem.Header>
+                        </MenuItem>
+                    </MenuItem>
+                </Menu>
+            </StackPanel>
+        </mw:WindowCommands>
+    </mw:MetroWindow.RightWindowCommands>
+
+    <mw:MetroWindow.Flyouts>
+        <mw:FlyoutsControl Background="{DynamicResource AppColorCyan}">
+            <mw:Flyout x:Name="InfoFlyout"
+                       Position="Bottom"
+                       CloseButtonVisibility="Collapsed"
+                       TitleVisibility="Collapsed"
+                       IsAutoCloseEnabled="True" AutoCloseInterval="5000"
+                       Background="{StaticResource AppColorCyan}">
+                <Grid HorizontalAlignment="Left" Height="42"
+                      Background="{StaticResource AppColorCyan}">
+                    <StackPanel Orientation="Horizontal"
+                                HorizontalAlignment="Left" Margin="0 0 100 0"
+                                Background="{StaticResource AppColorCyan}"
+                                VerticalAlignment="Center">
+                        <md:PackIcon Kind="InformationVariant"
+                                     Width="40" Height="40"
+                                     Foreground="White">
+                        </md:PackIcon>
+
+                        <Label Name="LblFlyoutInfo" 
+                               FontSize="26" FontWeight="ExtraBold"
+                               Foreground="White"
+                               Background="Transparent"
+                               Margin="10 0 0 0">
+                        </Label>
+                    </StackPanel>
+
+                    <Button x:Name="BtnCloseFlyoutInfo" HorizontalAlignment="Right"
+                            ToolTip="Schließen" Cursor="Hand"
+                            BorderThickness="1" BorderBrush="{StaticResource AppColorCyanHover}"
+                            Style="{StaticResource MahApps.Styles.Button.Circle}">
+                        <md:PackIcon Kind="ArrowDownBoldCircle" 
+                             Width="40" Height="40" Foreground="White">
+                        </md:PackIcon>
+
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Click">
+                                <i:ChangePropertyAction TargetName="InfoFlyout" 
+                                            PropertyName="IsOpen" Value="False"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </Button>
+                </Grid>
+            </mw:Flyout>
+        </mw:FlyoutsControl>
+    </mw:MetroWindow.Flyouts>
+
+    <mw:MetroWindow.Resources>
+
+    </mw:MetroWindow.Resources>
     
     <Grid>
         <Grid.RowDefinitions>
