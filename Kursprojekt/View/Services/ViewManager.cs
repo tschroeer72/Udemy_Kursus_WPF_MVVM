@@ -53,11 +53,12 @@ public class ViewManager
         MainView!.AnimatedContentControl.MetroTabItem.IsSelected = true;
 
         if (bFullPage) 
-        { 
-        
+        {
+            MainView!.TitleBar.Visibility = Visibility.Collapsed;
         }
         else
         {
+            MainView!.TitleBar.Visibility=Visibility.Visible;
             GoBackPage = ucPage;
         }
     }

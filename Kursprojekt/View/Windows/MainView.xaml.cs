@@ -37,6 +37,9 @@ public partial class MainView : MetroWindow
                 case "BtnHome":
                     ViewManager.ShowPageOnMainView<HomeView>();
                     break;
+                case "BtnVerwaltung":
+                    ViewManager.ShowPageOnMainView<VerwaltungView>(true);
+                    break;
                 case "BtnAdmin":
                     ViewManager.ShowPageOnMainView<AdminView>();
                     break;

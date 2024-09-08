@@ -15,15 +15,24 @@
     
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="50"/>
+            <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <StackPanel Grid.Row="0" Orientation="Horizontal">
+        <StackPanel x:Name="TitleBar"
+                    Grid.Row="0" 
+                    Height="50"
+                    Orientation="Horizontal">
             <Button x:Name="BtnHome"
                     Content="Home" FontSize="30"
                     Command="{Binding OpenPageCommand}"
                     CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}}">                
+            </Button>
+            <Button x:Name="BtnVerwaltung"
+                    Content="Verwaltung" FontSize="30"
+                    Margin="10 0"
+                    Command="{Binding OpenPageCommand}"
+                    CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}}">
             </Button>
             <Button x:Name="BtnAdmin"
                     Content="Admin" FontSize="30"

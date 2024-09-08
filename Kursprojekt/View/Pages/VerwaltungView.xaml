@@ -1,0 +1,47 @@
+﻿<UserControl x:Class="Kursprojekt.View.Pages.VerwaltungView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Kursprojekt.View.Pages" 
+             xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes" 
+             xmlns:uc="clr-namespace:Kursprojekt.View.UserControls" 
+             xmlns:vm="clr-namespace:Kursprojekt.ViewModel" 
+             d:DataContext="{d:DesignInstance Type=vm:VerwaltungViewModel}"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0">
+            <Grid HorizontalAlignment="Left">
+                <StackPanel Orientation="Horizontal">
+                    <Button x:Name="BtnGoBack"
+                            Height="40"
+                            Cursor="Hand"
+                            Click="GoBack">
+                        <md:PackIcon Kind="ArrowLeftBold"
+                                     Height="30" Width="50">                            
+                        </md:PackIcon>
+                    </Button>
+                    <Label Grid.Row="0" 
+                           Margin="30 0"
+                           Content="{Binding Titel}"
+                           FontSize="30"                   
+                           MinWidth="100">
+                    </Label>
+                </StackPanel>
+            </Grid>
+            
+        </Grid>
+
+        <Grid Grid.Row="1">
+            <uc:AnimatedContentControl x:Name="AnimatedContentControl">
+
+            </uc:AnimatedContentControl>
+        </Grid>
+    </Grid>
+</UserControl>

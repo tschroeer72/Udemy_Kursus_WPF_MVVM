@@ -37,6 +37,9 @@ public partial class App : Application
 
         services.AddSingleton<AppUserView>();
         services.AddSingleton<AppUserViewModel>();
+
+        services.AddSingleton<VerwaltungView>();
+        services.AddSingleton<VerwaltungViewModel>();
     }
 
     protected override void OnStartup(StartupEventArgs e)
