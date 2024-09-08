@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Kursprojekt.ViewModel;
 
-public class RoleViewModel : BaseViewModel
+public partial class RoleViewModel : BaseViewModel
 {
     public RoleViewModel()
     {

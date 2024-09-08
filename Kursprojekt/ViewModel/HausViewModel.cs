@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 
 namespace Kursprojekt.ViewModel;
 
-public partial class VerwaltungViewModel : BaseViewModel
+public partial class HausViewModel : BaseViewModel
 {
-    public VerwaltungViewModel()
+    public HausViewModel()
     {
-        Titel = "Verwaltung";
+        Titel = "Haus";
     }
+
 }

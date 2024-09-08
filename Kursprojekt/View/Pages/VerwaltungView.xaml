@@ -36,12 +36,16 @@
 
             <Grid HorizontalAlignment="Right">
                 <StackPanel Orientation="Horizontal">
-                    <RadioButton Content="Buchungen" Margin="20 0" Width="150"
-                                 Style="{StaticResource BtnUnderPageMenuStyle}">
+                    <RadioButton x:Name="BtnBuchung"
+                                 Content="Buchungen" Margin="20 0" Width="150"
+                                 Style="{StaticResource BtnUnderPageMenuStyle}"
+                                 Click="OpenUnderPage">
                     
                     </RadioButton>
-                    <RadioButton Content="Häuser" Width="150"
-                                 Style="{StaticResource BtnUnderPageMenuStyle}">
+                    <RadioButton x:Name="BtnHaus"
+                                 Content="Häuser" Width="150"
+                                 Style="{StaticResource BtnUnderPageMenuStyle}"
+                                 Click="OpenUnderPage">
                     
                     </RadioButton>
                 </StackPanel>

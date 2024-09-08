@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Kursprojekt.ViewModel;
 
-public class AdminViewModel : BaseViewModel
+public partial class AdminViewModel : BaseViewModel
 {
     public AdminViewModel()
     {

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Kursprojekt.ViewModel;
 
-public class AppUserViewModel: BaseViewModel
+public partial class AppUserViewModel: BaseViewModel
 {
     public AppUserViewModel()
     {

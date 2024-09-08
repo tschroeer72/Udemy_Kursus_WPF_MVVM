@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Kursprojekt.ViewModel;
 
-public class HomeViewModel : BaseViewModel
+public partial class HomeViewModel : BaseViewModel
 {
     public HomeViewModel()
     {

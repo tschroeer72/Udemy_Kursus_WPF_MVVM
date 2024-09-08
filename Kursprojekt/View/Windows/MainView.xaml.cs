@@ -21,6 +21,8 @@ public partial class MainView : MetroWindow
         MainViewModel = mainViewModel;
         DataContext = MainViewModel;
         _InitEvents();
+
+        //OpenPage(BtnHome);
     }
 
     private void _InitEvents()

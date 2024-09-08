@@ -40,6 +40,12 @@ public partial class App : Application
 
         services.AddSingleton<VerwaltungView>();
         services.AddSingleton<VerwaltungViewModel>();
+
+        services.AddSingleton<BuchungView>();
+        services.AddSingleton<BuchungViewModel>();
+
+        services.AddSingleton<HausView>();
+        services.AddSingleton<HausViewModel>();
     }
 
     protected override void OnStartup(StartupEventArgs e)

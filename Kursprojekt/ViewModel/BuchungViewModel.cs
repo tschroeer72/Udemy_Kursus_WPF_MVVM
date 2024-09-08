@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace Kursprojekt.ViewModel;
 
-public partial class VerwaltungViewModel : BaseViewModel
+public partial class BuchungViewModel :BaseViewModel
 {
-    public VerwaltungViewModel()
+    public BuchungViewModel()
     {
-        Titel = "Verwaltung";
+        Titel = "Buchung";
     }
 }
