@@ -10,6 +10,7 @@
              d:DataContext="{d:DesignInstance Type=vm:VerwaltungViewModel}"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+    
     <Grid Background="{StaticResource MaterialDesignPaper}">
         <Grid.RowDefinitions>
             <RowDefinition Height="50"/>
@@ -20,22 +21,29 @@
             <Grid HorizontalAlignment="Left">
                 <StackPanel Orientation="Horizontal">
                     <Button x:Name="BtnGoBack"
-                            Height="40"
-                            Cursor="Hand"
+                            Style="{StaticResource GoBackBtnStyle}"
+                            Height="34"
                             Click="GoBack">
                         <md:PackIcon Kind="ArrowLeftBold"
                                      Height="30" Width="50">                            
                         </md:PackIcon>
                     </Button>
-                    <Label Grid.Row="0" 
-                           Margin="30 0"
-                           Content="{Binding Titel}"
-                           FontSize="30"                   
-                           MinWidth="100">
-                    </Label>
+                    <TextBlock Text="{Binding Titel}"
+                               Style="{StaticResource TitelTxtBxStyle}">
+                    </TextBlock>
                 </StackPanel>
             </Grid>
-            
+
+            <Grid HorizontalAlignment="Right">
+                <StackPanel Orientation="Horizontal">
+                    <Button Content="Buchungen" Margin="20 0">
+                    
+                    </Button>
+                    <Button Content="Häuser">
+                    
+                    </Button>
+                </StackPanel>
+            </Grid>
         </Grid>
 
         <Grid Grid.Row="1">

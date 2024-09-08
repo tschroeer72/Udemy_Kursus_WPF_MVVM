@@ -17,13 +17,9 @@
 
         <Grid Grid.Row="0">
             <Grid HorizontalAlignment="Left">
-                <Label Content="{Binding Titel}" 
-                       FontSize="30"
-                       FontFamily="Forte"
-                       FontWeight="ExtraBold"
-                       Padding="0"
-                       Foreground="{StaticResource AppColorCyan}">                    
-                </Label>
+                <TextBlock Text="{Binding Titel}"
+                           Style="{StaticResource TitelTxtBxStyle}">
+                </TextBlock>
             </Grid>
             
             <Grid HorizontalAlignment="Right">

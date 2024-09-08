@@ -238,7 +238,7 @@
             <Style x:Key="TitelTxtBxStyle" TargetType="TextBlock">
                 <Setter Property="Foreground" Value="{StaticResource AppColorCyan}"/>
                 <Setter Property="FontSize" Value="36"/>
-                <Setter Property="FontFamily" Value="forte"/>
+                <Setter Property="FontFamily" Value="Forte"/>
                 <Setter Property="Margin" Value="4 0"/>
                 <Setter Property="FontWeight" Value="ExtraBold"/>
             </Style>
