@@ -1,4 +1,5 @@
 ﻿using Kursprojekt.View.Pages;
+using Kursprojekt.View.Services;
 using Kursprojekt.ViewModel;
 using MahApps.Metro.Controls;
 using Microsoft.Extensions.DependencyInjection;
@@ -13,7 +14,7 @@ namespace Kursprojekt.View.Windows;
 public partial class MainView : MetroWindow
 {
     public MainViewModel MainViewModel { get; }
-    public ServiceProvider? ServiceProvider;
+
     public MainView(MainViewModel mainViewModel)
     {
         InitializeComponent();
@@ -29,36 +30,17 @@ public partial class MainView : MetroWindow
 
     private void OpenPage(object? oSender)
     {
-        if(oSender is Button objButton)
+        if (oSender is Button objButton)
         {
-            //if(objButton == BtnHome)
-            //{
-
-            //}
-            //else if(objButton == BtnAdmin)
-            //{
-
-            //}
-
             switch (objButton.Name)
             {
                 case "BtnHome":
-                    var pageHome = ServiceProvider?.GetService<HomeView>();
-                    if (pageHome == null) return;
-
-                    PagePlace.Children.Clear();
-                    PagePlace.Children.Add(pageHome);
+                    ViewManager.ShowPageOnMainView<HomeView>();
                     break;
                 case "BtnAdmin":
-                    var pageAdmin = ServiceProvider?.GetService<AdminView>();
-                    if (pageAdmin == null) return;
-
-                    PagePlace.Children.Clear();
-                    PagePlace.Children.Add(pageAdmin);
+                    ViewManager.ShowPageOnMainView<AdminView>();
                     break;
             }
-            tpItem.IsSelected = false;
-            tpItem.IsSelected = true;
         }
     }
 }

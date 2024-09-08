@@ -1,16 +1,17 @@
 ﻿<mw:MetroWindow x:Class="Kursprojekt.View.Windows.MainView"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Kursprojekt.View.Windows"
-        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
-        xmlns:vm="clr-namespace:Kursprojekt.ViewModel"
-        xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes" 
-        xmlns:mw="http://metro.mahapps.com/winfx/xaml/controls"
-        mc:Ignorable="d"
-        d:DataContext="{d:DesignInstance Type=vm:MainViewModel}"
-        Title="MainView" Height="450" Width="800">
+                xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                xmlns:local="clr-namespace:Kursprojekt.View.Windows"
+                xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+                xmlns:vm="clr-namespace:Kursprojekt.ViewModel"
+                xmlns:uc="clr-namespace:Kursprojekt.View.UserControls"
+                xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes" 
+                xmlns:mw="http://metro.mahapps.com/winfx/xaml/controls"
+                mc:Ignorable="d"
+                d:DataContext="{d:DesignInstance Type=vm:MainViewModel}"
+                Title="MainView" Height="450" Width="800">
     
     <Grid>
         <Grid.RowDefinitions>
@@ -32,13 +33,9 @@
         </StackPanel>
         
         <Grid Grid.Row="1">
-            <mw:MetroAnimatedTabControl>
-                <mw:MetroTabItem Name="tpItem">
-                    <Grid x:Name="PagePlace">
-                        
-                    </Grid>
-                </mw:MetroTabItem>
-            </mw:MetroAnimatedTabControl>
+            <uc:AnimatedContentControl x:Name="AnimatedContentControl">
+                
+            </uc:AnimatedContentControl>
         </Grid>
     </Grid>
 </mw:MetroWindow>

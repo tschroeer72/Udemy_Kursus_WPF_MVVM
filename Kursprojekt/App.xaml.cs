@@ -1,4 +1,5 @@
 ﻿using Kursprojekt.View.Pages;
+using Kursprojekt.View.Services;
 using Kursprojekt.View.Windows;
 using Kursprojekt.ViewModel;
 using Microsoft.Extensions.DependencyInjection;
@@ -44,7 +45,8 @@ public partial class App : Application
             Current.Shutdown();
         }
 
-        mainView!.ServiceProvider = _ServiceProvider;
+        ViewManager.InitViewManager(mainView!, _ServiceProvider);
+        ViewManager.ServiceProvider = _ServiceProvider;
         mainView!.Show();
 
         base.OnStartup(e);
