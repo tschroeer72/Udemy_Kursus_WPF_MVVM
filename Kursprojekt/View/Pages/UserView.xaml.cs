@@ -17,17 +17,17 @@ using System.Windows.Shapes;
 namespace Kursprojekt.View.Pages
 {
     /// <summary>
-    /// Interaktionslogik für AppUserView.xaml
+    /// Interaktionslogik für UserView.xaml
     /// </summary>
-    public partial class AppUserView : UserControl
+    public partial class UserView : UserControl
     {
-        public AppUserViewModel AppUserViewModel { get; }
+        public UserViewModel UserViewModel { get; }
 
-        public AppUserView(AppUserViewModel appUserViewModel)
+        public UserView(UserViewModel appUserViewModel)
         {
             InitializeComponent();
-            AppUserViewModel = appUserViewModel;
-            DataContext = AppUserViewModel;
+            UserViewModel = appUserViewModel;
+            DataContext = UserViewModel;
         }
 
     }

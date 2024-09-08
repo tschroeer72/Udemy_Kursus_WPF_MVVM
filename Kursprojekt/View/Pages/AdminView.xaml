@@ -8,7 +8,7 @@
              xmlns:vm="clr-namespace:Kursprojekt.ViewModel"
              mc:Ignorable="d" 
              d:DataContext="{d:DesignInstance Type=vm:AdminViewModel}"
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="800" d:DesignWidth="1400">
     
     <Grid  Background="{StaticResource MaterialDesignPaper}">
         <Grid.RowDefinitions>
@@ -29,14 +29,14 @@
                              Margin="20 0"
                              Content="User" FontSize="30"
                              Width="100"
-                             Click="OpenPage">
+                             Click="OpenUnderPage">
                 </RadioButton>
                 <RadioButton x:Name="BtnRole"
                              GroupName="grpMnuAdmin"
                              Style="{StaticResource BtnUnderPageMenuStyle}"
                              Content="Rolle" FontSize="30"
                              Width="100"
-                             Click="OpenPage">
+                             Click="OpenUnderPage">
                 </RadioButton>
             </StackPanel>
         </Grid>

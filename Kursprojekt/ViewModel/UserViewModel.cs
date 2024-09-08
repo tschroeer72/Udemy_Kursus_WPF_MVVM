@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace Kursprojekt.ViewModel;
 
-public partial class AppUserViewModel: BaseViewModel
+public partial class UserViewModel: BaseViewModel
 {
-    public AppUserViewModel()
+    public UserViewModel()
     {
-        Titel = "App User";
+        Titel = "User";
     }
 }

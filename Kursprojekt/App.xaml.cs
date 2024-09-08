@@ -35,8 +35,8 @@ public partial class App : Application
         services.AddSingleton<RoleView>();
         services.AddSingleton<RoleViewModel>();
 
-        services.AddSingleton<AppUserView>();
-        services.AddSingleton<AppUserViewModel>();
+        services.AddSingleton<UserView>();
+        services.AddSingleton<UserViewModel>();
 
         services.AddSingleton<VerwaltungView>();
         services.AddSingleton<VerwaltungViewModel>();

@@ -29,16 +29,19 @@ public partial class AdminView : UserControl
         InitializeComponent();
         AdminViewModel = adminViewModel;
         DataContext = AdminViewModel;
+
+        OpenUnderPage(BtnUser, new RoutedEventArgs());
+        BtnUser.IsChecked = true;
     }
 
-    private void OpenPage(object sender, RoutedEventArgs e)
+    private void OpenUnderPage(object sender, RoutedEventArgs e)
     {
         if (sender is RadioButton objButton)
         {
             switch (objButton.Name)
             {
                 case "BtnUser":
-                    ViewManager.ShowUnderPageOn<AppUserView>(AnimatedContentControl);
+                    ViewManager.ShowUnderPageOn<UserView>(AnimatedContentControl);
                     break;
                 case "BtnRole":
                     ViewManager.ShowUnderPageOn<RoleView>(AnimatedContentControl);
