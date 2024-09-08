@@ -7,12 +7,30 @@
              xmlns:vm="clr-namespace:Kursprojekt.ViewModel"
              mc:Ignorable="d" 
              d:DataContext="{d:DesignInstance Type=vm:HomeViewModel}"
-             d:DesignHeight="450" d:DesignWidth="800">
-    <Grid Background="Aqua">
+             d:DesignHeight="800" d:DesignWidth="1400">
+    
+    <Grid Background="{StaticResource MaterialDesignPaper}">
         <Grid.RowDefinitions>
             <RowDefinition Height="50"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Label Grid.Row="0" Content="{Binding Titel}" FontSize="30"/>
+
+        <Grid Grid.Row="0">
+            <Grid HorizontalAlignment="Left">
+                <Label Content="{Binding Titel}" 
+                       FontSize="30"
+                       FontFamily="Forte"
+                       FontWeight="ExtraBold"
+                       Padding="0"
+                       Foreground="{StaticResource AppColorCyan}">                    
+                </Label>
+            </Grid>
+            
+            <Grid HorizontalAlignment="Right">
+
+            </Grid>
+            
+            
+        </Grid>
     </Grid>
 </UserControl>

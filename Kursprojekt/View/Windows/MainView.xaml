@@ -141,8 +141,8 @@
     <mw:MetroWindow.Resources>
 
     </mw:MetroWindow.Resources>
-    
-    <Grid>
+
+    <Grid Background="{StaticResource MaterialDesignPaper}">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>

@@ -10,7 +10,8 @@
              d:DataContext="{d:DesignInstance Type=vm:AppUserViewModel}"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid Background="Yellow">
+    
+    <Grid Background="{StaticResource MaterialDesignPaper}">
         <Grid.RowDefinitions>
             <RowDefinition Height="50"/>
             <RowDefinition Height="*"/>
