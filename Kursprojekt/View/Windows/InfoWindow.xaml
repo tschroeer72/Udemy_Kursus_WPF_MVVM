@@ -1,0 +1,141 @@
+﻿<Window x:Class="Kursprojekt.View.Windows.InfoWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Kursprojekt.View.Windows"
+        xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes" 
+        xmlns:mw="http://metro.mahapps.com/winfx/xaml/controls" 
+        mc:Ignorable="d"
+        Background="White"
+        AllowsTransparency="True"
+        UseLayoutRounding="True"
+        WindowStyle="None"
+        WindowStartupLocation="CenterOwner"
+        ResizeMode="CanResizeWithGrip"
+        FontFamily="{StaticResource MaterialDesignFont}"
+        Title="InfoWindow" 
+        MinHeight="200" MinWidth="500"
+        Height="200" Width="500">    
+    
+    <Grid>
+        <md:TransitioningContent  OpeningEffect="{md:TransitionEffect Duration=0:0:0.5,
+            Kind=ExpandIn}">
+            <Border BorderThickness="1"
+                    BorderBrush="{StaticResource AppColorCyan}">
+                <Grid Background="AliceBlue">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="40"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="40"/>
+                    </Grid.RowDefinitions>
+
+                    <!--//Titel und Close-->
+                    <Grid Grid.Row="0">
+                        <md:Card md:ShadowAssist.ShadowDepth="Depth2">
+                            <Grid Background="{StaticResource AppColorCyan}">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="40"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid Grid.Column="0"  Cursor="Hand"
+                                      PreviewMouseLeftButtonDown="Grid_PreviewMouseLeftButtonDown" >
+                                    <Label x:Name="lblTitle" Content="Titel" 
+                                           Margin="8 0"
+                                           Height="40"
+                                           BorderThickness="0" 
+                                           Foreground="White" FontWeight="Bold" 
+                                           FontSize="20" VerticalContentAlignment="Center">
+                                    </Label>
+                                </Grid>
+
+                                <Button Grid.Column="1"  
+                                        Width="35"
+                                        Height="35" Panel.ZIndex="10"
+                                        Background="White" 
+                                        Style="{StaticResource MaterialDesignFloatingActionButton}"
+                                        Click="BtnSchliessen_Click" Cursor="Hand">
+                                    <md:PackIcon Kind="Close" Foreground="Red" />
+                                </Button>
+                            </Grid>
+                        </md:Card>
+                    </Grid>
+
+                    <!--Info Text or TextInput-->
+                    <Grid Grid.Row="1" MinHeight="120" Margin="4">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="60"/>
+                        </Grid.RowDefinitions>
+                        <!--Info Text-->
+                        <ScrollViewer Grid.Row="0">
+                            <TextBlock x:Name="txtMessage" 
+                                       VerticalAlignment="Center" HorizontalAlignment="Center"
+                                       FontSize="20" TextWrapping="Wrap" 
+                                       FontWeight="Bold"
+                                       Foreground="{StaticResource  AppColorCyan}" 
+                                       Style="{StaticResource MaterialDesignButtonTextBlock}">
+                            </TextBlock>
+                        </ScrollViewer>
+
+                        <!--TextInput-->
+                        <Border x:Name="BorderInputText" Grid.Row="1"
+                                Height="56" Margin="20 0 8 8">
+                            <TextBox x:Name="txtInputText" 
+                                     MinWidth="300"
+                                     md:HintAssist.Hint="Angabe">
+                            </TextBox>
+                        </Border>
+                    </Grid>
+
+                    <!--Btn JA/NEIN/ABBRECHEN-->
+                    <Grid Grid.Row="2">
+                        <Grid Width="280" HorizontalAlignment="Right" Margin="10 0">
+                            <Grid x:Name="Grid_JA_NEIN" Visibility="Collapsed">
+                                <Button x:Name="BtnNein" Content="Nein"
+                                        Style="{StaticResource MaterialDesignRaisedButton}" 
+                                        BorderThickness="0"
+                                        HorizontalAlignment="Left"
+                                        Background="Red" Foreground="White" 
+                                        FontWeight="Bold"  Width="100" 
+                                        Click="BtnNein_Click">
+                                </Button>
+
+                                <Button x:Name="BtnJa" Content="Ja"
+                                        Style="{StaticResource MaterialDesignRaisedButton}"
+                                        BorderThickness="0"
+                                        Background="{StaticResource AppColorCyan}"
+                                        HorizontalAlignment="Right"
+                                        Foreground="White" FontWeight="Bold"
+                                        Width="100" Click="BtnJa_Click">
+                                </Button>
+                            </Grid>
+
+                            <Grid x:Name="Grid_Btn_OK_BtnAbbrechen">
+                                <Button x:Name="BtnAbbrechen" Content="Abbrechen"
+                                        Style="{StaticResource MaterialDesignRaisedButton}"   
+                                        HorizontalAlignment="Left"
+                                        BorderThickness="0"
+                                        Background="Red" Foreground="White" 
+                                        FontWeight="Bold" Width="100"
+                                        Click="BtnAbbrechen_Click">
+                                </Button>
+                                <Button Content="OK"                            
+                                        Style="{StaticResource MaterialDesignRaisedButton}" 
+                                        HorizontalAlignment="Right"
+                                        BorderThickness="0"
+                                        Background="{StaticResource AppColorCyan}"
+                                        Foreground="White" FontWeight="Bold" 
+                                        Width="150" 
+                                        Click="BtnOK_Click" >
+                                </Button>
+                            </Grid>
+                        </Grid>
+                    </Grid>
+
+                </Grid>
+            </Border>
+
+        </md:TransitioningContent>
+    </Grid>
+</Window>
