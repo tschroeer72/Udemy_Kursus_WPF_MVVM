@@ -1,4 +1,5 @@
-﻿using Kursprojekt.View.Pages;
+﻿using Kursprojekt.Enums;
+using Kursprojekt.View.Pages;
 using Kursprojekt.View.UserControls;
 using Kursprojekt.View.Windows;
 using Kursprojekt.ViewModel;
@@ -10,6 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace Kursprojekt.View.Services;
 
@@ -156,9 +158,37 @@ public class ViewManager
         }
     }
 
+    private static bool ShowInformationWindow(string sMessage)
+    {
+        return new InfoWindow(sMessage, IWDialogType.Information).ShowDialog() ?? false;
+    }
+
+    private static bool ShowConfirmationWindow(string sMessage)
+    {
+        return new InfoWindow(sMessage, IWDialogType.Confirmation).ShowDialog() ?? false;
+    }
+    private static string ShowInputWindow(string sMessage)
+    {
+        var myInfoWindow = new InfoWindow(sMessage, IWDialogType.Input);
+        myInfoWindow.ShowDialog();
+        return myInfoWindow.InputText;
+    }
+    private static void ShowMainInfoFlyout(string sMessage, bool bWarnung)
+    {
+        MainView!.LblFlyoutInfo.Content = sMessage;
+        MainView!.LblFlyoutInfo.Foreground = (bWarnung) ? Brushes.DarkRed : Brushes.White;
+        MainView!.InfoFlyout.IsOpen = true;
+    }
+
     public static void InitBaseDelEvents(BaseViewModel baseViewModel)
     {
         baseViewModel.DelShowLoginView += (IsStart) => ShowLoginView(IsStart);
         baseViewModel.DelGoBackOrGotoHome += () => GoBackOrToHome();
+
+        baseViewModel.DelShowInformationWindow += (msg) => ShowInformationWindow(msg);
+        baseViewModel.DelShowConfirmationWindow += (msg) => ShowConfirmationWindow(msg);
+        baseViewModel.DelShowInputWindow += (msg) => ShowInputWindow(msg);
+
+        baseViewModel.DelShowMainInfoFlyout += (msg, warnung) => ShowMainInfoFlyout(msg, warnung);
     }
 }
