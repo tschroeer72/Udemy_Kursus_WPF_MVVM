@@ -7,11 +7,17 @@ using System.Threading.Tasks;
 
 namespace Kursprojekt.ViewModel;
 
-public class LoginViewModel:BaseViewModel
+public partial class LoginViewModel:BaseViewModel
 {
+    public delegate void DelGoBackOrGotoHomeType();
+    public DelGoBackOrGotoHomeType? DelBockBackOrGotoHome { get; set; }
+
     [RelayCommand]
     void LoginUser()
     {
+        //User in DB suchen
 
+        //WENN gefunden DANN HomeView öffnen
+        DelBockBackOrGotoHome?.Invoke();
     }
 }

@@ -29,7 +29,7 @@
                 NonActiveWindowTitleBrush="{DynamicResource AppColorCyan}"
                 NonActiveBorderBrush="{DynamicResource AppColorCyan}"
                 Background="{DynamicResource MaterialDesignPaper}"
-                ResizeMode="CanResizeWithGrip">
+                ResizeMode="CanResizeWithGrip" Loaded="MetroWindow_Loaded">
 
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">

@@ -61,6 +61,46 @@ public class ViewManager
             MainView!.TitleBar.Visibility=Visibility.Visible;
             GoBackPage = ucPage;
         }
+
+        DoChangeOnViewAfterShow(ucPage);
+    }
+
+    public static void DoChangeOnViewAfterShow(UserControl ucPage)
+    {
+        switch (ucPage.Name)
+        {
+
+        }
+    }
+
+    public static void ShowLoginView(bool bStartLogin)
+    {
+        try
+        {
+            var pageService = ServiceProvider?.GetService<LoginView>();
+            if (pageService == null) return;
+            if (pageService is LoginView loginPage)
+            {
+                Show(loginPage, true);
+
+                if (bStartLogin)
+                {
+                    loginPage.GridGoBack.Visibility = Visibility.Collapsed;
+                    loginPage.BtnBeenden.Visibility = Visibility.Visible;
+                }
+                else
+                {
+                    loginPage.GridGoBack.Visibility = Visibility.Visible;
+                    loginPage.BtnBeenden.Visibility = Visibility.Collapsed;
+                }
+
+                GoBackPage = null;
+            }
+        }
+        catch (Exception ex) 
+        { 
+        
+        }
     }
 
     public static void GoBackOrToHome()

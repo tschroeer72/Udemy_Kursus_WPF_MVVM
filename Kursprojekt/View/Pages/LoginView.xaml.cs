@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Kursprojekt.View.Services;
+using Kursprojekt.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,10 +22,17 @@ namespace Kursprojekt.View.Pages
     /// </summary>
     public partial class LoginView : UserControl
     {
-        public LoginView()
+        public LoginViewModel LoginViewModel { get; }
+
+        public LoginView(LoginViewModel loginViewModel)
         {
             InitializeComponent();
+            LoginViewModel = loginViewModel;
+            DataContext = LoginViewModel;
+
+            LoginViewModel.DelBockBackOrGotoHome += () => ViewManager.GoBackOrToHome();
         }
+
 
         private void BtnBeenden_Click(object sender, RoutedEventArgs e)
         {

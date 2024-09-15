@@ -46,6 +46,9 @@ public partial class App : Application
 
         services.AddSingleton<HausView>();
         services.AddSingleton<HausViewModel>();
+
+        services.AddSingleton<LoginView>();
+        services.AddSingleton<LoginViewModel>();
     }
 
     protected override void OnStartup(StartupEventArgs e)

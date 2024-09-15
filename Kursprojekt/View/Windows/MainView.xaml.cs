@@ -22,7 +22,7 @@ public partial class MainView : MetroWindow
         DataContext = MainViewModel;
         _InitEvents();
 
-        //OpenUnderPage(BtnHome);
+        //OpenUnderPage(BtnHome);        
     }
 
     private void _InitEvents()
@@ -47,5 +47,10 @@ public partial class MainView : MetroWindow
                     break;
             }
         }
+    }
+
+    private void MetroWindow_Loaded(object sender, RoutedEventArgs e)
+    {
+        ViewManager.ShowLoginView(true);
     }
 }
