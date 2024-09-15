@@ -32,6 +32,8 @@ namespace Kursprojekt.View.Pages
 
             OpenUnderPage(BtnBuchung, new RoutedEventArgs());
             BtnBuchung.IsChecked = true;
+
+            ViewManager.InitBaseDelEvents(VerwaltungViewModel);
         }
 
         private void GoBack(object sender, RoutedEventArgs e)

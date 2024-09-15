@@ -22,7 +22,9 @@ public partial class MainView : MetroWindow
         DataContext = MainViewModel;
         _InitEvents();
 
-        //OpenUnderPage(BtnHome);        
+        //OpenUnderPage(BtnHome);
+        //
+        ViewManager.InitBaseDelEvents(MainViewModel);
     }
 
     private void _InitEvents()

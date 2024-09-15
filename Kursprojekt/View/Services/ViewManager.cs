@@ -67,13 +67,33 @@ public class ViewManager
 
     public static void DoChangeOnViewAfterShow(UserControl ucPage)
     {
-        switch (ucPage.Name)
-        {
+        MainView!.UserPanel.Visibility = Visibility.Visible;
 
-        }
+        MainView!.BtnHome.IsChecked = ucPage is HomeView;
+        MainView!.BtnVerwaltung.IsChecked = ucPage is VerwaltungView;
+        MainView!.BtnAdmin.IsChecked = ucPage is AdminView;
+
+        //switch (ucPage.Name)
+        //{
+        //    case "HomeView":
+        //        MainView!.BtnHome.IsChecked = true;
+        //        MainView!.BtnVerwaltung.IsChecked = false;
+        //        MainView!.BtnAdmin.IsChecked = false;
+        //        break;
+        //    case "VerwaltungView":
+        //        MainView!.BtnHome.IsChecked = false;
+        //        MainView!.BtnVerwaltung.IsChecked = true;
+        //        MainView!.BtnAdmin.IsChecked = false;
+        //        break;
+        //    case "AdminView":
+        //        MainView!.BtnHome.IsChecked = false;
+        //        MainView!.BtnVerwaltung.IsChecked = false;
+        //        MainView!.BtnAdmin.IsChecked = true;
+        //        break;
+        //}
     }
 
-    public static void ShowLoginView(bool bStartLogin)
+    public static void ShowLoginView(bool bAsStartLogin)
     {
         try
         {
@@ -83,7 +103,7 @@ public class ViewManager
             {
                 Show(loginPage, true);
 
-                if (bStartLogin)
+                if (bAsStartLogin)
                 {
                     loginPage.GridGoBack.Visibility = Visibility.Collapsed;
                     loginPage.BtnBeenden.Visibility = Visibility.Visible;
@@ -95,6 +115,7 @@ public class ViewManager
                 }
 
                 GoBackPage = null;
+                MainView!.UserPanel.Visibility = Visibility.Hidden;
             }
         }
         catch (Exception ex) 
@@ -133,5 +154,11 @@ public class ViewManager
         {
             MessageBox.Show(ex.ToString());
         }
+    }
+
+    public static void InitBaseDelEvents(BaseViewModel baseViewModel)
+    {
+        baseViewModel.DelShowLoginView += (IsStart) => ShowLoginView(IsStart);
+        baseViewModel.DelGoBackOrGotoHome += () => GoBackOrToHome();
     }
 }

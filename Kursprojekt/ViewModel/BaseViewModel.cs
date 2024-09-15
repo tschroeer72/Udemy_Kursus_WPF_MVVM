@@ -9,6 +9,12 @@ namespace Kursprojekt.ViewModel;
 
 public partial class BaseViewModel : ObservableObject
 {
+    public delegate void DelGoBackOrGotoHomeType();
+    public DelGoBackOrGotoHomeType? DelGoBackOrGotoHome { get; set; }
+
+    public delegate void DelShowLoginViewType(bool bAsStartLogin);
+    public DelShowLoginViewType? DelShowLoginView { get; set; }
+
     [ObservableProperty]
     string titel = "";
 }

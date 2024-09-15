@@ -1,4 +1,5 @@
-﻿using Kursprojekt.ViewModel;
+﻿using Kursprojekt.View.Services;
+using Kursprojekt.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,6 +29,8 @@ namespace Kursprojekt.View.Pages
             InitializeComponent();
             UserViewModel = appUserViewModel;
             DataContext = UserViewModel;
+
+            ViewManager.InitBaseDelEvents(UserViewModel);
         }
 
     }

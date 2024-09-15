@@ -9,8 +9,7 @@ namespace Kursprojekt.ViewModel;
 
 public partial class LoginViewModel:BaseViewModel
 {
-    public delegate void DelGoBackOrGotoHomeType();
-    public DelGoBackOrGotoHomeType? DelBockBackOrGotoHome { get; set; }
+   
 
     [RelayCommand]
     void LoginUser()
@@ -18,6 +17,6 @@ public partial class LoginViewModel:BaseViewModel
         //User in DB suchen
 
         //WENN gefunden DANN HomeView öffnen
-        DelBockBackOrGotoHome?.Invoke();
+        DelGoBackOrGotoHome?.Invoke();
     }
 }

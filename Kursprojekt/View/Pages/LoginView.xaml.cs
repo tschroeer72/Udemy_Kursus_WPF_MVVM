@@ -30,7 +30,9 @@ namespace Kursprojekt.View.Pages
             LoginViewModel = loginViewModel;
             DataContext = LoginViewModel;
 
-            LoginViewModel.DelBockBackOrGotoHome += () => ViewManager.GoBackOrToHome();
+            //LoginViewModel.DelGoBackOrGotoHome += () => ViewManager.GoBackOrToHome();
+
+            ViewManager.InitBaseDelEvents(LoginViewModel);
         }
 
 

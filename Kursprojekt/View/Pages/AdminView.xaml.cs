@@ -32,6 +32,8 @@ public partial class AdminView : UserControl
 
         OpenUnderPage(BtnUser, new RoutedEventArgs());
         BtnUser.IsChecked = true;
+
+        ViewManager.InitBaseDelEvents(AdminViewModel);
     }
 
     private void OpenUnderPage(object sender, RoutedEventArgs e)
