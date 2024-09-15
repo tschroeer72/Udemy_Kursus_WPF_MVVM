@@ -33,12 +33,27 @@ public partial class BaseViewModel : ObservableObject
     [RelayCommand]
     public virtual void GetInitialData()
     {
-
+        try
+        {
+            if (IsPageBusy) return;
+            IsPageBusy = true;
+        }
+        finally
+        {
+            IsPageBusy = false;
+        }
     }
 
     [ObservableProperty]
     string titel = "";
 
     [ObservableProperty]
+    string message = string.Empty;
+
+    [ObservableProperty]
     bool isViewModelLoaded = false;
+
+    [ObservableProperty]
+    bool isPageBusy = false;
+
 }
