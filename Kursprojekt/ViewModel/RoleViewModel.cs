@@ -12,4 +12,9 @@ public partial class RoleViewModel : BaseViewModel
     {
         Titel = "Rolle";
     }
+
+    public override void GetInitialData()
+    {
+        base.GetInitialData();
+    }
 }

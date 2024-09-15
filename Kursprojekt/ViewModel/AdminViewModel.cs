@@ -13,4 +13,9 @@ public partial class AdminViewModel : BaseViewModel
     {
         Titel = "Admin";
     }
+
+    public override void GetInitialData()
+    {
+        base.GetInitialData();
+    }
 }

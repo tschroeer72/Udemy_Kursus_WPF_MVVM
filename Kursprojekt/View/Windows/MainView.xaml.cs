@@ -20,21 +20,13 @@ public partial class MainView : MetroWindow
         InitializeComponent();
         MainViewModel = mainViewModel;
         DataContext = MainViewModel;
-        _InitEvents();
 
-        //OpenUnderPage(BtnHome);
-        //
         ViewManager.InitBaseDelEvents(MainViewModel);
     }
 
-    private void _InitEvents()
+    private void OpenPageOnMain(object sender, RoutedEventArgs e)
     {
-        MainViewModel.EventOpenPage += (s, e) => OpenPage(s);
-    }
-
-    private void OpenPage(object? oSender)
-    {
-        if (oSender is RadioButton objButton)
+        if (sender is RadioButton objButton)
         {
             switch (objButton.Name)
             {
@@ -51,8 +43,4 @@ public partial class MainView : MetroWindow
         }
     }
 
-    private void MetroWindow_Loaded(object sender, RoutedEventArgs e)
-    {
-        ViewManager.ShowLoginView(true);
-    }
 }

@@ -5,10 +5,17 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Kursprojekt.View.Pages"
              xmlns:uc="clr-namespace:Kursprojekt.View.UserControls"
-             xmlns:vm="clr-namespace:Kursprojekt.ViewModel"
+             xmlns:vm="clr-namespace:Kursprojekt.ViewModel" 
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              mc:Ignorable="d" 
              d:DataContext="{d:DesignInstance Type=vm:AdminViewModel}"
              d:DesignHeight="800" d:DesignWidth="1400">
+
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding GetInitialDataCommand}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
     
     <Grid  Background="{StaticResource MaterialDesignPaper}">
         <Grid.RowDefinitions>

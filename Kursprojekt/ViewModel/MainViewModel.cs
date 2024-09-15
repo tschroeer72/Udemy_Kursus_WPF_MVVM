@@ -6,16 +6,16 @@ namespace Kursprojekt.ViewModel;
 
 public partial class MainViewModel : BaseViewModel  
 {
-    public event EventHandler? EventOpenPage;
 
     public MainViewModel()
     {
         Titel = "Main";
     }
 
-    [RelayCommand]
-    void OpenPage(object oParam)
+    public override void GetInitialData()
     {
-        EventOpenPage?.Invoke(oParam, EventArgs.Empty);
+        DelShowLoginView?.Invoke(true);
+
+        base.GetInitialData();
     }
 }

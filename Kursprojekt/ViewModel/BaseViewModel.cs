@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +16,16 @@ public partial class BaseViewModel : ObservableObject
     public delegate void DelShowLoginViewType(bool bAsStartLogin);
     public DelShowLoginViewType? DelShowLoginView { get; set; }
 
+
+    [RelayCommand]
+    public virtual void GetInitialData()
+    {
+
+    }
+
     [ObservableProperty]
     string titel = "";
+
+    [ObservableProperty]
+    bool isViewModelLoaded = false;
 }

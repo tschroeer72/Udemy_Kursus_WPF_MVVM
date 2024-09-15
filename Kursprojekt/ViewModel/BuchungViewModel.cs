@@ -12,4 +12,9 @@ public partial class BuchungViewModel :BaseViewModel
     {
         Titel = "Buchung";
     }
+
+    public override void GetInitialData()
+    {
+        base.GetInitialData();
+    }
 }

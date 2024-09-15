@@ -13,4 +13,8 @@ public partial class HausViewModel : BaseViewModel
         Titel = "Haus";
     }
 
+    public override void GetInitialData()
+    {
+        base.GetInitialData();
+    }
 }

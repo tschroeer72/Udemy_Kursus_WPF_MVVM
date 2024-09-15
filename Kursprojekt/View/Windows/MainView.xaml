@@ -29,7 +29,7 @@
                 NonActiveWindowTitleBrush="{DynamicResource AppColorCyan}"
                 NonActiveBorderBrush="{DynamicResource AppColorCyan}"
                 Background="{DynamicResource MaterialDesignPaper}"
-                ResizeMode="CanResizeWithGrip" Loaded="MetroWindow_Loaded">
+                ResizeMode="CanResizeWithGrip">
 
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
@@ -158,23 +158,20 @@
                              Style="{StaticResource BtnMainMenuStyle}"
                              Content="Home" FontSize="30"
                              Width="210" Height="44"
-                             Command="{Binding OpenPageCommand}"
-                             CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}}">                
+                             Click="OpenPageOnMain">                
                 </RadioButton>
                 <RadioButton x:Name="BtnVerwaltung" GroupName="grpTitleBar"
                              Style="{StaticResource BtnMainMenuStyle}"
                              Content="Verwaltung" FontSize="30"
                              Width="210" Height="44"
                              Margin="10 0"
-                             Command="{Binding OpenPageCommand}"
-                             CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}}">
+                             Click="OpenPageOnMain">
                 </RadioButton>
                 <RadioButton x:Name="BtnAdmin" GroupName="grpTitleBar"
                              Style="{StaticResource BtnMainMenuStyle}"
                              Content="Admin" FontSize="30"
                              Width="210" Height="44"
-                             Command="{Binding OpenPageCommand}"
-                             CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}}">
+                             Click="OpenPageOnMain">
                 </RadioButton>
             </StackPanel>
         </Grid>

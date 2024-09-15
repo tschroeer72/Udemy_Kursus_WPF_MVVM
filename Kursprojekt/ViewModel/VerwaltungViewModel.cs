@@ -12,4 +12,9 @@ public partial class VerwaltungViewModel : BaseViewModel
     {
         Titel = "Verwaltung";
     }
+
+    public override void GetInitialData()
+    {
+        base.GetInitialData();
+    }
 }

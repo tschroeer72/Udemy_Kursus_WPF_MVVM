@@ -13,4 +13,15 @@ public partial class HomeViewModel : BaseViewModel
     {
         Titel = "Home";
     }
+
+    public override void GetInitialData()
+    {
+        if (!IsViewModelLoaded)
+        {
+            //Datenbankabfrage
+        }
+
+        IsViewModelLoaded = true;
+        base.GetInitialData();
+    }
 }

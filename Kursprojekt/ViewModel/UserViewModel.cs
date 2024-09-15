@@ -12,4 +12,9 @@ public partial class UserViewModel: BaseViewModel
     {
         Titel = "User";
     }
+
+    public override void GetInitialData()
+    {
+        base.GetInitialData();
+    }
 }
