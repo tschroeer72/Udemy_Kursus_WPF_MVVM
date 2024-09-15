@@ -17,5 +17,6 @@ public partial class MainViewModel : BaseViewModel
         DelShowLoginView?.Invoke(true);
 
         base.GetInitialData();
+
     }
 }
