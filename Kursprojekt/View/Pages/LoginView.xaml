@@ -55,15 +55,21 @@
                     </Border>
 
                     <!--Fehlermeldung-->
-                    <TextBlock Height="40" ></TextBlock>
+                    <TextBlock Text="{Binding Message,
+                               UpdateSourceTrigger=PropertyChanged}" 
+                               Height="40" MinWidth="200"
+                               Style="{StaticResource MessageTxtBlckStyle}">
+                    </TextBlock>
 
                     <!--EMAIL-->
-                    <TextBox x:Name="txtbEMail" Margin="0 10" FontSize="20"
-                            md:HintAssist.Hint="EMail:" >
+                    <TextBox x:Name="txtEMail" Margin="0 10" FontSize="20"
+                             md:HintAssist.Hint="Email:" 
+                             Text="{Binding User.Email, UpdateSourceTrigger=PropertyChanged}"                             
+                             Style="{StaticResource TextBxAngabenStyle}" Cursor="Arrow">
                     </TextBox>
 
                     <!--Password-->
-                    <PasswordBox></PasswordBox>
+                    <PasswordBox Password="{Binding User.Password, UpdateSourceTrigger=PropertyChanged}"></PasswordBox>
 
                     <Border  Margin="0 50 0 0"
                              BorderThickness="0 0 0 0"

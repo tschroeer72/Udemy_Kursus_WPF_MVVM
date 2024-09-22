@@ -120,7 +120,7 @@ public class ViewManager
                 MainView!.UserPanel.Visibility = Visibility.Hidden;
             }
         }
-        catch (Exception ex) 
+        catch (Exception ) 
         { 
         
         }

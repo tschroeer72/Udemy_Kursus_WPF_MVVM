@@ -36,7 +36,7 @@ public class UserManager
         var DBuser = await DBUnit.User.GetFirstOrDefaultAsync(filter: f => f.Email == appUser.Email, includeProperties: nameof(Role));
         if (DBuser == null)
         {
-            return new DBResponse() { Message = $"{DBuser.Email} ist nicht vorhanden!" };
+            return new DBResponse() { Message = $"{DBuser?.Email} ist nicht vorhanden!" };
         }
 
         HashUserPassword(ref appUser);

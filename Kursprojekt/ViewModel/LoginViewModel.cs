@@ -12,7 +12,7 @@ namespace Kursprojekt.ViewModel;
 
 public partial class LoginViewModel:BaseViewModel
 {
-    [ObservableProperty] private AppUser appUser = new();
+    [ObservableProperty] private AppUser user = new();
     
     public LoginViewModel()
     {
@@ -33,10 +33,17 @@ public partial class LoginViewModel:BaseViewModel
         // ------------
         
         //User in DB suchen
-        var response = await UserManager.LoginUserAsync(AppUser);
+        var response = await UserManager.LoginUserAsync(User);
+        
         //AppUser = response.Data as AppUser;
         
         //WENN gefunden DANN HomeView öffnen
+        DelGoBackOrGotoHome?.Invoke();
+    }
+    
+    [RelayCommand]
+    void GoBack()
+    {            
         DelGoBackOrGotoHome?.Invoke();
     }
 }

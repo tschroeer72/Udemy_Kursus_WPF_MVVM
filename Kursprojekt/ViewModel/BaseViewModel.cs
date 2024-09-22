@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Kursprojekt.DTOs;
+using Kursprojekt.Services;
 
 namespace Kursprojekt.ViewModel;
 
@@ -33,6 +35,8 @@ public partial class BaseViewModel : ObservableObject
     [RelayCommand]
     public virtual void GetInitialData()
     {
+        SetLoginUserInfos();
+        
         try
         {
             if (IsPageBusy) return;
@@ -44,6 +48,11 @@ public partial class BaseViewModel : ObservableObject
         }
     }
 
+    public void SetLoginUserInfos()
+    {
+        LoginUserInfos = UserManager.GetLoginUserInfos();
+    }
+    
     [ObservableProperty]
     string titel = "";
 
@@ -56,4 +65,6 @@ public partial class BaseViewModel : ObservableObject
     [ObservableProperty]
     bool isPageBusy = false;
 
+    [ObservableProperty] 
+    LoginUserInfos loginUserInfos = new();
 }

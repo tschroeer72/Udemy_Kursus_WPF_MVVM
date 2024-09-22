@@ -241,6 +241,16 @@
                 <Setter Property="FontWeight" Value="ExtraBold"/>
             </Style>
 
+            <Style x:Key="MessageTxtBlckStyle" TargetType="TextBlock">
+                <Setter Property="TextWrapping" Value="Wrap"/>
+                <Setter Property="FontSize" Value="16"/>
+                <Setter Property="FontWeight" Value="Bold"/>
+                <Setter Property="MinHeight" Value="20"/>
+                <Setter Property="Foreground" Value="DarkRed"/>
+                <Setter Property="Margin" Value="4"/>
+                <Setter Property="HorizontalAlignment" Value="Center"/>
+            </Style>
+            
             <!--TextBox-->
             <Style TargetType="TextBox" BasedOn="{StaticResource MaterialDesignFloatingHintTextBox}">
                 <Setter Property="FontSize" Value="16"/>
@@ -251,7 +261,24 @@
                 <Setter Property="md:HintAssist.HintOpacity" Value="1"/>
                 <Setter Property="md:HintAssist.FloatingScale" Value="1.2"/>
             </Style>
-
+            
+            <Style x:Key="TextBxAngabenStyle" TargetType="TextBox" BasedOn="{StaticResource MaterialDesignFloatingHintTextBox}">
+                <Setter Property="FontSize" Value="18"/>
+                <Setter Property="Cursor" Value="Arrow"/>
+                <Setter Property="FontFamily" Value="Roboto"/>
+                <Setter Property="BorderBrush" Value="{StaticResource AppColorCyan}"/>                
+                <Setter Property="md:HintAssist.Foreground" Value="{StaticResource AppColorCyan}"/>
+                <Setter Property="md:HintAssist.HintOpacity" Value="1"/>
+                <Setter Property="md:HintAssist.FloatingScale" Value="1.2"/>                
+                <Setter Property="md:TextFieldAssist.UnderlineBrush" Value="{StaticResource AppColorCyan}"/>                
+                <Setter Property="md:ValidationAssist.PopupPlacement" Value="Bottom"/>
+                <Setter Property="md:ValidationAssist.UsePopup" Value="False"/>                
+                <Setter Property="md:ValidationAssist.Background" Value="Transparent"/>
+                <Setter Property="md:ValidationAssist.OnlyShowOnFocus" Value="True"/>                
+                <Setter Property="SnapsToDevicePixels" Value="True"/>
+                <Setter Property="UseLayoutRounding" Value="True"/>
+            </Style>
+            
         </ResourceDictionary>
     </Application.Resources>
 </Application>
