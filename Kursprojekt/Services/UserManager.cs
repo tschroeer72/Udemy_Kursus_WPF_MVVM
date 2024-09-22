@@ -17,7 +17,7 @@ public class UserManager
         appUser.Password = Convert.ToBase64String(PWByteSHA);
     }
 
-    private static async Task<DBResponse> RegisterUser(AppUser appUser)
+    public static async Task<DBResponse> RegisterUserAsync(AppUser appUser)
     {
         var user = await DBUnit.User.GetFirstOrDefaultAsync(filter: f => f.Email == appUser.Email);
         if (user != null)
@@ -28,5 +28,23 @@ public class UserManager
         HashUserPassword(ref appUser);
         appUser.Role = null;
         return await DBUnit.User.AddAsync((appUser));
+    }
+
+    public static async Task<DBResponse> LoginUserAsync(AppUser appUser)
+    {
+        var DBuser = await DBUnit.User.GetFirstOrDefaultAsync(filter: f => f.Email == appUser.Email, includeProperties: nameof(Role));
+        if (DBuser == null)
+        {
+            return new DBResponse() { Message = $"{DBuser.Email} ist nicht vorhanden!" };
+        }
+
+        HashUserPassword(ref appUser);
+
+        if (DBuser.Password != appUser.Password)
+        {
+            return new DBResponse() { Message = "Das Passwort ist falsch!" };
+        }
+
+        return new DBResponse() { Success = true, Data = DBuser};
     }
 }

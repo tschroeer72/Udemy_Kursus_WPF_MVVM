@@ -4,15 +4,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CommunityToolkit.Mvvm.ComponentModel;
+using Kursprojekt.Datenbank.Models;
+using Kursprojekt.Services;
 
 namespace Kursprojekt.ViewModel;
 
 public partial class LoginViewModel:BaseViewModel
 {
-   
+    [ObservableProperty] private AppUser appUser = new();
+    
+    public LoginViewModel()
+    {
+        
+    }
 
     [RelayCommand]
-    void LoginUser()
+    async Task LoginUser()
     {
 
         //Test des InfoWindows und des Flyouts
@@ -22,8 +30,12 @@ public partial class LoginViewModel:BaseViewModel
         //DelShowMainInfoFlyout?.Invoke("Hallo 4");
         //DelShowMainInfoFlyout?.Invoke("Hallo 5", true);
 
+        // ------------
+        
         //User in DB suchen
-
+        var response = await UserManager.LoginUserAsync(AppUser);
+        //AppUser = response.Data as AppUser;
+        
         //WENN gefunden DANN HomeView öffnen
         DelGoBackOrGotoHome?.Invoke();
     }
