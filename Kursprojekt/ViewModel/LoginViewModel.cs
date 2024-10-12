@@ -5,19 +5,26 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
+using Kursprojekt.Datenbank.DTOs;
 using Kursprojekt.Datenbank.Models;
 using Kursprojekt.Services;
+using Kursprojekt.Validators;
 
 namespace Kursprojekt.ViewModel;
 
 public partial class LoginViewModel:BaseViewModel
 {
-    [ObservableProperty] private AppUser user = new();
-    
-    public LoginViewModel()
+    private UserLoginValidator UserLoginValidator { get; }
+    private MainViewModel MainViewModel { get; }
+
+    public LoginViewModel(UserLoginValidator userLoginValidator, MainViewModel mainViewModel)
     {
-        
+        UserLoginValidator = userLoginValidator;
+        MainViewModel = mainViewModel;
     }
+
+    [ObservableProperty] 
+    AppUser user = new();
 
     [RelayCommand]
     async Task LoginUser()
@@ -31,14 +38,46 @@ public partial class LoginViewModel:BaseViewModel
         //DelShowMainInfoFlyout?.Invoke("Hallo 5", true);
 
         // ------------
-        
+
         //User in DB suchen
-        var response = await UserManager.LoginUserAsync(User);
-        
+        //var response = await UserManager.LoginUserAsync(User);
+
         //AppUser = response.Data as AppUser;
-        
+
         //WENN gefunden DANN HomeView öffnen
-        DelGoBackOrGotoHome?.Invoke();
+        //DelGoBackOrGotoHome?.Invoke();
+
+        //---------
+
+        try
+        {
+            if (IsPageBusy) return;
+
+            IsPageBusy = true;
+            Message = string.Empty;
+
+            var validationResponse = UserLoginValidator.Validate(User);
+            if (!validationResponse.IsValid)
+            {
+                Message = validationResponse.Errors[0].ToString();
+                return;
+            }
+
+            DBResponse response = await UserManager.LoginUserAsync(User);
+            if (!response.Success)
+            {
+                Message = response.Message;
+                return;
+            }
+
+            DelGoBackOrGotoHome?.Invoke();
+            User = new();
+            MainViewModel.SetLoginUserInfos();
+        }
+        finally
+        {
+            IsPageBusy = false;
+        }
     }
     
     [RelayCommand]

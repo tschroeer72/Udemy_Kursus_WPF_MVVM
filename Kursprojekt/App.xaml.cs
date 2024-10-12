@@ -4,6 +4,7 @@ using Kursprojekt.View.Windows;
 using Kursprojekt.ViewModel;
 using Microsoft.Extensions.DependencyInjection;
 using System.Windows;
+using Kursprojekt.Validators;
 
 namespace Kursprojekt;
 
@@ -23,6 +24,10 @@ public partial class App : Application
 
     private void ConfigureServices(ServiceCollection services)
     {
+        //Validators
+        services.AddSingleton<UserLoginValidator>();
+
+        //Views und ViewModels
         services.AddSingleton<MainView>();
         services.AddSingleton<MainViewModel>();
 

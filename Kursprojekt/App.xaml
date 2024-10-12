@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:Kursprojekt"
              xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes" 
+             xmlns:Conv="clr-namespace:Kursprojekt.Converter" 
              xmlns:mw="http://metro.mahapps.com/winfx/xaml/controls">
     <Application.Resources>
         <ResourceDictionary>
@@ -26,6 +27,9 @@
             <Color x:Key="AppCyanHoverColor">#FF89F0F3</Color>
             <Color x:Key="AppWhiteColor">#FFFDFDFD</Color>
             <!--#endregion-->
+
+            <!--Converters-->
+            <Conv:BoolToVisibilityConverter x:Key="BoolToVisConverter"/>
 
             <!--Button-->
             <Style x:Key="GoBackBtnStyle" TargetType="Button" BasedOn="{StaticResource MaterialDesignPaperButton}">
