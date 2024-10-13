@@ -16,7 +16,6 @@ namespace Kursprojekt.ViewModel;
 
 public partial class UserViewModel: BaseViewModel
 {
-    
     public ObservableCollection<AppUser> Users { get; set; } = new();
     public ObservableCollection<Role> Roles { get; set; } = new();
 
@@ -30,20 +29,18 @@ public partial class UserViewModel: BaseViewModel
         UserModelValidator = userModelValidator;
     }
 
-    //GetAll Roles
-    #region Standart Bereich für alle ViewNodels
     public async override void GetInitialData()
     {
         if (!IsViewModelLoaded)
         {
-            await LoadAndSetDATA();
+            await LoadAndSetData();
             IsViewModelLoaded = true;
         }
         base.GetInitialData();
     }
 
 
-    private async Task LoadAndSetDATA()
+    private async Task LoadAndSetData()
     {
         bool IstIsPageBusyTrue = IsPageBusy;
         try
@@ -51,22 +48,22 @@ public partial class UserViewModel: BaseViewModel
             IsPageBusy = true;
             Message = "";
 
-            var userLst = await DBUnit.User.GetAllAsync(includeProperties: nameof(Role));
-            var roleLst = await DBUnit.Role.GetAllAsync();
+            var userList = await DBUnit.User.GetAllAsync(includeProperties: nameof(Role));
+            var roleList = await DBUnit.Role.GetAllAsync();
             Users.Clear();
             Roles.Clear();
 
-            if (userLst is not null)
+            if (userList != null)
             {
-                foreach (var user in userLst)
+                foreach (var user in userList)
                 {
                     Users.Add(user);
                 }
             }
 
-            if (roleLst is not null)
+            if (roleList != null)
             {
-                foreach (var role in roleLst)
+                foreach (var role in roleList)
                 {
                     Roles.Add(role);
                 }
@@ -79,21 +76,6 @@ public partial class UserViewModel: BaseViewModel
             IsPageBusy = false;
         }
     }
-
-    [RelayCommand]
-    async Task ReSetInitData()
-    {
-        await LoadAndSetDATA();
-    }
-
-    [RelayCommand]
-    void ResetForNew()
-    {
-        Message = "";
-        User = new();
-        Role = new();
-    }
-    #endregion
 
 
     #region Eigenschaften
@@ -115,6 +97,19 @@ public partial class UserViewModel: BaseViewModel
 
     #region RelayCommand
 
+    [RelayCommand]
+    async Task ReSetInitData()
+    {
+        await LoadAndSetData();
+    }
+
+    [RelayCommand]
+    void ResetForNew()
+    {
+        Message = "";
+        User = new();
+        Role = new();
+    }
 
     [RelayCommand]
     void SetSelectetUser(AppUser iUser)
@@ -152,7 +147,7 @@ public partial class UserViewModel: BaseViewModel
                 }
 
                 DelShowMainInfoFlyout?.Invoke($"{User.Email} wurde hinzugefügt.");
-                await LoadAndSetDATA();
+                await LoadAndSetData();
             }
         }
         finally
@@ -187,7 +182,7 @@ public partial class UserViewModel: BaseViewModel
                     }
 
                     DelShowMainInfoFlyout?.Invoke($"{User.Email} wurde gelöscht.");
-                    await LoadAndSetDATA();
+                    await LoadAndSetData();
                 }
             }
         }
@@ -231,7 +226,7 @@ public partial class UserViewModel: BaseViewModel
                     }
 
                     DelShowMainInfoFlyout?.Invoke($"Der Nutzer Daten wurden geändert.");
-                    await LoadAndSetDATA();
+                    await LoadAndSetData();
                 }
             }
         }
@@ -283,7 +278,7 @@ public partial class UserViewModel: BaseViewModel
                     return;
                 }
                 DelShowMainInfoFlyout?.Invoke($"Das Passwort wurden geändert.");
-                await LoadAndSetDATA();
+                await LoadAndSetData();
             }
         }
         finally

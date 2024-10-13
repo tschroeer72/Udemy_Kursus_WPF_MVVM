@@ -305,8 +305,8 @@
                                             <BeginStoryboard>
                                                 <Storyboard>
                                                     <ThicknessAnimation Duration="0:0:0.1"
-                                                        Storyboard.TargetProperty="BorderThickness"
-                                                        To="1 1 1 4">
+                                                                        Storyboard.TargetProperty="BorderThickness"
+                                                                        To="1 1 1 4">
                                                     </ThicknessAnimation>
                                                 </Storyboard>
                                             </BeginStoryboard>
@@ -314,10 +314,9 @@
                                         <Trigger.ExitActions>
                                             <BeginStoryboard>
                                                 <Storyboard>
-                                                    <ThicknessAnimation 
-                                                         Duration="0:0:0.3"
-                                                         Storyboard.TargetProperty="BorderThickness"
-                                                         To="6 1">
+                                                    <ThicknessAnimation Duration="0:0:0.3"
+                                                                        Storyboard.TargetProperty="BorderThickness"
+                                                                        To="6 1">
                                                     </ThicknessAnimation>
                                                 </Storyboard>
                                             </BeginStoryboard>
@@ -343,11 +342,10 @@
                     <Setter.Value>
                         <ControlTemplate TargetType="{x:Type DataGridColumnHeader}">
                             <Border Background="{StaticResource AppColorCyan}">
-                                <ContentPresenter 
-                                    UseLayoutRounding="True"
-                                    SnapsToDevicePixels="True"
-                                    HorizontalAlignment="Left" 
-                                    VerticalAlignment="Center">
+                                <ContentPresenter UseLayoutRounding="True"
+                                                  SnapsToDevicePixels="True"
+                                                  HorizontalAlignment="Left" 
+                                                  VerticalAlignment="Center">
                                 </ContentPresenter>
                             </Border>
                         </ControlTemplate>
@@ -422,7 +420,7 @@
                         <Setter Property="Background" Value="{StaticResource AppColorCyanHover}"/>
                     </Trigger>
                     <Trigger Property="IsSelected" Value="True">
-                        <Setter Property="Background" Value="{StaticResource AppColorCyanHover}"/>
+                        <Setter Property="Background" Value="{StaticResource AppColorCyan}"/>
                     </Trigger>
                 </Style.Triggers>
             </Style>

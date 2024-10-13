@@ -169,7 +169,7 @@
                                                                 BorderThickness="0 0 0 1" 
                                                                 BorderBrush="{StaticResource AppColorCyan}">
                                                             <StackPanel>
-                                                                <Label Content="{Binding RoleID}" FontSize="18"/>
+                                                                <Label Content="{Binding ID}" FontSize="18"/>
                                                                 <Label Content="{Binding RoleName}" FontSize="16"/>
                                                             </StackPanel>
                                                         </Border>
@@ -206,11 +206,11 @@
                                     </StackPanel>
                                 </mw:MetroTabItem>
 
-                                <mw:MetroTabItem Header="Neuer USer" HeaderTemplate="{StaticResource TabButtonTemplate}">
+                                <mw:MetroTabItem Header="Neuer User" HeaderTemplate="{StaticResource TabButtonTemplate}">
                                     <StackPanel Orientation="Vertical">
                                         <!--Titel-->
                                         <Grid Margin="10 20 0 20">
-                                            <TextBlock Text="NEUER NUTZER" 
+                                            <TextBlock Text="Neuer User" 
                                                       FontSize="36" MinWidth="100"
                                                       FontWeight="ExtraBold"
                                                       Foreground="{StaticResource AppColorCyan}"
@@ -249,12 +249,12 @@
 
                                         <!--Passwort-->
                                         <Ctrl:PasswordBoxControl x:Name="PwBxPasswordNeu"
-                                                  HintText="PASSWORT:"
-                                                  PasswordText="{Binding User.Password, UpdateSourceTrigger=PropertyChanged}"
-                                                  Margin="0 10" 
-                                                  FontSize="20"
-                                                  Height="60"                                              
-                                                  Cursor="Arrow">
+                                                                 HintText="Passwort::"
+                                                                 PasswordText="{Binding User.Password, UpdateSourceTrigger=PropertyChanged}"
+                                                                 Margin="0 10" 
+                                                                 FontSize="20"
+                                                                 Height="60"                                              
+                                                                 Cursor="Arrow">
                                         </Ctrl:PasswordBoxControl>
 
                                         <!--RoleID-->
@@ -312,15 +312,15 @@
 
                                 <mw:MetroTabItem Header="Passwort ändern" HeaderTemplate="{StaticResource TabButtonTemplate}">
                                     <StackPanel Orientation="Vertical"
-                                        Margin="0 10 100 10">
+                                                Margin="0 10 100 10">
                                         <!--Titel-->
                                         <Grid Margin="10 20 0 20">
-                                            <TextBlock Text="PASSWORT ÄNDERN" 
-                                                      FontSize="36" MinWidth="100"
-                                                      FontWeight="ExtraBold"
-                                                      Foreground="{StaticResource AppColorCyan}"
-                                                      FontFamily="forte"
-                                                      HorizontalAlignment="Left">
+                                            <TextBlock Text="Passwort ändern" 
+                                                       FontSize="36" MinWidth="100"
+                                                       FontWeight="ExtraBold"
+                                                       Foreground="{StaticResource AppColorCyan}"
+                                                       FontFamily="forte"
+                                                       HorizontalAlignment="Left">
                                             </TextBlock>
                                         </Grid>
 
@@ -331,39 +331,39 @@
 
                                         <!--Email-->
                                         <TextBox md:HintAssist.Hint="EMAIL:" IsReadOnly="True" Cursor="No"
-                                                Style="{StaticResource TextBxAngabenStyle}"
-                                                Margin="0 0 0 20" Text="{Binding User.Email, UpdateSourceTrigger=PropertyChanged}">
+                                                 Style="{StaticResource TextBxAngabenStyle}"
+                                                 Margin="0 0 0 20" Text="{Binding User.Email, UpdateSourceTrigger=PropertyChanged}">
                                         </TextBox>
 
                                         <!--Password mit Border für die Opacity, weil iSanable sieht scheisse aus-->
                                         <Grid>
                                             <Ctrl:PasswordBoxControl x:Name="PwBxPassword"
-                                                  HintText="ALTES PASSWORT:"
-                                                  PasswordText="{Binding User.Password, UpdateSourceTrigger=PropertyChanged}"
-                                                  Margin="0 10"
-                                                  FontSize="20"
-                                                  Height="60"                                          
-                                                  Cursor="Arrow">
+                                                                     HintText="Altes Passwort:"
+                                                                     PasswordText="{Binding User.Password, UpdateSourceTrigger=PropertyChanged}"
+                                                                     Margin="0 10"
+                                                                     FontSize="20"
+                                                                     Height="60"                                          
+                                                                     Cursor="Arrow">
                                             </Ctrl:PasswordBoxControl>
                                             <Border Opacity="0" Background="White" Cursor="No"/>
                                         </Grid>
 
                                         <!--NEUES PASSWORT-->
-                                        <Ctrl:PasswordBoxControl
-                                              HintText="NEUES PASSWORT:"
-                                              PasswordText="{Binding NeuesPasswort, 
-                                              UpdateSourceTrigger=PropertyChanged}"                                       
-                                              FontSize="20"
-                                              Height="60"                                              
-                                              Cursor="Arrow">
+                                        <Ctrl:PasswordBoxControl HintText="Neues Passwort:"
+                                                                 PasswordText="{Binding NeuesPasswort, UpdateSourceTrigger=PropertyChanged}"                                       
+                                                                 FontSize="20" 
+                                                                 Height="60"                                              
+                                                                 Cursor="Arrow">
                                         </Ctrl:PasswordBoxControl>
 
                                         <!--Button PASSWORT ÄNDERN-->
-                                        <Border Margin="0 30 0 0" Padding="4"                                               
+                                        <Border Margin="0 30 0 0" 
+                                                Padding="4"                                               
                                                 HorizontalAlignment="Right">
-                                            <Button Content="PASSWORT ÄNDERN" Margin="6" 
-                                                      FontSize="24" Height="50"
-                                                      Command="{Binding UpdatePasswordCommand}">
+                                            <Button Content="Passwort ändern" 
+                                                    Margin="6" 
+                                                    FontSize="24" Height="50"
+                                                    Command="{Binding UpdatePasswordCommand}">
                                             </Button>
                                         </Border>
 
