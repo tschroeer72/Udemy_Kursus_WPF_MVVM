@@ -35,17 +35,7 @@ public partial class BaseViewModel : ObservableObject
     [RelayCommand]
     public virtual void GetInitialData()
     {
-        SetLoginUserInfos();
-        
-        try
-        {
-            if (IsPageBusy) return;
-            IsPageBusy = true;
-        }
-        finally
-        {
-            IsPageBusy = false;
-        }
+        SetLoginUserInfos(); // Wird am Ende geändert
     }
 
     public void SetLoginUserInfos()
@@ -63,7 +53,10 @@ public partial class BaseViewModel : ObservableObject
     bool isViewModelLoaded = false;
 
     [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(IsPageNotBusy))]
     bool isPageBusy = false;
+
+    public bool IsPageNotBusy => !IsPageBusy;
 
     [ObservableProperty] 
     LoginUserInfos loginUserInfos = new();

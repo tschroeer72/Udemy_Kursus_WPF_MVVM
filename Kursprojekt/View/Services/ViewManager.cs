@@ -75,6 +75,7 @@ public class ViewManager
         MainView!.BtnVerwaltung.IsChecked = ucPage is VerwaltungView;
         MainView!.BtnAdmin.IsChecked = ucPage is AdminView;
 
+        MainView!.ShowCloseButton = true;
         //switch (ucPage.Name)
         //{
         //    case "HomeView":
@@ -116,6 +117,7 @@ public class ViewManager
                     loginPage.BtnBeenden.Visibility = Visibility.Collapsed;
                 }
 
+                MainView!.ShowCloseButton = false;
                 GoBackPage = null;
                 MainView!.UserPanel.Visibility = Visibility.Hidden;
             }

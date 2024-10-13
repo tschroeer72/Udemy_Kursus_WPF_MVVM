@@ -1,4 +1,5 @@
-﻿using Kursprojekt.View.Pages;
+﻿using System.Diagnostics.Eventing.Reader;
+using Kursprojekt.View.Pages;
 using Kursprojekt.View.Services;
 using Kursprojekt.ViewModel;
 using MahApps.Metro.Controls;
@@ -41,6 +42,14 @@ public partial class MainView : MetroWindow
                     break;
             }
         }
+        else if (sender is MenuItem objMenuItem)
+        {
+            switch (objMenuItem.Name)
+            {
+                case "MeuBtnLogout":
+                    ViewManager.ShowLoginView(true);
+                    break;
+            }
+        }
     }
-
 }

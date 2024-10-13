@@ -24,7 +24,7 @@
 
         <Grid Grid.Row="0">
             <Grid HorizontalAlignment="Left">
-                <TextBlock Text="{Binding Titel}"
+                <TextBlock Text="{Binding Titel}" MinWidth="200"
                            Style="{StaticResource TitelTxtBxStyle}">
                 </TextBlock>
             </Grid>

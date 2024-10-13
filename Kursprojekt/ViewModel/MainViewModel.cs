@@ -12,11 +12,9 @@ public partial class MainViewModel : BaseViewModel
         Titel = "Main";
     }
 
-    public override void GetInitialData()
+    [RelayCommand]
+    public void ShowLoginView()
     {
         DelShowLoginView?.Invoke(true);
-
-        base.GetInitialData();
-
     }
 }

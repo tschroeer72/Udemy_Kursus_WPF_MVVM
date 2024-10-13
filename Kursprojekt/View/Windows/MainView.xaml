@@ -8,9 +8,9 @@
                 xmlns:vm="clr-namespace:Kursprojekt.ViewModel"
                 xmlns:uc="clr-namespace:Kursprojekt.View.UserControls"
                 xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes" 
-                xmlns:mw="http://metro.mahapps.com/winfx/xaml/controls"
-                mc:Ignorable="d"
+                xmlns:mw="http://metro.mahapps.com/winfx/xaml/controls" 
                 d:DataContext="{d:DesignInstance Type=vm:MainViewModel}"
+                mc:Ignorable="d"
                 Title="Rooms" 
                 SnapsToDevicePixels="True"
                 UseLayoutRounding="True"   
@@ -33,7 +33,7 @@
 
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
-            <i:InvokeCommandAction Command="{Binding GetInitialDataCommand}"/>
+            <i:InvokeCommandAction Command="{Binding ShowLoginViewCommand}"/>
         </i:EventTrigger>
     </i:Interaction.Triggers>
     
@@ -71,7 +71,8 @@
                                   Height="50" 
                                   Background="White"
                                   FontWeight="ExtraBold"
-                                  Cursor="Hand">
+                                  Cursor="Hand" 
+                                  Click="OpenPageOnMain">
                             <MenuItem.Header>
                                 <StackPanel Orientation="Horizontal">
                                     <Label Content="Abmelden" 
