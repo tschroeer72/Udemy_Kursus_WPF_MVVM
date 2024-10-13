@@ -16,6 +16,8 @@ public partial class AdminViewModel : BaseViewModel
 
     public override void GetInitialData()
     {
+        IsViewModelLoaded = true;
+
         base.GetInitialData();
     }
 }

@@ -29,7 +29,7 @@
             <!--#endregion-->
 
             <!--Converters-->
-            <Conv:BoolToVisibilityConverter x:Key="BoolToVisConverter"/>
+            <Conv:BoolToVisibilityConverter x:Key="BoolToVisConverter"/> 
 
             <!--Button-->
             <Style x:Key="GoBackBtnStyle" TargetType="Button" BasedOn="{StaticResource MaterialDesignPaperButton}">
@@ -282,7 +282,166 @@
                 <Setter Property="SnapsToDevicePixels" Value="True"/>
                 <Setter Property="UseLayoutRounding" Value="True"/>
             </Style>
-            
+
+            <!--TabButtonTemplate-->
+            <DataTemplate x:Key="TabButtonTemplate" DataType="Border">
+                <Border MinWidth="250">
+                    <Border BorderBrush="{StaticResource AppColorCyan}"
+                            Width="{Binding}" Height="40" Cursor="Hand" Margin="4" 
+                            CornerRadius="10">
+                        <Label Content="{Binding }" FontSize="20" 
+                               HorizontalAlignment="Center" 
+                               VerticalAlignment="Center" VerticalContentAlignment="Center"
+                               FontWeight="ExtraBold" Padding="10 2"
+                               Foreground="{StaticResource AppColorCyan}">
+                        </Label>
+
+                        <Border.Style>
+                            <Style TargetType="Border">
+                                <Setter Property="BorderThickness" Value="6 1"/>
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Trigger.EnterActions>
+                                            <BeginStoryboard>
+                                                <Storyboard>
+                                                    <ThicknessAnimation Duration="0:0:0.1"
+                                                        Storyboard.TargetProperty="BorderThickness"
+                                                        To="1 1 1 4">
+                                                    </ThicknessAnimation>
+                                                </Storyboard>
+                                            </BeginStoryboard>
+                                        </Trigger.EnterActions>
+                                        <Trigger.ExitActions>
+                                            <BeginStoryboard>
+                                                <Storyboard>
+                                                    <ThicknessAnimation 
+                                                         Duration="0:0:0.3"
+                                                         Storyboard.TargetProperty="BorderThickness"
+                                                         To="6 1">
+                                                    </ThicknessAnimation>
+                                                </Storyboard>
+                                            </BeginStoryboard>
+                                        </Trigger.ExitActions>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Border.Style>
+                    </Border>
+                </Border>
+            </DataTemplate>
+
+            <!--DataGrid Styles-->
+            <Style TargetType="{x:Type DataGridColumnHeader}" BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">
+                <Setter Property="SnapsToDevicePixels" Value="True"/>
+                <Setter Property="UseLayoutRounding" Value="True"/>
+                <Setter Property="Height" Value="30"/>
+                <Setter Property="FontSize" Value="22"/>
+                <Setter Property="FontWeight" Value="ExtraBold"/>
+                <Setter Property="Foreground" Value="White"/>
+                <Setter Property="Cursor" Value="Hand"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type DataGridColumnHeader}">
+                            <Border Background="{StaticResource AppColorCyan}">
+                                <ContentPresenter 
+                                    UseLayoutRounding="True"
+                                    SnapsToDevicePixels="True"
+                                    HorizontalAlignment="Left" 
+                                    VerticalAlignment="Center">
+                                </ContentPresenter>
+                            </Border>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <Style TargetType="{x:Type DataGridCell}" BasedOn="{ StaticResource MaterialDesignDataGridCell}">
+                <Setter Property="Height" Value="38"/>
+                <Setter Property="Padding" Value="0 6"/>
+                <Setter Property="FontSize" Value="20"/>
+                <Setter Property="FontWeight" Value="Bold"/>
+                <Setter Property="Background" Value="Transparent"/>
+                <Setter Property="Foreground" Value="{StaticResource AppColorCyan}"/>
+                <Setter Property="BorderThickness" Value="0"/>
+                <Style.Triggers>
+                    <Trigger Property="IsSelected" Value="True">
+                        <Setter Property="FontSize" Value="24"/>
+                        <Setter Property="Padding" Value="0 4"/>
+                        <Setter Property="Foreground" Value="Black"/>
+                        <Setter Property="Background" Value="{StaticResource AppColorCyanHover}"/>
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+
+            <Style TargetType="{x:Type DataGridRow}" BasedOn="{StaticResource MaterialDesignDataGridRow}">
+                <Setter Property="Height" Value="38"/>
+                <Setter Property="BorderThickness" Value="0 0 0 1"/>
+                <Setter Property="BorderBrush" Value="{StaticResource AppColorCyanHover}"/>
+                <Setter Property="Background" Value="White"/>
+                <Setter Property="Cursor" Value="Hand"/>
+                <Style.Triggers>
+                    <Trigger Property="DataGridRow.IsMouseOver" Value="True">
+                        <Setter Property="Background" Value="LightGray"/>
+                        <Setter Property="BorderThickness" Value="0"/>
+                    </Trigger>
+
+                    <MultiTrigger>
+                        <MultiTrigger.Conditions>
+                            <Condition Property="DataGridCell.IsSelected" Value="True" />
+                            <Condition Property="DataGridCell.IsMouseOver" Value="True" />
+                        </MultiTrigger.Conditions>
+                        <MultiTrigger.Setters>
+                            <Setter Property="Background" Value="{StaticResource AppColorCyanHover}"/>
+                        </MultiTrigger.Setters>
+                    </MultiTrigger>
+                </Style.Triggers>
+            </Style>
+
+            <Style TargetType="DataGrid" BasedOn="{StaticResource MaterialDesignDataGrid}">
+                <Setter Property="GridLinesVisibility" Value="All"/>
+                <Setter Property="BorderThickness" Value="0"/>
+                <Setter Property="Background" Value="Transparent"/>
+                <Setter Property="VerticalAlignment" Value="Top"/>
+                <Setter Property="AutoGenerateColumns" Value="False"/>
+                <Setter Property="HeadersVisibility" Value="Column"/>
+                <Setter Property="IsReadOnly" Value="True"/>
+                <Setter Property="CanUserAddRows" Value="False"/>
+            </Style>
+
+            <!--ComboBoxItem und ComboBox-->
+            <!--ComboBoxItem-->
+            <Style x:Key="ComboBoxItemStyle" TargetType="ComboBoxItem" BasedOn="{StaticResource MaterialDesignComboBoxItemStyle}">
+                <Setter Property="SnapsToDevicePixels" Value="True"/>
+                <Setter Property="UseLayoutRounding" Value="True"/>
+                <Setter Property="Foreground" Value="Black"/>
+                <Setter Property="Background" Value="{StaticResource MaterialDesignPaper}"/>
+                <Setter Property="FontSize" Value="16"/>
+                <Setter Property="Cursor" Value="Hand"/>
+                <Style.Triggers>
+                    <Trigger Property="IsMouseOver" Value="True">
+                        <Setter Property="Background" Value="{StaticResource AppColorCyanHover}"/>
+                    </Trigger>
+                    <Trigger Property="IsSelected" Value="True">
+                        <Setter Property="Background" Value="{StaticResource AppColorCyanHover}"/>
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+
+            <!--ComboBox-->
+            <Style TargetType="ComboBox" BasedOn="{StaticResource MaterialDesignFilledComboBox}">
+                <Setter Property="ItemContainerStyle" Value="{StaticResource ComboBoxItemStyle}"/>
+                <Setter Property="SnapsToDevicePixels" Value="True"/>
+                <Setter Property="UseLayoutRounding" Value="True"/>
+                <Setter Property="VerticalAlignment" Value="Bottom"/>
+                <Setter Property="Padding" Value="0 6 0 2"/>
+                <Setter Property="Cursor" Value="Hand"/>
+                <Setter Property="BorderThickness" Value="0 0 0 1"/>
+                <Setter Property="BorderBrush" Value="{StaticResource AppColorCyan}"/>
+                <Setter Property="md:TextFieldAssist.UnderlineBrush" Value="{StaticResource AppColorCyan}"/>
+            </Style>
+
+
+
         </ResourceDictionary>
     </Application.Resources>
 </Application>

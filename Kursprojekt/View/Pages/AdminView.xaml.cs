@@ -30,10 +30,16 @@ public partial class AdminView : UserControl
         AdminViewModel = adminViewModel;
         DataContext = AdminViewModel;
 
-        OpenUnderPage(BtnUser, new RoutedEventArgs());
-        BtnUser.IsChecked = true;
-
         ViewManager.InitBaseDelEvents(AdminViewModel);
+    }
+
+    private void AdminView_Loaded(object sender, RoutedEventArgs e)
+    {
+        if (!AdminViewModel.IsViewModelLoaded)
+        {
+            ViewManager.ShowUnderPageOn<UserView>(AnimatedContentControl);
+            BtnUser.IsChecked = true;
+        }
     }
 
     private void OpenUnderPage(object sender, RoutedEventArgs e)
@@ -51,4 +57,5 @@ public partial class AdminView : UserControl
             }
         }
     }
+
 }
