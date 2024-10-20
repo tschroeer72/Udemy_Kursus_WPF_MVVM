@@ -29,7 +29,7 @@ public partial class UserViewModel: BaseViewModel
         UserModelValidator = userModelValidator;
     }
 
-    public async override void GetInitialData()
+    public override async void GetInitialData()
     {
         if (!IsViewModelLoaded)
         {
@@ -73,7 +73,10 @@ public partial class UserViewModel: BaseViewModel
         }
         finally
         {
-            IsPageBusy = false;
+            if (!IstIsPageBusyTrue)
+            {
+                IsPageBusy = false;
+            }
         }
     }
 
@@ -164,7 +167,7 @@ public partial class UserViewModel: BaseViewModel
             if (IsPageNotBusy)
             {
                 MessageDeleteUpdate = "";
-                if (!(User.ID > 0))
+                if (User.ID == 0)
                 {
                     MessageDeleteUpdate = "Bitte den Nutzer auswählen";
                     return;
@@ -201,7 +204,7 @@ public partial class UserViewModel: BaseViewModel
             if (IsPageNotBusy)
             {
                 MessageDeleteUpdate = "";
-                if (!(User.ID > 0))
+                if (User.ID == 0)
                 {
                     MessageDeleteUpdate = "Bitte den Nutzer auswählen";
                     return;
@@ -243,7 +246,7 @@ public partial class UserViewModel: BaseViewModel
         try
         {
             Message = "";
-            if (!(User.ID > 0))
+            if (User.ID == 0)
             {
                 Message = "Bitte den Nutzer auswählen";
                 return;
@@ -258,7 +261,7 @@ public partial class UserViewModel: BaseViewModel
             //Nur um zu prüfen
             IsPageBusy = true;
             var user = await DBUnit.User.GetByIDAsync(User.ID);
-            if (user is null)
+            if (user == null)
             {
                 Message = $"{User.Email} wurde nicht gefunden.";
                 return;

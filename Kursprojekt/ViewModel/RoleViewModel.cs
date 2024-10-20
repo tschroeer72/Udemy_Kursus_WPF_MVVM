@@ -44,12 +44,13 @@ public partial class RoleViewModel : BaseViewModel
             Message = "";
             var roleLst = await DBUnit.Role.GetAllAsync();
             if (Rollen.Count > 0) Rollen.Clear();
-            if (roleLst is not null)
+            if (roleLst != null)
             {
                 foreach (var role in roleLst)
                 {
                     Rollen.Add(role);
                 }
+                //Rollen.AddRange((roleLst));
             }
             EnumRollen = Enum.GetValues(typeof(RoleType)).Cast<RoleType>();
         }
@@ -106,7 +107,7 @@ public partial class RoleViewModel : BaseViewModel
                 }
 
                 var role = await DBUnit.Role.GetFirstOrDefaultAsync(filter: r => r.RoleName == Rolle.RoleName);
-                if (role is not null)
+                if (role != null)
                 {
                     Message = $"{Rolle.RoleName} ist schon vorhanden.";
                     return;
@@ -139,14 +140,14 @@ public partial class RoleViewModel : BaseViewModel
             {
                 IsPageBusy = true;
                 Message = "";
-                if (!(Rolle.ID > 0))
+                if (Rolle.ID == 0)
                 {
                     Message = "Bitte eine Rolle auswählen!";
                     return;
                 }
 
                 var role = await DBUnit.User.GetFirstOrDefaultAsync(filter: u => u.RoleID == Rolle.ID);
-                if (role is not null)
+                if (role != null)
                 {
                     Message = $"{Rolle.RoleName} wird von einem Nutzer benutzt und kann nicht gelöscht werden.";
                     return;
@@ -194,7 +195,7 @@ public partial class RoleViewModel : BaseViewModel
                 }
 
                 IsPageBusy = false;
-                var iSJA = DelShowConfirmationWindow?.Invoke($"Soll die Daten geändert werden?") ?? false;
+                var iSJA = DelShowConfirmationWindow?.Invoke($"Sollen die Daten geändert werden?") ?? false;
                 if (iSJA)
                 {
                     IsPageBusy = true;
@@ -205,7 +206,7 @@ public partial class RoleViewModel : BaseViewModel
                         return;
                     }
 
-                    DelShowMainInfoFlyout?.Invoke($"{Rolle.RoleName} Daten wurde geändert.");
+                    DelShowMainInfoFlyout?.Invoke($"{Rolle.RoleName} Daten wurden geändert.");
                     await LoadAndSetDataAsync();
                     ResetForNew();
                 }
@@ -220,6 +221,8 @@ public partial class RoleViewModel : BaseViewModel
     [ObservableProperty]
     Role rolle = new();
 
+    //[ObservableProperty] 
+    //List<Role> rollen = new();
 
     [ObservableProperty]
     IEnumerable<RoleType>? enumRollen;
