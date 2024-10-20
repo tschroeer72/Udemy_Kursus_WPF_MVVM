@@ -4,7 +4,10 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Kursprojekt.View.Pages" 
+             xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes" 
+             xmlns:mw="http://metro.mahapps.com/winfx/xaml/controls" 
              xmlns:vm="clr-namespace:Kursprojekt.ViewModel" 
+             xmlns:Ctrl="clr-namespace:Kursprojekt.View.UserControls" 
              xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              d:DataContext="{d:DesignInstance Type=vm:RoleViewModel}"
              mc:Ignorable="d" 
@@ -23,15 +26,162 @@
         </Grid.RowDefinitions>
 
         <Grid Grid.Row="0">
-            <Grid HorizontalAlignment="Left">
-                <TextBlock Text="{Binding Titel}"
-                           Style="{StaticResource TitelTxtBxStyle}">
+            <Grid HorizontalAlignment="Left" MinWidth="100">
+                <TextBlock Text="{Binding Titel}" 
+                           FontSize="36" 
+                           FontWeight="ExtraBold"
+                           Foreground="{StaticResource AppColorCyan}"
+                           FontFamily="forte">
                 </TextBlock>
             </Grid>
         </Grid>
 
         <Grid Grid.Row="1">
-            
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Border Grid.Column="0" Margin="0 2 0 0" 
+                        BorderThickness="0 1 0 0" 
+                        BorderBrush="White">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <Grid Grid.Row="0" Margin="0 0 4 20">
+                            <Button Content="Daten aktualisieren" 
+                                    HorizontalAlignment="Right" Width="270" Height="50"                        
+                                    Command="{Binding ReSetInitDataCommand}" Cursor="Hand">
+                            </Button>
+                        </Grid>
+
+                        <Grid Grid.Row="1">
+                            <DataGrid Name="RoleDataGrid" 
+                                      ItemsSource="{Binding Rollen}"
+                                      AutoGenerateColumns="False"
+                                      HorizontalScrollBarVisibility="Disabled">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="Name" Binding="{Binding RoleName}" Width="200"/>
+                                    <DataGridTextColumn Header="Beschreibung" Binding="{Binding Description}" Width="*"/>
+                                </DataGrid.Columns>
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="SelectionChanged">
+                                        <i:InvokeCommandAction Command="{Binding SetSelectetRoleCommand}"
+                                                               CommandParameter="{Binding ElementName=RoleDataGrid, Path=SelectedItem}"/>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </DataGrid>
+
+
+                            <!--ProgressRing-->
+                            <mw:ProgressRing 
+                                   IsActive="True"
+                                   Visibility="{Binding IsPageBusy,
+                                   Converter={StaticResource BoolToVisConverter}}"
+                                   VerticalAlignment="Center"
+                                   HorizontalAlignment="Center"
+                                   Height="100" Width="100">
+                            </mw:ProgressRing>
+                        </Grid>
+                    </Grid>
+                </Border>
+
+                <Grid Grid.Column="1">
+                    <md:Card Margin="0 0 10 10"
+                             md:ShadowAssist.ShadowDepth="Depth2" 
+                             Background="{StaticResource MaterialDesignPaper}">
+                        <Border BorderThickness="10 0 0 0" Padding="10 0"
+                                BorderBrush="{StaticResource AppColorCyan}">
+                            <StackPanel Orientation="Vertical">
+                                <Grid Margin="10 20 0 20">
+                                    <Button Content="Alles neu" 
+                                            HorizontalAlignment="Right"
+                                            FontSize="30" Height="50" Width="200"
+                                            Command="{Binding ResetForNewCommand}">
+                                    </Button>
+                                </Grid>
+
+                                <Grid>
+                                    <!--Error Message-->
+                                    <TextBlock Text="{Binding Message, UpdateSourceTrigger=PropertyChanged}"
+                                               Margin="0 20" Height="40" MinWidth="200"
+                                               Style="{StaticResource MessageTxtBlckStyle}">
+                                    </TextBlock>
+                                </Grid>
+
+                                <!--ROLE-->
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="36"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <TextBox x:Name="TxtBxRoleName" Grid.Column="0"
+                                             IsReadOnly="True" 
+                                             md:HintAssist.Hint="Rollenname:"
+                                             Style="{StaticResource TextBxAngabenStyle}"
+                                             Text="{Binding Rolle.RoleName, UpdateSourceTrigger=PropertyChanged}">
+                                    </TextBox>
+
+                                    <ComboBox Name="CbobxRole" Grid.Column="1"
+                                            ItemsSource="{Binding EnumRollen}"
+                                            SelectedItem="{Binding EnumRolle}"
+                                            Background="{StaticResource MaterialDesignPaper}"
+                                            Foreground="Transparent" 
+                                            Cursor="Hand">
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="SelectionChanged">
+                                                <i:ChangePropertyAction TargetName="TxtBxRoleName"                                                                 
+                                                       PropertyName="Text" Value="{Binding EnumRolle}">
+                                                </i:ChangePropertyAction>
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
+                                    </ComboBox>
+                                </Grid>
+
+                                <!--BESCHREIBUNG-->
+                                <TextBox Grid.Column="0"
+                                        md:HintAssist.Hint="Beschreibung:"
+                                        Style="{StaticResource TextBxAngabenStyle}"
+                                        Text="{Binding Rolle.Description, UpdateSourceTrigger=PropertyChanged}">
+                                </TextBox>
+
+                                <!--CRUD Buttons-->
+                                <Grid Margin="0 100 0 0">
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                        <Button Content="Löschen" Margin="6" 
+                                                FontSize="30"
+                                                Width="200" Height="50"                                            
+                                                Foreground="DarkRed"
+                                                Command="{Binding DeleteCommand}">
+                                        </Button>
+
+                                        <Button Content="Ändern" Margin="6" 
+                                                FontSize="30" 
+                                                Width="200" Height="50"
+                                                Command="{Binding UpdateCommand}">
+                                        </Button>
+
+                                        <Button Content="Hinzufügen" Margin="6" 
+                                                FontSize="30" 
+                                                Width="250" Height="50"
+                                                Command="{Binding AddCommand}">
+                                        </Button>
+                                    </StackPanel>
+                                </Grid>
+
+                            </StackPanel>
+                        </Border>
+                    </md:Card>
+
+
+                </Grid>
+
+            </Grid>
         </Grid>
     </Grid>
 </UserControl>
