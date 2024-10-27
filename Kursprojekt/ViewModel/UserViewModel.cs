@@ -38,8 +38,7 @@ public partial class UserViewModel: BaseViewModel
         }
         base.GetInitialData();
     }
-
-
+    
     private async Task LoadAndSetData()
     {
         bool IstIsPageBusyTrue = IsPageBusy;
@@ -79,8 +78,7 @@ public partial class UserViewModel: BaseViewModel
             }
         }
     }
-
-
+    
     #region Eigenschaften
     [ObservableProperty]
     AppUser user = new();
@@ -289,8 +287,6 @@ public partial class UserViewModel: BaseViewModel
             IsPageBusy = false;
         }
     }
-
-
-
+    
     #endregion
 }

@@ -10,8 +10,16 @@ using Kursprojekt.Services;
 
 namespace Kursprojekt.ViewModel;
 
-public partial class BaseViewModel : ObservableObject
+public partial class BaseViewModel : ObservableRecipient
 {
+    protected override void OnActivated()
+    {
+        SetLoginUserInfos();
+        base.OnActivated();
+
+        IsActive = false;
+    }
+
     public delegate bool DelShowInformationWindowType(string iMessage);
     public DelShowInformationWindowType? DelShowInformationWindow { get; set; }
 

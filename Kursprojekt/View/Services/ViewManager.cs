@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Kursprojekt.View.Services;
 
@@ -64,6 +65,7 @@ public class ViewManager
             GoBackPage = ucPage;
         }
 
+        ActivateViwModel(ucPage);
         DoChangeOnViewAfterShow(ucPage);
     }
 
@@ -138,6 +140,12 @@ public class ViewManager
 
         Show(GoBackPage);
     }
+    
+    private static void ActivateViwModel(UserControl iPage)
+    {
+        var pageVM = iPage.DataContext as BaseViewModel;
+        if (pageVM != null) pageVM.IsActive = true;
+    }
 
     public static void ShowUnderPageOn<T>(AnimatedContentControl animatedContentControl) where T : UserControl
     {
@@ -152,6 +160,8 @@ public class ViewManager
 
                 animatedContentControl.MetroTabItem.IsSelected = false;
                 animatedContentControl.MetroTabItem.IsSelected = true;
+                
+                ActivateViwModel(ucPage);
             }
         }
         catch (Exception ex)
@@ -169,12 +179,14 @@ public class ViewManager
     {
         return new InfoWindow(sMessage, IWDialogType.Confirmation).ShowDialog() ?? false;
     }
+
     private static string ShowInputWindow(string sMessage)
     {
         var myInfoWindow = new InfoWindow(sMessage, IWDialogType.Input);
         myInfoWindow.ShowDialog();
         return myInfoWindow.InputText;
     }
+
     private static void ShowMainInfoFlyout(string sMessage, bool bWarnung)
     {
         MainView!.LblFlyoutInfo.Content = sMessage;
