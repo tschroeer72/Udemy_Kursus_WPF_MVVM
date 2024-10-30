@@ -10,9 +10,7 @@
     <Grid>
         <mw:MetroAnimatedTabControl>
             <mw:MetroTabItem Name="MetroTabItem">
-                <ContentControl x:Name="PagePlace">
-
-                </ContentControl>
+                <mw:ContentControlEx x:Name="PagePlace"/>
             </mw:MetroTabItem>
         </mw:MetroAnimatedTabControl>
     </Grid>

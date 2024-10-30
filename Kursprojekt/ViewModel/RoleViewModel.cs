@@ -24,14 +24,14 @@ public partial class RoleViewModel : BaseViewModel
         Mapper = mapper;
     }
 
-    public async override void GetInitialData()
+    [RelayCommand]
+    public async Task GetInitialData()
     {
         if (!IsViewModelLoaded)
         {
             await LoadAndSetDataAsync();
             IsViewModelLoaded = true;
         }
-        base.GetInitialData();
     }
 
     private async Task LoadAndSetDataAsync()

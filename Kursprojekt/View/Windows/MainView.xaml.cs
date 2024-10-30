@@ -21,8 +21,9 @@ public partial class MainView : MetroWindow
         InitializeComponent();
         MainViewModel = mainViewModel;
         DataContext = MainViewModel;
+        MainViewModel.InitBaseViewModelDelegateAndEvents();
 
-        ViewManager.InitBaseDelEvents(MainViewModel);
+        //ViewManager.InitBaseDelEvents(MainViewModel);
     }
 
     private void OpenPageOnMain(object sender, RoutedEventArgs e)

@@ -29,8 +29,7 @@ namespace Kursprojekt.View.Pages
             InitializeComponent();
             HomeViewModel = homeViewModel;
             DataContext = HomeViewModel;
-
-            ViewManager.InitBaseDelEvents(HomeViewModel);
+            HomeViewModel.InitBaseViewModelDelegateAndEvents();
         }
 
     }

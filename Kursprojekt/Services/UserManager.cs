@@ -9,6 +9,8 @@ namespace Kursprojekt.Services;
 
 public class UserManager
 {
+    public static LoginUserInfos LoginUserInfo { get; set; } = new();
+
     private static void HashUserPassword(ref AppUser appUser)
     {
         string strPW = appUser.Password;
@@ -46,7 +48,7 @@ public class UserManager
             return new DBResponse() { Message = "Das Passwort ist falsch!" };
         }
 
-        CurrentUser.AppUser = DBuser;
+        SetLoginUserInfos(DBuser);
         return new DBResponse() { Success = true, Data = DBuser};
     }
 
@@ -106,15 +108,11 @@ public class UserManager
 
     }
 
-    public static LoginUserInfos GetLoginUserInfos()
+    public static void SetLoginUserInfos(AppUser oAppUSer)
     {
-        LoginUserInfos loginUserInfos = new();
-
-        loginUserInfos.LoginUser = CurrentUser.AppUser;
-        loginUserInfos.IsAdmin = IsUserInRole(CurrentUser.AppUser, RoleType.Admin);
-        loginUserInfos.IsUser = IsUserInRole(CurrentUser.AppUser, RoleType.User);
-        loginUserInfos.IsNurLesenUser = IsUserInRole(CurrentUser.AppUser, RoleType.NurLesen);
-
-        return loginUserInfos;
+        LoginUserInfo.LoginUser = oAppUSer;
+        LoginUserInfo.IsAdmin = IsUserInRole(oAppUSer, RoleType.Admin);
+        LoginUserInfo.IsUser = IsUserInRole(oAppUSer, RoleType.User);
+        LoginUserInfo.IsNurLesenUser = IsUserInRole(oAppUSer, RoleType.NurLesen);
     }
 }

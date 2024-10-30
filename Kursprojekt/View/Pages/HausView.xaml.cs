@@ -29,8 +29,7 @@ public partial class HausView : UserControl
         InitializeComponent();
         HausViewModel = hausViewModel;
         DataContext = HausViewModel;
-
-        ViewManager.InitBaseDelEvents(HausViewModel);
+        HausViewModel.InitBaseViewModelDelegateAndEvents();
     }
     
 }

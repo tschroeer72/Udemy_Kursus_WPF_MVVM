@@ -20,7 +20,6 @@ public class ViewManager
 {
     private static UserControl? GoBackPage { get; set; }
     public static MainView? MainView { get; set; }
-    //public static MainViewModel? MainViewModel { get; set; }
     public static ServiceProvider? ServiceProvider { get; set; }
 
     public static void InitViewManager(MainView mainView, ServiceProvider serviceProvider)
@@ -43,17 +42,14 @@ public class ViewManager
 		}
 		catch (Exception ex)
 		{
-            MessageBox.Show(ex.ToString());
-		}
+            //MessageBox.Show(ex.ToString());
+            ShowInformationWindow(ex.ToString());
+        }
     }
 
     public static void Show(UserControl ucPage, bool bFullPage = false)
     {
-        MainView!.AnimatedContentControl.PagePlace.Content = null;
-        MainView!.AnimatedContentControl.PagePlace.Content = ucPage;
-
-        MainView!.AnimatedContentControl.MetroTabItem.IsSelected = false;
-        MainView!.AnimatedContentControl.MetroTabItem.IsSelected = true;
+        MainView!.AnimatedContentControl.ShowPage(ucPage);
 
         if (bFullPage) 
         {
@@ -65,7 +61,6 @@ public class ViewManager
             GoBackPage = ucPage;
         }
 
-        ActivateViwModel(ucPage);
         DoChangeOnViewAfterShow(ucPage);
     }
 
@@ -141,12 +136,6 @@ public class ViewManager
         Show(GoBackPage);
     }
     
-    private static void ActivateViwModel(UserControl iPage)
-    {
-        var pageVM = iPage.DataContext as BaseViewModel;
-        if (pageVM != null) pageVM.IsActive = true;
-    }
-
     public static void ShowUnderPageOn<T>(AnimatedContentControl animatedContentControl) where T : UserControl
     {
         try
@@ -155,18 +144,13 @@ public class ViewManager
             if (pageService == null) return;
             if (pageService is UserControl ucPage)
             {
-                animatedContentControl.PagePlace.Content = null;
-                animatedContentControl.PagePlace.Content = ucPage;
-
-                animatedContentControl.MetroTabItem.IsSelected = false;
-                animatedContentControl.MetroTabItem.IsSelected = true;
-                
-                ActivateViwModel(ucPage);
+                animatedContentControl.ShowPage(ucPage);
             }
         }
         catch (Exception ex)
         {
-            MessageBox.Show(ex.ToString());
+            //MessageBox.Show(ex.ToString());
+            ShowInformationWindow(ex.ToString());
         }
     }
 

@@ -39,16 +39,6 @@ public partial class LoginViewModel:BaseViewModel
 
         // ------------
 
-        //User in DB suchen
-        //var response = await UserManager.LoginUserAsync(User);
-
-        //AppUser = response.Data as AppUser;
-
-        //WENN gefunden DANN HomeView öffnen
-        //DelGoBackOrGotoHome?.Invoke();
-
-        //---------
-
         try
         {
             if (IsPageBusy) return;
@@ -72,7 +62,7 @@ public partial class LoginViewModel:BaseViewModel
 
             DelGoBackOrGotoHome?.Invoke();
             User = new();
-            MainViewModel.SetLoginUserInfos();
+            
         }
         finally
         {

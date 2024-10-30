@@ -1,17 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using MahApps.Metro.Controls;
+using System.ComponentModel;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Kursprojekt.View.UserControls
 {
@@ -23,6 +12,25 @@ namespace Kursprojekt.View.UserControls
         public AnimatedContentControl()
         {
             InitializeComponent();
+
+            //Alternative zu Animation
+            //DependencyPropertyDescriptor.FromProperty(ContentProperty, typeof(ContentControlEx)).AddValueChanged(PagePlace, ContentChanged);
+        }
+
+        //Alternative zu Animation
+        //private void ContentChanged(object? sender, EventArgs e)
+        //{
+        //    MetroTabItem.IsSelected = false;
+        //    MetroTabItem.IsSelected = true;
+        //}
+
+        public void ShowPage(UserControl ucPage)
+        {
+            PagePlace.Content = null;
+            PagePlace.Content = ucPage;
+
+            MetroTabItem.IsSelected = false;
+            MetroTabItem.IsSelected = true;
         }
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CommunityToolkit.Mvvm.Input;
 
 namespace Kursprojekt.ViewModel;
 
@@ -13,8 +14,9 @@ public partial class HausViewModel : BaseViewModel
         Titel = "Haus";
     }
 
-    public override void GetInitialData()
+    [RelayCommand]
+    public  void GetInitialData()
     {
-        base.GetInitialData();
+       
     }
 }

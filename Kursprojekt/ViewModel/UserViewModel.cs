@@ -29,14 +29,14 @@ public partial class UserViewModel: BaseViewModel
         UserModelValidator = userModelValidator;
     }
 
-    public override async void GetInitialData()
+    [RelayCommand]
+    public async Task GetInitialData()
     {
         if (!IsViewModelLoaded)
         {
             await LoadAndSetData();
             IsViewModelLoaded = true;
         }
-        base.GetInitialData();
     }
     
     private async Task LoadAndSetData()

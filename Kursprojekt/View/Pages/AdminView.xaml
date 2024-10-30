@@ -11,11 +11,6 @@
              d:DataContext="{d:DesignInstance Type=vm:AdminViewModel}"
              d:DesignHeight="800" d:DesignWidth="1400" Loaded="AdminView_Loaded">
 
-    <i:Interaction.Triggers>
-        <i:EventTrigger EventName="Loaded">
-            <i:InvokeCommandAction Command="{Binding GetInitialDataCommand}"/>
-        </i:EventTrigger>
-    </i:Interaction.Triggers>
 
     <Grid  Background="{StaticResource MaterialDesignPaper}">
         <Grid.RowDefinitions>

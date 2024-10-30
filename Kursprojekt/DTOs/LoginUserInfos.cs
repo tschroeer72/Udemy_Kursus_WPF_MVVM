@@ -1,11 +1,16 @@
-﻿using Kursprojekt.Datenbank.Models;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using Kursprojekt.Datenbank.Models;
 
 namespace Kursprojekt.DTOs;
 
-public class LoginUserInfos
+//[INotifyPropertyChanged]
+public partial class LoginUserInfos : ObservableObject
 {
-    public AppUser LoginUser { get; set; } = new();
-    public bool IsAdmin { get; set; }
-    public bool IsUser { get; set; }
-    public bool IsNurLesenUser { get; set; }
+    [ObservableProperty] AppUser loginUser = new();
+
+    [ObservableProperty] bool isAdmin = false;
+
+    [ObservableProperty] bool isUser = false;
+
+    [ObservableProperty] bool isNurLesenUser = false;
 }

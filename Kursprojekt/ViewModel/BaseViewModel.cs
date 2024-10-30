@@ -12,14 +12,6 @@ namespace Kursprojekt.ViewModel;
 
 public partial class BaseViewModel : ObservableRecipient
 {
-    protected override void OnActivated()
-    {
-        SetLoginUserInfos();
-        base.OnActivated();
-
-        IsActive = false;
-    }
-
     public delegate bool DelShowInformationWindowType(string iMessage);
     public DelShowInformationWindowType? DelShowInformationWindow { get; set; }
 
@@ -38,18 +30,6 @@ public partial class BaseViewModel : ObservableRecipient
 
     public delegate void DelShowLoginViewType(bool bAsStartLogin);
     public DelShowLoginViewType? DelShowLoginView { get; set; }
-
-
-    [RelayCommand]
-    public virtual void GetInitialData()
-    {
-        SetLoginUserInfos(); // Wird am Ende geändert
-    }
-
-    public void SetLoginUserInfos()
-    {
-        LoginUserInfos = UserManager.GetLoginUserInfos();
-    }
     
     [ObservableProperty]
     string titel = "";
@@ -66,6 +46,4 @@ public partial class BaseViewModel : ObservableRecipient
 
     public bool IsPageNotBusy => !IsPageBusy;
 
-    [ObservableProperty] 
-    LoginUserInfos loginUserInfos = new();
 }

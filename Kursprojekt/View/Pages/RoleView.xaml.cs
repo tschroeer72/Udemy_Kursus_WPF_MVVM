@@ -29,8 +29,7 @@ namespace Kursprojekt.View.Pages
             InitializeComponent();
             RoleViewModel = roleViewModel;
             DataContext = RoleViewModel;
-
-            ViewManager.InitBaseDelEvents(RoleViewModel);
+            RoleViewModel.InitBaseViewModelDelegateAndEvents();
         }
     }
 }

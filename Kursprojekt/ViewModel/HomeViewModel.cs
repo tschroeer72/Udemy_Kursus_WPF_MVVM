@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CommunityToolkit.Mvvm.Input;
 
 namespace Kursprojekt.ViewModel;
 
@@ -14,7 +15,8 @@ public partial class HomeViewModel : BaseViewModel
         Titel = "Home";
     }
 
-    public override void GetInitialData()
+    [RelayCommand]
+    public  void GetInitialData()
     {
         if (!IsViewModelLoaded)
         {
@@ -22,6 +24,6 @@ public partial class HomeViewModel : BaseViewModel
         }
 
         IsViewModelLoaded = true;
-        base.GetInitialData();
+        
     }
 }

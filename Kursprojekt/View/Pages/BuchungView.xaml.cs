@@ -29,8 +29,7 @@ public partial class BuchungView : UserControl
         InitializeComponent();
         BuchungViewModel = buchungViewModel;
         DataContext = BuchungViewModel;
-        
-        ViewManager.InitBaseDelEvents(BuchungViewModel);
+        BuchungViewModel.InitBaseViewModelDelegateAndEvents();
     }
 
     

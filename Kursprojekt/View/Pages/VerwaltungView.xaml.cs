@@ -29,16 +29,14 @@ namespace Kursprojekt.View.Pages
             InitializeComponent();
             VerwaltungViewModel = verwaltungViewModel;
             DataContext = VerwaltungViewModel;
-
+            VerwaltungViewModel.InitBaseViewModelDelegateAndEvents();
             OpenUnderPage(BtnBuchung, new RoutedEventArgs());
             BtnBuchung.IsChecked = true;
-
-            ViewManager.InitBaseDelEvents(VerwaltungViewModel);
         }
 
         private void GoBack(object sender, RoutedEventArgs e)
         {
-            ViewManager.GoBackOrToHome();             
+            ViewManager.GoBackOrToHome();
         }
 
         private void OpenUnderPage(object sender, RoutedEventArgs e)

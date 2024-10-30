@@ -30,8 +30,6 @@ namespace Kursprojekt.View.Pages
             UserViewModel = appUserViewModel;
             UserViewModel.InitBaseViewModelDelegateAndEvents();
             DataContext = UserViewModel;
-
-            //ViewManager.InitBaseDelEvents(UserViewModel);
         }
 
     }

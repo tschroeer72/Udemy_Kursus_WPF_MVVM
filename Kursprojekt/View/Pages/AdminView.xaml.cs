@@ -29,8 +29,7 @@ public partial class AdminView : UserControl
         InitializeComponent();
         AdminViewModel = adminViewModel;
         DataContext = AdminViewModel;
-
-        ViewManager.InitBaseDelEvents(AdminViewModel);
+        AdminViewModel.InitBaseViewModelDelegateAndEvents();
     }
 
     private void AdminView_Loaded(object sender, RoutedEventArgs e)
@@ -39,6 +38,7 @@ public partial class AdminView : UserControl
         {
             ViewManager.ShowUnderPageOn<UserView>(AnimatedContentControl);
             BtnUser.IsChecked = true;
+            AdminViewModel.IsViewModelLoaded = true;
         }
     }
 
