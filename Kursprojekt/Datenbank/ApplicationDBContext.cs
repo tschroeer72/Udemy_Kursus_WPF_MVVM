@@ -29,4 +29,6 @@ public class ApplicationDBContext : DbContext
 
     public DbSet<AppUser> AppUsers { get; set; }
     public DbSet<Role> Roles { get; set; }
+    public DbSet<Haus> Häuser { get; set; }
+    public DbSet<Buchung> Buchungen { get; set; }
 }

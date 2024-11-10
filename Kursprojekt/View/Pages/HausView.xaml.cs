@@ -1,5 +1,6 @@
 ﻿using Kursprojekt.View.Services;
 using Kursprojekt.ViewModel;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,6 +31,32 @@ public partial class HausView : UserControl
         HausViewModel = hausViewModel;
         DataContext = HausViewModel;
         HausViewModel.InitBaseViewModelDelegateAndEvents();
+
+        HausViewModel.DelShowFileDialog += () => ShowFileDialog();
     }
-    
+
+    private string ShowFileDialog()
+    {
+        try
+        {
+            OpenFileDialog dlgOpenFile = new()
+            {
+                Filter = "Image Files jpg, png, gif| *.jpg;*.png;*.gif",
+                Multiselect = false
+            };
+
+            var result = dlgOpenFile.ShowDialog();
+            if (result == true && result.HasValue)
+            {
+                return dlgOpenFile.FileName;
+            }
+
+            return "";
+        }
+        catch (Exception ex)
+        {
+            ViewManager.ShowInformationWindow(ex.Message);
+            return "";
+        }
+    }
 }

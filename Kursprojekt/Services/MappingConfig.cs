@@ -14,5 +14,7 @@ public class MappingConfig : Profile
     {
         CreateMap<Role, Role>();
         CreateMap<AppUser, AppUser>();
+        CreateMap<Haus, Haus>();
+        CreateMap<Buchung, Buchung>();
     }
 }

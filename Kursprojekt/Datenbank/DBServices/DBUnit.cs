@@ -13,4 +13,14 @@ public class DBUnit
     {
         get { return new DBUnitBase<Role>(); }
     }
+
+    public static DBUnitBase<Haus> Haus
+    {
+        get { return new DBUnitBase<Haus>(); }
+    }
+
+    public static DBUnitBase<Buchung> Buchung
+    {
+        get { return new DBUnitBase<Buchung>(); }
+    }
 }

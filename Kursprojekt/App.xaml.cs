@@ -31,6 +31,12 @@ public partial class App : Application
         //Validator 
         services.AddSingleton<UserLoginValidator>();
         services.AddSingleton<UserModelValidator>();
+        services.AddSingleton<HausAddAndUpdateValidator>();
+
+        //AutoMapper && Validator  
+        //Type VMAssembyRefTyp = typeof(MappingConfig);
+        //services.AddAutoMapper(VMAssembyRefTyp);
+        //services.AddValidatorsFromAssemblyContaining(VMAssembyRefTyp);
 
         //Views und ViewModels
         services.AddSingleton<MainView>();

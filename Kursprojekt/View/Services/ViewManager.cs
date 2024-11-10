@@ -154,7 +154,7 @@ public class ViewManager
         }
     }
 
-    private static bool ShowInformationWindow(string sMessage)
+    public static bool ShowInformationWindow(string sMessage)
     {
         return new InfoWindow(sMessage, IWDialogType.Information).ShowDialog() ?? false;
     }

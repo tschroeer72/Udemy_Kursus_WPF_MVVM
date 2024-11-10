@@ -29,7 +29,8 @@
             <!--#endregion-->
 
             <!--Converters-->
-            <Conv:BoolToVisibilityConverter x:Key="BoolToVisConverter"/> 
+            <Conv:BoolToVisibilityConverter x:Key="BoolToVisConverter"/>
+            <Conv:BytesArrayToBitmapImageConverter x:Key="BytesArrayToBitmapImageConverter"/>
 
             <!--Button-->
             <Style x:Key="GoBackBtnStyle" TargetType="Button" BasedOn="{StaticResource MaterialDesignPaperButton}">

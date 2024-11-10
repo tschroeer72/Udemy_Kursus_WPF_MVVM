@@ -5,7 +5,11 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Kursprojekt.View.Pages" 
              xmlns:uc="clr-namespace:Kursprojekt.View.UserControls" 
-             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+             xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes" 
+             xmlns:mw="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors" 
+             xmlns:vm="clr-namespace:Kursprojekt.ViewModel" 
+             d:DataContext="{d:DesignInstance Type=vm:HausViewModel}"
              mc:Ignorable="d" 
              d:DesignHeight="800" d:DesignWidth="1400">
 
@@ -22,21 +26,263 @@
         </Grid.RowDefinitions>
 
         <Grid Grid.Row="0">
-            <Grid HorizontalAlignment="Left">
-                <TextBlock Text="{Binding Titel}"
-                       Style="{StaticResource TitelTxtBxStyle}">
+            <Grid HorizontalAlignment="Left" MinWidth="200">
+                <TextBlock Text="{Binding Titel}" 
+                           FontSize="36" 
+                           FontWeight="ExtraBold"
+                           Foreground="{StaticResource AppColorCyan}"
+                           FontFamily="forte">
                 </TextBlock>
             </Grid>
 
-            <Grid HorizontalAlignment="Right">
-
+            <Grid HorizontalAlignment="Right" Margin="0 2 0 0">
+                <Button Content="Refresh" 
+                        FontSize="30" Height="40"
+                        Command="{Binding ReSetForAddNewCommand}">
+                </Button>
             </Grid>
         </Grid>
 
         <Grid Grid.Row="1">
-            <uc:AnimatedContentControl x:Name="AnimatedContentControl">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="1.2*"/>
+            </Grid.ColumnDefinitions>
 
-            </uc:AnimatedContentControl>
+            <!--DataGrid && Filter-->
+            <Border Grid.Column="0" Margin="0 2 0 0" 
+                    BorderThickness="0 1 0 0" 
+                    BorderBrush="White" 
+                    Cursor="Hand">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <!--Filter-->
+                    <Grid Grid.Row="0">
+                        <TextBox md:HintAssist.Hint="AuftragsNr. suchen:"
+                                 HorizontalAlignment="Left"
+                                 Margin="10 0 0 20"
+                                 Width="250" FontSize="20" Height="60"
+                                 FontWeight="ExtraBold" 
+                                 Text="{Binding HausFilterText, UpdateSourceTrigger=PropertyChanged}"
+                                 Style="{StaticResource TextBxAngabenStyle}" Cursor="Arrow">
+                        </TextBox>
+
+                        <Button Content="Daten aufrufen" Height="50"  
+                                HorizontalAlignment="Right"
+                                Command="{Binding ReSetInitDataCommand}">
+                        </Button>
+                    </Grid>
+
+                    <!--DataGrid-->
+                    <Grid Grid.Row="1">
+                        <DataGrid x:Name="HausDataGrid"
+                                  ItemsSource="{Binding Haeuser}">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="AuftrNr." Binding="{Binding AuftragID}" Width="150"/>
+                                <DataGridTextColumn Header="Anz. Zi." Binding="{Binding ZimmerAnzahl}" Width="90"/>
+                                <DataGridCheckBoxColumn Header="Res." Binding="{Binding IstReserviert}" Width="80"/>
+                                <DataGridCheckBoxColumn Header="Verk." Binding="{Binding IstVerkauft}" Width="80"/>
+                                <DataGridTextColumn Header="Preis in €" Binding="{Binding Preis}" Width="170"/>
+                                <DataGridTextColumn Header="Anschrift" Binding="{Binding Anschrift}" Width="*"/>
+                            </DataGrid.Columns>
+
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="SelectionChanged">
+                                    <i:InvokeCommandAction Command="{Binding SetSelectetHausCommand}"
+                                                           CommandParameter="{Binding ElementName=HausDataGrid, Path=SelectedItem}">
+                                    </i:InvokeCommandAction>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </DataGrid>
+
+                        <!--ProgressRing-->
+                        <mw:ProgressRing 
+                                  IsActive="True"
+                                  Visibility="{Binding IsPageBusy,
+                                  Converter={StaticResource BoolToVisConverter}}"
+                                  VerticalAlignment="Center"
+                                  HorizontalAlignment="Center"
+                                  Height="100" Width="100">
+                        </mw:ProgressRing>
+                    </Grid>
+                </Grid>
+            </Border>
+
+            <!--Angabe-Felder-->
+            <Grid Grid.Column="1">
+                <md:Card Margin="0 0 10 10"
+                         md:ShadowAssist.ShadowDepth="Depth2" 
+                         Background="{StaticResource MaterialDesignPaper}">
+                    <Border Padding="10 0"
+                            BorderThickness="10 0 0 0" 
+                            BorderBrush="{StaticResource AppColorCyan}">
+                        <StackPanel Orientation="Vertical">
+                            <!--Error Message-->
+                            <TextBlock Text="{Binding Message, UpdateSourceTrigger=PropertyChanged}"
+                                       MinWidth="200"  Height="20"
+                                       Style="{StaticResource MessageTxtBlckStyle}">
+                            </TextBlock>
+
+                            <!--Bild-->
+                            <StackPanel Orientation="Horizontal" Height="260">
+                                <Border Width="300" 
+                                        BorderThickness="1"
+                                        BorderBrush="{StaticResource AppColorCyan}" 
+                                        CornerRadius="4" Padding="2">
+                                    <Image x:Name="HausBild"
+                                           Stretch="Fill" 
+                                           Source="{Binding Haus.Bild, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource BytesArrayToBitmapImageConverter}}">
+                                    </Image>
+                                </Border>
+
+                                <Button Width="200" Height="260" 
+                                        Style="{StaticResource MaterialDesignFlatDarkButton}"
+                                        Cursor="Hand" 
+                                        ToolTip="Haus Bild hinzufügen"
+                                        Command="{Binding ShowFileDialogCommand}">
+                                    <md:PackIcon Kind="ImageAdd" Width="170" Height="250"/>
+                                </Button>
+                            </StackPanel>
+
+                            <!--AuftragID-->
+                            <TextBox md:HintAssist.Hint="Auftrag Nr.:" 
+                                     Style="{StaticResource TextBxAngabenStyle}"
+                                     Margin="0 0 0 4" 
+                                     Text="{Binding Haus.AuftragID, UpdateSourceTrigger=PropertyChanged}">
+                            </TextBox>
+
+                            <!--ZimmerAnzahl-->
+                            <TextBox md:HintAssist.Hint="Zimmer Anzahl:" 
+                                     Style="{StaticResource TextBxAngabenStyle}"
+                                     Margin="0 0 0 4" 
+                                     Text="{Binding Haus.ZimmerAnzahl, UpdateSourceTrigger=PropertyChanged}">
+                            </TextBox>
+
+                            <!--Preis-->
+                            <TextBox md:HintAssist.Hint="Preis in €:" 
+                                     Style="{StaticResource TextBxAngabenStyle}"
+                                     Margin="0 0 0 4" 
+                                     Text="{Binding Haus.Preis, UpdateSourceTrigger=PropertyChanged}" >
+                            </TextBox>
+
+                            <!--Adresse-->
+                            <TextBox md:HintAssist.Hint="Anschrift:" 
+                                     Style="{StaticResource TextBxAngabenStyle}"
+                                     Margin="0 0 0 10" 
+                                     Text="{Binding Haus.Anschrift, UpdateSourceTrigger=PropertyChanged}">
+                            </TextBox>
+
+                            <!--Reserviert oder nicht Reserviert-->
+                            <Border BorderThickness="1"  BorderBrush="{StaticResource AppColorCyan}" 
+                                    Height="40" Margin="0 10 0 10" CornerRadius="8">
+                                <StackPanel Orientation="Horizontal" IsEnabled="False"
+                                            Margin="4 0 0 0"                                                
+                                            VerticalAlignment="Center"
+                                            HorizontalAlignment="Stretch">
+                                    <Viewbox Stretch="Uniform">
+                                        <RadioButton x:Name="RdBtnReserviert" Background="Red"    
+                                                     GroupName="grpReserviert"
+                                                     Content="Reserviert" 
+                                                     FontSize="11"
+                                                     Cursor="Hand"
+                                                     IsChecked="{Binding Haus.IstReserviert, UpdateSourceTrigger=PropertyChanged}">
+                                        </RadioButton>
+                                    </Viewbox>
+
+                                    <Viewbox Stretch="Uniform" Margin="30 0 0 0">
+                                        <RadioButton GroupName="grpReserviert"  
+                                                     Content="Nicht reserviert"
+                                                     FontSize="11"
+                                                     Cursor="Hand">
+                                            <RadioButton.Style>
+                                                <Style TargetType="RadioButton" 
+                                                       BasedOn="{StaticResource MaterialDesignAccentRadioButton}">
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding ElementName=RdBtnReserviert, Path=IsChecked}" Value="True">
+                                                            <Setter Property="IsChecked" Value="False"/>
+                                                        </DataTrigger>
+                                                        <DataTrigger Binding="{Binding ElementName=RdBtnReserviert, Path=IsChecked}" Value="False">
+                                                            <Setter Property="IsChecked" Value="True"/>
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </RadioButton.Style>
+                                        </RadioButton>
+                                    </Viewbox>
+                                </StackPanel>
+                            </Border>
+
+
+                            <!--Verkauft oder nicht Verkauft-->
+                            <Border BorderThickness="1" BorderBrush="{StaticResource AppColorCyan}" 
+                                    Height="40" Margin="0 10 0 10" CornerRadius="8">
+                                <StackPanel Orientation="Horizontal" IsEnabled="False"
+                                            Margin="4 0 0 0" Cursor="Hand"
+                                            VerticalAlignment="Center"
+                                            HorizontalAlignment="Stretch">
+                                    <Viewbox Stretch="Uniform">
+                                        <RadioButton x:Name="RdBtnVerkauft" Background="Red"  
+                                                     GroupName="grpVerkauft"
+                                                     Content="Verkauft" 
+                                                     FontSize="12"
+                                                     Cursor="Hand"
+                                                     IsChecked="{Binding Haus.IstVerkauft, UpdateSourceTrigger=PropertyChanged}">
+                                        </RadioButton>
+                                    </Viewbox>
+
+                                    <Viewbox Stretch="Uniform" Margin="36 0 0 0">
+                                        <RadioButton GroupName="grpVerkauft"  
+                                                     Content="Nicht verkauft"
+                                                     FontSize="12"
+                                                     Cursor="Hand">
+                                            <RadioButton.Style>
+                                                <Style TargetType="RadioButton" BasedOn="{StaticResource MaterialDesignAccentRadioButton}">
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding ElementName=RdBtnVerkauft, Path=IsChecked}" Value="True">
+                                                            <Setter Property="IsChecked" Value="False"/>
+                                                        </DataTrigger>
+                                                        <DataTrigger Binding="{Binding ElementName=RdBtnVerkauft, Path=IsChecked}" Value="False">
+                                                            <Setter Property="IsChecked" Value="True"/>
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </RadioButton.Style>
+                                        </RadioButton>
+                                    </Viewbox>
+                                </StackPanel>
+                            </Border>
+
+                            <!--Buttons-->
+                            <Grid Margin="0 16 0 0">
+                                <StackPanel Orientation="Horizontal" 
+                                            HorizontalAlignment="Right">
+                                    <Button Content="Löschen" 
+                                            FontSize="24" Height="36"                                            
+                                            Foreground="DarkRed"
+                                            Command="{Binding DeleteCommand}">
+                                    </Button>
+
+                                    <Button Content="Ändern" Margin="20 0" 
+                                            FontSize="24" Height="36" 
+                                            Command="{Binding UpdateCommand}">
+                                    </Button>
+
+                                    <Button Content="Hinzufügen" 
+                                            FontSize="24" Height="36" 
+                                            Command="{Binding AddCommand}">
+                                    </Button>
+                                </StackPanel>
+
+                            </Grid>
+
+                        </StackPanel>
+                    </Border>
+                </md:Card>
+            </Grid>
         </Grid>
     </Grid>
 </UserControl>
