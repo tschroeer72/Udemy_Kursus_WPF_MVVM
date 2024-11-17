@@ -36,7 +36,7 @@
             </Grid>
 
             <Grid HorizontalAlignment="Right" Margin="0 2 0 0">
-                <Button Content="Refresh" 
+                <Button Content="Felder löschen" 
                         FontSize="30" Height="40"
                         Command="{Binding ReSetForAddNewCommand}">
                 </Button>

@@ -37,6 +37,7 @@ public partial class HausViewModel : BaseViewModel
     [ObservableProperty]
     string hausFilterText = "";
 
+    [RelayCommand]
     public async Task GetInitialData()
     {
         if (!IsViewModelLoaded)
@@ -50,20 +51,23 @@ public partial class HausViewModel : BaseViewModel
     {
         try
         {
-            IsPageBusy = true;
-            Message = "";
+            //if (IsPageNotBusy)
+            //{
+                IsPageBusy = true;
+                Message = "";
 
-            Haeuser.Clear();
-            HaeuserBackup.Clear();
-            var hausLst = await DBUnit.Haus.GetAllAsync();
-            if (hausLst is not null)
-            {
-                foreach (var myHaus in hausLst)
+                Haeuser.Clear();
+                HaeuserBackup.Clear();
+                var hausLst = await DBUnit.Haus.GetAllAsync();
+                if (hausLst != null)
                 {
-                    Haeuser.Add(myHaus);
-                    HaeuserBackup.Add(myHaus);
+                    foreach (var myHaus in hausLst)
+                    {
+                        Haeuser.Add(myHaus);
+                        HaeuserBackup.Add(myHaus);
+                    }
                 }
-            }
+            //}
         }
         finally
         {
@@ -99,6 +103,7 @@ public partial class HausViewModel : BaseViewModel
                 Message = "Bei einem neuen Haus bitte auf 'ALLES NEU' klicken!";
                 return;
             }
+
             var valResult = HausValidator.Validate(Haus);
             if (!valResult.IsValid)
             {
@@ -129,11 +134,12 @@ public partial class HausViewModel : BaseViewModel
         {
             Message = "";
 
-            if (!(Haus.ID > 0))
+            if (Haus.ID <= 0)
             {
                 Message = "Bitte wählen Sie zuerst ein Haus aus!";
                 return;
             }
+
             var valResult = HausValidator.Validate(Haus);
             if (!valResult.IsValid)
             {
@@ -141,8 +147,8 @@ public partial class HausViewModel : BaseViewModel
                 return;
             }
 
-            var JaNein = DelShowConfirmationWindow?.Invoke($"Wollen Sie die Daten ändern?") ?? false;
-            if (JaNein)
+            var bolYes = DelShowConfirmationWindow?.Invoke($"Wollen Sie die Daten ändern?") ?? false;
+            if (bolYes)
             {
                 IsPageBusy = true;
                 var resp = await DBUnit.Haus.UpdateAsync(Haus);
@@ -174,8 +180,8 @@ public partial class HausViewModel : BaseViewModel
                 return;
             }
 
-            var JaNein = DelShowConfirmationWindow?.Invoke($"Wollen Sie das Haus löschen?") ?? false;
-            if (JaNein)
+            var bolYes = DelShowConfirmationWindow?.Invoke($"Wollen Sie das Haus löschen?") ?? false;
+            if (bolYes)
             {
                 IsPageBusy = true;
                 var resp = await DBUnit.Haus.DeleteByIDAsync(Haus.ID);
@@ -207,9 +213,9 @@ public partial class HausViewModel : BaseViewModel
     {
         var filename = DelShowFileDialog?.Invoke();
 
-        if (filename is null || string.IsNullOrEmpty(filename)) return;
+        if (filename == null || string.IsNullOrEmpty(filename)) return;
 
-        if (Haus is null) { Haus = new(); }
+        //if (Haus == null) { Haus = new(); }
         Haus.Bild = File.ReadAllBytes(filename);
         OnPropertyChanged(nameof(Haus));
     }
@@ -221,10 +227,10 @@ public partial class HausViewModel : BaseViewModel
             IsPageBusy = true;
             List<Haus> lstHausFilter = new();
 
-            if (!string.IsNullOrEmpty(HausFilterText))
+            if (!string.IsNullOrEmpty(value))
             {
-                var hLst = await Task.Run(() => HaeuserBackup.Where(h => h.AuftragID.Contains(HausFilterText)));
-                lstHausFilter.AddRange(hLst);
+                var hausLst = await Task.Run(() => HaeuserBackup.Where(h => h.AuftragID.Contains(value)));
+                lstHausFilter.AddRange(hausLst);
             }
 
             Haeuser.Clear();

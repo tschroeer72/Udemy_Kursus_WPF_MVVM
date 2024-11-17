@@ -52,7 +52,7 @@
             <StackPanel x:Name="UserPanel"
                         Orientation="Horizontal"
                         VerticalAlignment="Center">
-                <Label Name="LblUsermail" Content="{Binding LoginUser.Email, Source={x:Static vms:UserManager.LoginUserInfo}}"
+                <Label Name="LblUsermail" Content="{Binding Source={x:Static vms:UserManager.LoginUserInfo}, Path=LoginUser.Email}"
                        FontSize="18"
                        FontWeight="Bold"                       
                        FontFamily="Roboto"

@@ -1,11 +1,14 @@
-﻿using Kursprojekt.View.Pages;
+﻿using System.Reflection;
+using Kursprojekt.View.Pages;
 using Kursprojekt.View.Services;
 using Kursprojekt.View.Windows;
 using Kursprojekt.ViewModel;
 using Microsoft.Extensions.DependencyInjection;
 using System.Windows;
+using FluentValidation;
 using Kursprojekt.Validators;
 using Kursprojekt.Services;
+using Kursprojekt.Datenbank.DBServices;
 
 namespace Kursprojekt;
 
@@ -26,18 +29,26 @@ public partial class App : Application
     private void ConfigureServices(ServiceCollection services)
     {
         //AutoMapper 
-        services.AddAutoMapper(typeof(MappingConfig));
+        //services.AddAutoMapper(typeof(MappingConfig));
 
-        //Validator 
-        services.AddSingleton<UserLoginValidator>();
-        services.AddSingleton<UserModelValidator>();
-        services.AddSingleton<HausAddAndUpdateValidator>();
+        ////Validator 
+        //services.AddSingleton<UserLoginValidator>();
+        //services.AddSingleton<UserModelValidator>();
+        //services.AddSingleton<HausAddAndUpdateValidator>();
+
+        //----------------
 
         //AutoMapper && Validator  
-        //Type VMAssembyRefTyp = typeof(MappingConfig);
-        //services.AddAutoMapper(VMAssembyRefTyp);
-        //services.AddValidatorsFromAssemblyContaining(VMAssembyRefTyp);
+        Type VMAssembyRefTyp = typeof(MappingConfig);
+        services.AddAutoMapper(VMAssembyRefTyp);
+        services.AddValidatorsFromAssemblyContaining(VMAssembyRefTyp);
 
+        //----------------
+
+        //Assembly Ass = Assembly.LoadFrom("Kursprojekt");
+        //services.AddValidatorsFromAssembly(Ass);
+
+        //--------------------
         //Views und ViewModels
         services.AddSingleton<MainView>();
         services.AddSingleton<MainViewModel>();
@@ -67,7 +78,7 @@ public partial class App : Application
         services.AddSingleton<LoginViewModel>();
     }
 
-    protected override void OnStartup(StartupEventArgs e)
+    protected override async void OnStartup(StartupEventArgs e)
     {
         //MainView mainView = new();
         //mainView.Show();
@@ -80,7 +91,7 @@ public partial class App : Application
         }
 
         ViewManager.InitViewManager(mainView!, _ServiceProvider);
-        ViewManager.ServiceProvider = _ServiceProvider;
+        //await DBUnit.User.GetAllAsync();
         mainView!.Show();
 
         base.OnStartup(e);

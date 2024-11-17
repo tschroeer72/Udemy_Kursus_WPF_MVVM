@@ -127,6 +127,8 @@ public partial class UserViewModel: BaseViewModel
             MessageAdd = "";
             if (IsPageNotBusy)
             {
+                IsPageBusy = true;
+
                 if (User.ID > 0)
                 {
                     MessageAdd = "Bei einem neuen User bitte auf 'ALLES NEU' klicken!";
