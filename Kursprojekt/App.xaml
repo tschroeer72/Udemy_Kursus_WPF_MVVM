@@ -443,7 +443,16 @@
                 <Setter Property="md:TextFieldAssist.UnderlineBrush" Value="{StaticResource AppColorCyan}"/>
             </Style>
 
-
+            <!--DatePicker Property="DisplayDateStart" Value="{x:Static system:DateTime.Now}"-->
+            <Style TargetType="DatePicker" BasedOn="{StaticResource MaterialDesignFloatingHintDatePicker}">
+                <Setter Property="SelectedDateFormat" Value="Short"/>
+                <Setter Property="FontSize" Value="20"/>
+                <Setter Property="Background" Value="Transparent"/>
+                <Setter Property="BorderBrush" Value="{StaticResource AppColorCyan}"/>
+                <Setter Property="md:TextFieldAssist.UnderlineBrush" Value="{StaticResource AppColorCyan}"/>
+                <Setter Property="md:HintAssist.FloatingScale" Value="1.2"/>
+                <Setter Property="md:HintAssist.Foreground" Value="{StaticResource AppColorCyan}"/>
+            </Style>
 
         </ResourceDictionary>
     </Application.Resources>
