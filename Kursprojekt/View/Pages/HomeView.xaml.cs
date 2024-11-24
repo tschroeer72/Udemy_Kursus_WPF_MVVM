@@ -15,22 +15,32 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Kursprojekt.View.Pages
+namespace Kursprojekt.View.Pages;
+
+/// <summary>
+/// Interaktionslogik für HomeView.xaml
+/// </summary>
+public partial class HomeView : UserControl
 {
-    /// <summary>
-    /// Interaktionslogik für HomeView.xaml
-    /// </summary>
-    public partial class HomeView : UserControl
+    public HomeViewModel HomeViewModel { get; }
+
+    public HomeView(HomeViewModel homeViewModel)
     {
-        public HomeViewModel HomeViewModel { get; }
+        InitializeComponent();
+        HomeViewModel = homeViewModel;
+        DataContext = HomeViewModel;
+        HomeViewModel.InitBaseViewModelDelegateAndEvents();
 
-        public HomeView(HomeViewModel homeViewModel)
+        HomeViewModel.EventScrollToSelectedHaus += (s, e) => ScrollToSelectedHaus(s);
+    }
+
+    private void ScrollToSelectedHaus(object? sender)
+    {
+        if (sender is int index)
         {
-            InitializeComponent();
-            HomeViewModel = homeViewModel;
-            DataContext = HomeViewModel;
-            HomeViewModel.InitBaseViewModelDelegateAndEvents();
-        }
+            if (index < 0 && LstBxPerson.Items.Count < index) return;
 
+            LstBxPerson.ScrollIntoView(LstBxPerson.Items[index]);
+        }
     }
 }

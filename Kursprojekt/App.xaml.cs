@@ -9,6 +9,8 @@ using FluentValidation;
 using Kursprojekt.Validators;
 using Kursprojekt.Services;
 using Kursprojekt.Datenbank.DBServices;
+using System.Windows.Markup;
+using System.Globalization;
 
 namespace Kursprojekt;
 
@@ -93,6 +95,8 @@ public partial class App : Application
         ViewManager.InitViewManager(mainView!, _ServiceProvider);
         //await DBUnit.User.GetAllAsync();
         mainView!.Show();
+
+        FrameworkElement.LanguageProperty.OverrideMetadata(typeof(FrameworkElement), new FrameworkPropertyMetadata(XmlLanguage.GetLanguage(CultureInfo.CurrentUICulture.Name)));
 
         base.OnStartup(e);
     }

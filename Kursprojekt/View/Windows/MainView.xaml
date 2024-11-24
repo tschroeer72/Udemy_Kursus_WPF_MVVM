@@ -52,7 +52,7 @@
             <StackPanel x:Name="UserPanel"
                         Orientation="Horizontal"
                         VerticalAlignment="Center">
-                <Label Name="LblUsermail" Content="{Binding Source={x:Static vms:UserManager.LoginUserInfo}, Path=LoginUser.Email}"
+                <Label Name="LblUsermail" Content="{Binding Source={x:Static vms:UserManager.LoginUserInfos}, Path=LoginUser.Email}"
                        FontSize="18"
                        FontWeight="Bold"                       
                        FontFamily="Roboto"
@@ -170,7 +170,7 @@
                              Click="OpenPageOnMain">
                 </RadioButton>
                 <RadioButton x:Name="BtnAdmin" GroupName="grpTitleBar"
-                             IsEnabled="{Binding IsAdmin, Source={x:Static vms:UserManager.LoginUserInfo}}"
+                             IsEnabled="{Binding IsAdmin, Source={x:Static vms:UserManager.LoginUserInfos}}"
                              Style="{StaticResource BtnMainMenuStyle}"
                              Content="Admin" FontSize="30"
                              Width="210" Height="44"

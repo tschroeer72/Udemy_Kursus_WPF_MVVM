@@ -31,6 +31,10 @@
             <!--Converters-->
             <Conv:BoolToVisibilityConverter x:Key="BoolToVisConverter"/>
             <Conv:BytesArrayToBitmapImageConverter x:Key="BytesArrayToBitmapImageConverter"/>
+            <Conv:DateYearOneToEmptyDateConverter x:Key="DateYearOneToEmptyDateConverter"/>
+            <Conv:BoolToVerkauftTextConverter x:Key="BoolToVerkauftTextConverter"/>
+            <Conv:BoolToVerfuegbarkeitTextConverter x:Key="BoolToVerfuegbarkeitTextConverter"/>
+            <Conv:BoolToGreenConverter x:Key="BoolToGreenConverter"/>
 
             <!--Button-->
             <Style x:Key="GoBackBtnStyle" TargetType="Button" BasedOn="{StaticResource MaterialDesignPaperButton}">

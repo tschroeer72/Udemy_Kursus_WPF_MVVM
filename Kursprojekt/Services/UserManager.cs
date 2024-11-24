@@ -9,7 +9,7 @@ namespace Kursprojekt.Services;
 
 public class UserManager
 {
-    public static LoginUserInfos LoginUserInfo { get; set; } = new();
+    public static LoginUserInfos LoginUserInfos { get; set; } = new();
 
     private static void HashUserPassword(ref AppUser appUser)
     {
@@ -110,9 +110,9 @@ public class UserManager
 
     public static void SetLoginUserInfos(AppUser oAppUSer)
     {
-        LoginUserInfo.LoginUser = oAppUSer;
-        LoginUserInfo.IsAdmin = IsUserInRole(oAppUSer, RoleType.Admin);
-        LoginUserInfo.IsUser = IsUserInRole(oAppUSer, RoleType.User);
-        LoginUserInfo.IsNurLesenUser = IsUserInRole(oAppUSer, RoleType.NurLesen);
+        LoginUserInfos.LoginUser = oAppUSer;
+        LoginUserInfos.IsAdmin = IsUserInRole(oAppUSer, RoleType.Admin);
+        LoginUserInfos.IsUser = IsUserInRole(oAppUSer, RoleType.User);
+        LoginUserInfos.IsNurLesenUser = IsUserInRole(oAppUSer, RoleType.NurLesen);
     }
 }

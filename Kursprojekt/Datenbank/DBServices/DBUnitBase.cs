@@ -123,7 +123,7 @@ public class DBUnitBase<ModelName> where ModelName : class
 
     }
     
-    public async Task<IEnumerable<ModelName>?> GetAllAsync(Expression<Func<ModelName, bool>>? filter = null, string? includeProperties = null)
+    public async Task<List<ModelName>?> GetAllAsync(Expression<Func<ModelName, bool>>? filter = null, string? includeProperties = null)
     {
         try
         {
