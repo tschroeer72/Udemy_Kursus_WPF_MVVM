@@ -6,6 +6,9 @@
              xmlns:local="clr-namespace:Kursprojekt.View.Pages" 
              xmlns:vm="clr-namespace:Kursprojekt.ViewModel" 
              xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+             xmlns:lc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"  
+             xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes" 
+             xmlns:mw="http://metro.mahapps.com/winfx/xaml/controls"
              d:DataContext="{d:DesignInstance Type=vm:BuchungViewModel}"
              mc:Ignorable="d" 
              d:DesignHeight="800" d:DesignWidth="1400">
@@ -18,24 +21,851 @@
     
     <Grid Background="{StaticResource MaterialDesignPaper}">
         <Grid.RowDefinitions>
-            <RowDefinition Height="50"/>
+            <RowDefinition Height="60"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Grid Grid.Row="0">
-            <Grid HorizontalAlignment="Left">
-                <TextBlock Text="{Binding Titel}"
-                   Style="{StaticResource TitelTxtBxStyle}">
-                </TextBlock>
-            </Grid>
+        <Border Grid.Row="0" BorderThickness="0 1 0 1" 
+                BorderBrush="{StaticResource AppColorCyan}">
+            <Grid>
+                <!--Titel-->
+                <Grid HorizontalAlignment="Left" MinWidth="100">
+                    <TextBlock Text="{Binding Titel}" 
+                               FontSize="36" 
+                               FontWeight="ExtraBold"
+                               Foreground="{StaticResource AppColorCyan}"
+                               FontFamily="forte">
+                    </TextBlock>
+                </Grid>
 
-            <Grid HorizontalAlignment="Right">
+                <!--DatePickers und Daten Aufruf-->
+                <Grid HorizontalAlignment="Right">
+                    <StackPanel Orientation="Horizontal">
+                        <Border>
+                            <StackPanel Orientation="Horizontal"
+                                        Margin="0 0 30 0" Cursor="Hand"
+                                        VerticalAlignment="Center"
+                                        HorizontalAlignment="Stretch">
 
+                                <Viewbox Height="36" VerticalAlignment="Bottom">
+                                    <RadioButton  GroupName="A" 
+                                                  Content="Innerhalb"
+                                                  Foreground="{StaticResource AppColorCyan}"                                        
+                                                  FontSize="16" 
+                                                  FontWeight="ExtraBold"
+                                                  Cursor="Hand">
+                                    </RadioButton>
+                                </Viewbox>
+
+                                <StackPanel Orientation="Horizontal" Margin="10 0">
+                                    <DatePicker Name="DPickerVon" 
+                                                md:HintAssist.Hint="von:" 
+                                                SelectedDate="{Binding VonDateFilter,UpdateSourceTrigger=PropertyChanged, Converter={StaticResource DateYearOneToEmptyDateConverter}}"   
+                                                Width="150" 
+                                                Margin="0 0 6 0" 
+                                                FontWeight="ExtraBold"
+                                                Foreground="{StaticResource AppColorCyan}">
+                                    </DatePicker>
+
+                                    <DatePicker Name="DPickerBis" 
+                                                md:HintAssist.Hint="bis:" 
+                                                SelectedDate="{Binding BisDateFilter, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource DateYearOneToEmptyDateConverter}}"   
+                                                Width="150"
+                                                FontWeight="ExtraBold"
+                                                Foreground="{StaticResource AppColorCyan}">
+                                    </DatePicker>
+                                </StackPanel>
+
+                                <Viewbox Height="36" VerticalAlignment="Bottom">
+                                    <RadioButton Name="RdBtnALLE" 
+                                                 GroupName="A"  
+                                                 Content="Alle"
+                                                 Margin="6 0 0 0" 
+                                                 FontWeight="ExtraBold"
+                                                 Foreground="{StaticResource AppColorCyan}"
+                                                 FontSize="16"
+                                                 Cursor="Hand"
+                                                 IsChecked="{Binding BoolAlleBuchungen, UpdateSourceTrigger=PropertyChanged}">
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="Checked">
+                                                <i:ChangePropertyAction TargetName="DPickerVon" PropertyName="SelectedDate" Value=""/>
+                                                <i:ChangePropertyAction TargetName="DPickerBis" PropertyName="SelectedDate" Value=""/>
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
+                                    </RadioButton>
+                                </Viewbox>
+                            </StackPanel>
+                        </Border>
+
+                        <Button Content="Daten aufrufen" Height="40"   
+                                VerticalAlignment="Bottom" Margin="0 0 4 5"
+                                Command="{Binding ReSetInitDataCommand}">
+                        </Button>
+                    </StackPanel>
+                </Grid>
             </Grid>
-        </Grid>
+        </Border>
 
         <Grid Grid.Row="1">
-            
+            <mw:MetroAnimatedTabControl>
+
+                <!--RESERVIERUNGEN-->
+                <mw:MetroTabItem Header="Reservierungen" HeaderTemplate="{StaticResource TabButtonTemplate}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1.1*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <!--Grid.Column="0" Titel, ListBox und Filtern-->
+                        <Border Grid.Column="0" 
+                                Margin="0 2 0 0" 
+                                BorderThickness="0 1 0 0" 
+                                BorderBrush="White">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="140"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+
+                                <!--Titel und Filtern-->
+                                <StackPanel Grid.Row="0" Orientation="Vertical">
+                                    <!--Titel-->
+                                    <Grid HorizontalAlignment="Left" MinWidth="100">
+                                        <TextBlock Text="Reservierungen" 
+                                                   FontSize="36" 
+                                                   FontWeight="ExtraBold"
+                                                   Foreground="{StaticResource AppColorCyan}"
+                                                   FontFamily="forte">
+                                        </TextBlock>
+                                    </Grid>
+                                    <!--Filtern-->
+                                    <TextBox md:HintAssist.Hint="AuftragID suchen:"
+                                             HorizontalAlignment="Left"
+                                             Margin="10 0 0 20"
+                                             Width="250"
+                                             FontSize="20" 
+                                             Height="60"
+                                             FontWeight="ExtraBold" 
+                                             Text="{Binding BuchungFilterText, UpdateSourceTrigger=PropertyChanged}"
+                                             Style="{StaticResource TextBxAngabenStyle}" Cursor="Arrow">
+                                    </TextBox>
+                                </StackPanel>
+
+                                <!--ListBox-->
+                                <Grid Grid.Row="1">
+                                    <!--ListBox-->
+                                    <ListBox x:Name="ListBoxBuchungen" 
+                                             ItemsSource="{Binding Buchungen}" 
+                                             SelectedItem="{Binding Buchung}"
+                                             ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                                        <!--ItemContainerStyle-->
+                                        <ListBox.ItemContainerStyle>
+                                            <Style TargetType="ListBoxItem">
+                                                <Setter Property="Padding" Value="0"/>
+                                                <Setter Property="Margin" Value="4 0 4 8"/>
+                                                <Setter Property="Template">
+                                                    <Setter.Value>
+                                                        <ControlTemplate TargetType="ListBoxItem">
+                                                            <Border x:Name="TemplateBorder"  
+                                                                    Background="White"
+                                                                    BorderThickness="10 1"
+                                                                    BorderBrush="{StaticResource AppColorCyan}"
+                                                                    CornerRadius="8">
+                                                                <StackPanel Orientation="Horizontal" >
+                                                                    <!--Image Left Width="250" von 900-->
+                                                                    <Border Width="250"
+                                                                            Height="280" 
+                                                                            BorderThickness="0 0 1 0"
+                                                                            BorderBrush="{StaticResource AppColorCyan}">
+                                                                        <Image Stretch="UniformToFill" 
+                                                                               Width="250" 
+                                                                               Height="250"
+                                                                               mw:ControlsHelper.CornerRadius="6"
+                                                                               Source="{Binding Haus.Bild, Converter={StaticResource BytesArrayToBitmapImageConverter}}">
+                                                                        </Image>
+                                                                    </Border>
+
+                                                                    <!--Data Right  Width="650" von 900-->
+                                                                    <StackPanel Orientation="Vertical" 
+                                                                                Cursor="Hand" 
+                                                                                Background="Transparent">
+                                                                        <!--Data Info-->
+                                                                        <Border Margin="6 0 0 0" 
+                                                                                Padding="10 0 0 0"
+                                                                                MinWidth="500">
+                                                                            <StackPanel Orientation="Vertical">
+                                                                                <!--IsReserviert-->
+                                                                                <Label Content="{Binding Haus.IstReserviert, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource BoolToVerfuegbarkeitTextConverter}}"
+                                                                                       Foreground= "{Binding Haus.IstReserviert, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource BoolToGreenConverter}}"
+                                                                                       FontWeight="ExtraBold"
+                                                                                       FontFamily="roboto"
+                                                                                       FontSize="24" 
+                                                                                       Height="24"
+                                                                                       Padding="0"
+                                                                                       HorizontalAlignment="Center">
+                                                                                </Label>
+
+                                                                                <!--AUFTRAG NUMMER-->
+                                                                                <Label Content="Auftragsnr.:" 
+                                                                                       FontWeight="ExtraBold" 
+                                                                                       FontFamily="roboto" 
+                                                                                       FontSize="20" 
+                                                                                       Height="24" 
+                                                                                       Padding="0"
+                                                                                       HorizontalAlignment="Left"> 
+                                                                                </Label>
+                                                                                <TextBlock Text="{Binding Haus.ID, UpdateSourceTrigger=PropertyChanged}"
+                                                                                    Foreground="{StaticResource AppColorCyan}" 
+                                                                                    FontFamily="Antique Olive"
+                                                                                    FontSize="18" Height="26"
+                                                                                    Padding="0"
+                                                                                    TextAlignment="Left"
+                                                                                    HorizontalAlignment="Left">
+                                                                                </TextBlock>
+
+                                                                                <!--ZIMMER ANZAHL-->
+                                                                                <Label Content="Zimmeranzahl:"
+                                                                                     FontWeight="ExtraBold"
+                                                                                     FontFamily="roboto"
+                                                                                     FontSize="20" Height="24" Width="200"
+                                                                                     Padding="0"
+                                                                                     HorizontalAlignment="Left">
+                                                                                </Label>
+                                                                                <Label Content="{Binding Haus.ZimmerAnzahl, UpdateSourceTrigger=PropertyChanged}"   
+                                                                                       Foreground="{StaticResource AppColorCyan}" 
+                                                                                       FontFamily="Antique Olive"
+                                                                                       FontSize="18" Height="26" Width="200"
+                                                                                       Padding="0"
+                                                                                       HorizontalAlignment="Left">
+                                                                                </Label>
+
+                                                                                <!--PREIS-->
+                                                                                <Label Content="Preis:"
+                                                                                      FontWeight="ExtraBold"
+                                                                                      FontFamily="roboto"
+                                                                                      FontSize="20" Height="24" Width="200"
+                                                                                      Padding="0"
+                                                                                      HorizontalAlignment="Left">
+                                                                                </Label>
+                                                                                <TextBlock Text="{Binding Haus.Preis, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0} Euro}"
+                                                                                     Foreground="{StaticResource AppColorCyan}"
+                                                                                     FontFamily="Antique Olive"
+                                                                                     FontSize="18" Height="26" Width="200"
+                                                                                     Padding="0"
+                                                                                     HorizontalAlignment="Left">
+                                                                                </TextBlock>
+
+                                                                                <!--ANSCHRIFT-->
+                                                                                <Label Content="Anschrift:"
+                                                                                    FontWeight="ExtraBold"
+                                                                                    FontFamily="roboto"
+                                                                                    FontSize="20" Height="24" Width="200"
+                                                                                    Padding="0"
+                                                                                    HorizontalAlignment="Left">
+                                                                                </Label>
+                                                                                <TextBlock Text="{Binding Haus.Anschrift, UpdateSourceTrigger=PropertyChanged}"
+                                                                                    Foreground="{StaticResource AppColorCyan}"
+                                                                                    FontFamily="Antique Olive"
+                                                                                    FontSize="18" Height="26"
+                                                                                    Padding="0" TextWrapping="Wrap"
+                                                                                    HorizontalAlignment="Left">
+                                                                                </TextBlock>
+
+                                                                            </StackPanel>
+                                                                        </Border>
+
+                                                                        <!--Buttons-->
+                                                                        <Border Margin="6 0 0 0" Padding="10 0 0 0">
+                                                                            <StackPanel Orientation="Horizontal">
+                                                                                <Button x:Name="BtnVerkauf" 
+                                                                                    Visibility="Hidden"
+                                                                                    Content="Verkaufen" 
+                                                                                    Width="200" Margin="10 10 20 10"
+                                                                                    HorizontalAlignment="Right"
+                                                                                    Command="{Binding ElementName=ListBoxBuchungen, 
+                                                                                    Path= DataContext.BuchungHausVerkaufenCommand}">
+                                                                                </Button>
+
+                                                                                <Button x:Name="BtnStornieren" Visibility="Hidden"
+                                                                                    Content="Stornieren"
+                                                                                    Width="200" Margin="10 10 50 10"
+                                                                                    HorizontalAlignment="Right"
+                                                                                    Foreground="DarkRed" 
+                                                                                    Command="{Binding ElementName=ListBoxBuchungen, 
+                                                                                    Path= DataContext.BuchungStornierenCommand}">
+                                                                                </Button>
+                                                                            </StackPanel>
+
+                                                                        </Border>
+                                                                    </StackPanel>
+                                                                </StackPanel>
+                                                            </Border>
+
+                                                            <ControlTemplate.Triggers>
+                                                                <Trigger Property="IsMouseOver" Value="True">
+                                                                    <Setter TargetName="TemplateBorder" Property="Background" Value="AliceBlue"/>
+                                                                </Trigger>
+
+                                                                <Trigger Property="IsSelected" Value="True">
+                                                                    <Setter TargetName="TemplateBorder" Property="BorderThickness" Value="10 0 10 10"/>
+                                                                    <Setter TargetName="BtnStornieren" Property="Visibility" Value="Visible"/>
+                                                                    <Setter TargetName="BtnVerkauf" Property="Visibility" Value="Visible"/>
+                                                                </Trigger>
+                                                            </ControlTemplate.Triggers>
+                                                        </ControlTemplate>
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </Style>
+                                        </ListBox.ItemContainerStyle>
+                                    </ListBox>
+
+                                    <!--ProgressRing-->
+                                    <mw:ProgressRing 
+                                          IsActive="True"
+                                          Visibility="{Binding IsPageBusy,
+                                             Converter={StaticResource BoolToVisConverter}}"
+                                          VerticalAlignment="Center"
+                                          HorizontalAlignment="Center"
+                                          Height="100" Width="100">
+                                    </mw:ProgressRing>
+                                </Grid>
+                            </Grid>
+                        </Border>
+
+                        <!--Grid.Column="1" Data Info-->
+                        <Grid Grid.Column="1">
+                            <md:Card Margin="10 0 10 10"
+                                     md:ShadowAssist.ShadowDepth="Depth2" 
+                                     Background="{StaticResource MaterialDesignPaper}">
+                                <Border BorderThickness="10 0 0 0"
+                                         BorderBrush="{StaticResource AppColorCyan}">
+                                    <Border BorderThickness="1"
+                                           BorderBrush="{StaticResource AppColorCyan}"
+                                           CornerRadius="20"
+                                           Background="{StaticResource AppColorCyan}"
+                                           Margin="10 0 0 0">
+
+                                        <ScrollViewer>
+                                            <StackPanel Orientation="Vertical"
+                                                    Margin="10">
+                                                <!--IstReserviert-->
+                                                <Label Content="{Binding Buchung.Haus.IstReserviert, UpdateSourceTrigger=PropertyChanged,
+                                                       Converter={StaticResource BoolToVerfuegbarkeitTextConverter}}"
+                                                       Foreground= "{Binding Buchung.Haus.IstReserviert, UpdateSourceTrigger=PropertyChanged,
+                                                       Converter={StaticResource BoolToGreenConverter}}"
+                                                       FontWeight="ExtraBold"
+                                                       FontFamily="roboto"
+                                                       FontSize="40"
+                                                       Padding="0"
+                                                       Margin="0 0 0 20"
+                                                       HorizontalAlignment="Center">
+                                                </Label>
+
+                                                <!--AUFTRAG NUMMER-->
+                                                <Label Content="Auftragnr.:"
+                                                           FontWeight="ExtraBold"
+                                                           FontFamily="roboto"
+                                                           FontSize="40"
+                                                           Padding="0"
+                                                           HorizontalAlignment="Left">
+                                                </Label>
+                                                <TextBlock Text="{Binding Buchung.Haus.ID, UpdateSourceTrigger=PropertyChanged}"
+                                                         Foreground="White" 
+                                                         FontFamily="Antique Olive"
+                                                         FontSize="30"
+                                                         Padding="0"
+                                                         Margin="0 0 0 20"
+                                                         TextAlignment="Left"
+                                                         HorizontalAlignment="Left">
+                                                </TextBlock>
+
+                                                <!--BEARBEITER-->
+                                                <Label Content="Bearbeiter:"
+                                                           FontWeight="ExtraBold"
+                                                           FontFamily="roboto"
+                                                           FontSize="40"
+                                                           Padding="0"
+                                                           HorizontalAlignment="Left">
+                                                </Label>
+                                                <TextBlock Text="{Binding Buchung.Bearbeiter, UpdateSourceTrigger=PropertyChanged}"
+                                                           Foreground="White" 
+                                                           FontFamily="Antique Olive"
+                                                           FontSize="30"
+                                                           Padding="0"
+                                                           Margin="0 0 0 20"
+                                                           HorizontalAlignment="Left">
+                                                </TextBlock>
+
+                                                <!--KundenName-->
+                                                <Label Content="Kundenname:"
+                                                         FontWeight="ExtraBold"
+                                                         FontFamily="roboto"
+                                                         FontSize="40"
+                                                         Padding="0"
+                                                         HorizontalAlignment="Left">
+                                                </Label>
+                                                <TextBlock Text="{Binding Buchung.KundenName, UpdateSourceTrigger=PropertyChanged}"
+                                                          Foreground="White" 
+                                                          FontFamily="Antique Olive"
+                                                          FontSize="30"
+                                                          Padding="0"
+                                                          Margin="0 0 0 20"
+                                                          HorizontalAlignment="Left">
+                                                </TextBlock>
+
+                                                <!--KundenTelefonNummer-->
+                                                <Label Content="Kunden Telefunnr.:"
+                                                         FontWeight="ExtraBold"
+                                                         FontFamily="roboto"
+                                                         FontSize="40"
+                                                         Padding="0"
+                                                         HorizontalAlignment="Left">
+                                                </Label>
+                                                <TextBlock Text="{Binding Buchung.KundenTelefonNummer, UpdateSourceTrigger=PropertyChanged}"
+                                                       Foreground="White" 
+                                                       FontFamily="Antique Olive"
+                                                       FontSize="30"
+                                                       Padding="0"
+                                                       Margin="0 0 0 20"
+                                                       HorizontalAlignment="Left">
+                                                </TextBlock>
+
+                                                <!--BesichtigungsDatum-->
+                                                <Label Content="Besichtigungsdatum:"
+                                                         FontWeight="ExtraBold"
+                                                         FontFamily="roboto"
+                                                         FontSize="40"
+                                                         Padding="0"
+                                                         HorizontalAlignment="Left">
+                                                </Label>
+                                                <TextBlock Text="{Binding Buchung.BesichtigungDatum, UpdateSourceTrigger=PropertyChanged,StringFormat=dd.MM.yyyy}"
+                                                       Foreground="White" 
+                                                       FontFamily="Antique Olive"
+                                                       FontSize="30"
+                                                       Padding="0"
+                                                       Margin="0 0 0 20"
+                                                       HorizontalAlignment="Left">
+                                                </TextBlock>
+
+                                                <!--Besichtigungzeit-->
+                                                <Label Content="Besichtigungszeit:"
+                                                        FontWeight="ExtraBold"
+                                                        FontFamily="roboto"
+                                                        FontSize="40"
+                                                        Padding="0"
+                                                        HorizontalAlignment="Left">
+                                                </Label>
+                                                <TextBlock Text="{Binding Buchung.BesichtigungZeit, UpdateSourceTrigger=PropertyChanged}"
+                                                       Foreground="White" 
+                                                       FontFamily="Antique Olive"
+                                                       FontSize="30"
+                                                       Padding="0"
+                                                       Margin="0 0 0 20"
+                                                       HorizontalAlignment="Left">
+                                                </TextBlock>
+
+                                                <!--BuchungsDatum-->
+                                                <Label Content="Buchungsdatum:"
+                                                        FontWeight="ExtraBold"
+                                                        FontFamily="roboto"
+                                                        FontSize="40"
+                                                        Padding="0"
+                                                        HorizontalAlignment="Left">
+                                                </Label>
+                                                <TextBlock Text="{Binding Buchung.BuchungDatum, UpdateSourceTrigger=PropertyChanged,StringFormat=dd.MM.yyyy}"
+                                                       Foreground="White" 
+                                                       FontFamily="Antique Olive"
+                                                       FontSize="30"
+                                                       Padding="0"
+                                                       Margin="0 0 0 20"
+                                                       HorizontalAlignment="Left">
+                                                </TextBlock>
+
+                                                <!--ZIMMER ANZAHL-->
+                                                <Label Content="Zimmeranzahl:"
+                                                        FontWeight="ExtraBold"
+                                                        FontFamily="roboto"
+                                                        FontSize="40"
+                                                        Padding="0"
+                                                        HorizontalAlignment="Left">
+                                                </Label>
+                                                <Label Content="{Binding Buchung.Haus.ZimmerAnzahl, UpdateSourceTrigger=PropertyChanged}"   
+                                                        Foreground="White" 
+                                                        FontFamily="Antique Olive"
+                                                        FontSize="30"
+                                                        Padding="0"
+                                                        Margin="0 0 0 20"
+                                                        HorizontalAlignment="Left">
+                                                </Label>
+
+                                                <!--PREIS-->
+                                                <Label Content="Preis:"
+                                                         FontWeight="ExtraBold"
+                                                         FontFamily="roboto"
+                                                         FontSize="40"
+                                                         Padding="0"
+                                                         HorizontalAlignment="Left">
+                                                </Label>
+                                                <TextBlock Text="{Binding Buchung.Haus.Preis, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0} Euro}"
+                                                       Foreground="White" 
+                                                       FontFamily="Antique Olive"
+                                                       FontSize="30"
+                                                       Padding="0"
+                                                       Margin="0 0 0 20"
+                                                       HorizontalAlignment="Left">
+                                                </TextBlock>
+
+                                                <!--Anschrift-->
+                                                <Label Content="Anschrift:"
+                                                        FontWeight="ExtraBold"
+                                                        FontFamily="roboto"
+                                                        FontSize="40"
+                                                        Padding="0"
+                                                        HorizontalAlignment="Left">
+                                                </Label>
+                                                <TextBlock Text="{Binding Buchung.Haus.Anschrift, UpdateSourceTrigger=PropertyChanged}"
+                                                       Foreground="White" 
+                                                       FontFamily="Antique Olive"
+                                                       FontSize="30" TextWrapping="Wrap"
+                                                       Padding="0"
+                                                       Margin="0 0 0 20"
+                                                       HorizontalAlignment="Left">
+                                                </TextBlock>
+
+                                            </StackPanel>
+                                        </ScrollViewer>
+                                    </Border>
+                                </Border>
+                            </md:Card>
+                        </Grid>
+                    </Grid>
+                </mw:MetroTabItem>
+
+                <!--VERKAUFTE HÄUSER-->
+                <mw:MetroTabItem Header="Verkaufte Häuser" HeaderTemplate="{StaticResource TabButtonTemplate}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="1.4*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <!--Grid.Column="0" Titel, ListBox und Filtern-->
+                        <Border Grid.Column="0" Margin="0 2 0 0" 
+                                BorderThickness="0 1 0 0" 
+                                BorderBrush="White">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="140"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+
+                                <!--Titel und Filtern-->
+                                <StackPanel Grid.Row="0" Orientation="Vertical">
+                                    <!--Titel-->
+                                    <Grid HorizontalAlignment="Left" 
+                                          MinWidth="100">
+                                        <TextBlock Text="Verkaufte Häuser" 
+                                         FontSize="36" 
+                                         FontWeight="ExtraBold"
+                                         Foreground="{StaticResource AppColorCyan}"
+                                         FontFamily="forte">
+                                        </TextBlock>
+                                    </Grid>
+
+                                    <!--Filtern und Button-->
+                                    <Grid>
+                                        <TextBox md:HintAssist.Hint="AuftragID suchen:"
+                                         HorizontalAlignment="Left"
+                                         Margin="10 0 0 20"
+                                         Width="250" FontSize="20" Height="60"
+                                         FontWeight="ExtraBold" 
+                                         Text="{Binding VerkaufFilterText, UpdateSourceTrigger=PropertyChanged}"
+                                         Style="{StaticResource TextBxAngabenStyle}" Cursor="Arrow">
+                                            <i:Interaction.Triggers>
+                                                <i:EventTrigger EventName="TextChanged">
+                                                    <i:InvokeCommandAction Command="{Binding VerkaufFilternCommand}"/>
+                                                </i:EventTrigger>
+                                            </i:Interaction.Triggers>
+                                        </TextBox>
+
+                                        <Button Content="Chartdaten aufrufen"
+                                            HorizontalAlignment="Right"
+                                            Height="40"                        
+                                           Command="{Binding ShowBarChartDataCommand}">
+                                        </Button>
+                                    </Grid>
+                                </StackPanel>
+                                <!-- ListBox-->
+                                <Grid Grid.Row="1">
+                                    <!--ListBox-->
+                                    <ListBox ItemsSource="{Binding VerkaufteHäuser}" 
+                                         SelectedItem="{Binding Haus}"
+                                         ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                                        <!--ItemContainerStyle-->
+                                        <ListBox.ItemContainerStyle>
+                                            <Style TargetType="ListBoxItem" BasedOn="{StaticResource MaterialDesignNavigationPrimaryListBoxItem}">
+                                                <Setter Property="Padding" Value="0"/>
+                                                <Setter Property="Margin" Value="4 0 4 8"/>
+                                                <Setter Property="Template">
+                                                    <Setter.Value>
+                                                        <ControlTemplate TargetType="ListBoxItem">
+                                                            <Border x:Name="TemplateBorder"  Background="White"
+                                                                    BorderThickness="10 1"
+                                                                    BorderBrush="{StaticResource AppColorCyan}"
+                                                                    CornerRadius="8">
+                                                                <StackPanel x:Name="test" Orientation="Horizontal">
+                                                                    <!--Image Left Width="250" von 900-->
+                                                                    <Border Width="250"
+                                                                            Height="280" 
+                                                                            BorderThickness="0 0 1 0"
+                                                                            BorderBrush="{StaticResource AppColorCyan}">
+                                                                        <Image Stretch="UniformToFill" 
+                                                                              Width="250" Height="250"
+                                                                              mw:ControlsHelper.CornerRadius="6"
+                                                                              Source="{Binding Bild, 
+                                                                              Converter={StaticResource BytesArrayToBitmapImageConverter}}">
+                                                                        </Image>
+                                                                    </Border>
+
+                                                                    <!--Data Right  Width="650" von 900-->
+                                                                    <StackPanel Orientation="Vertical" 
+                                                                            Cursor="Hand" Background="Transparent">
+                                                                        <!--Data Info-->
+                                                                        <Border Margin="6 0 0 0" Padding="10 0 0 0"
+                                                                            MinWidth="500">
+                                                                            <StackPanel Orientation="Vertical">
+                                                                                <!--IsReserviert-->
+                                                                                <Label Content="{Binding IstVerkauft, UpdateSourceTrigger=PropertyChanged,
+                                                                                     Converter={StaticResource BoolToVerkauftTextConverter}}"
+                                                                                     Foreground= "{Binding IstVerkauft, UpdateSourceTrigger=PropertyChanged,
+                                                                                     Converter={StaticResource BoolToGreenConverter}}"
+                                                                                     FontWeight="ExtraBold"
+                                                                                     FontFamily="roboto"
+                                                                                     FontSize="40"
+                                                                                     Padding="0 8"
+                                                                                     HorizontalAlignment="Left">
+                                                                                </Label>
+
+                                                                                <!--AUFTRAG NUMMER-->
+                                                                                <Label Content="Auftragnr.:"
+                                                                                    FontWeight="ExtraBold"
+                                                                                    FontFamily="roboto"
+                                                                                    FontSize="20" Height="24"
+                                                                                    Padding="0"
+                                                                                    HorizontalAlignment="Left">
+                                                                                </Label>
+                                                                                <TextBlock Text="{Binding AuftragID, UpdateSourceTrigger=PropertyChanged}"
+                                                                                    Foreground="{StaticResource AppColorCyan}" 
+                                                                                    FontFamily="Antique Olive"
+                                                                                    FontSize="18" Height="26"
+                                                                                    Padding="0"
+                                                                                    TextAlignment="Left"
+                                                                                    HorizontalAlignment="Left">
+                                                                                </TextBlock>
+
+                                                                                <!--ZIMMER ANZAHL-->
+                                                                                <Label Content="Zimmeranzahl:"
+                                                                                     FontWeight="ExtraBold"
+                                                                                     FontFamily="roboto"
+                                                                                     FontSize="20" Height="24" Width="200"
+                                                                                     Padding="0"
+                                                                                     HorizontalAlignment="Left">
+                                                                                </Label>
+                                                                                <Label Content="{Binding ZimmerAnzahl, UpdateSourceTrigger=PropertyChanged}"   
+                                                                                       Foreground="{StaticResource AppColorCyan}" 
+                                                                                       FontFamily="Antique Olive"
+                                                                                       FontSize="18" Height="26" Width="200"
+                                                                                       Padding="0"
+                                                                                       HorizontalAlignment="Left">
+                                                                                </Label>
+
+                                                                                <!--PREIS-->
+                                                                                <Label Content="Preis:"
+                                                                                      FontWeight="ExtraBold"
+                                                                                      FontFamily="roboto"
+                                                                                      FontSize="20" Height="24" Width="200"
+                                                                                      Padding="0"
+                                                                                      HorizontalAlignment="Left">
+                                                                                </Label>
+                                                                                <TextBlock Text="{Binding Preis, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0} Euro}"
+                                                                                     Foreground="{StaticResource AppColorCyan}"
+                                                                                     FontFamily="Antique Olive"
+                                                                                     FontSize="18" Height="26" Width="200"
+                                                                                     Padding="0"
+                                                                                     HorizontalAlignment="Left">
+                                                                                </TextBlock>
+
+                                                                                <!--ANSCHRIFT-->
+                                                                                <Label Content="Anschrift:"
+                                                                                    FontWeight="ExtraBold"
+                                                                                    FontFamily="roboto"
+                                                                                    FontSize="20" Height="24" Width="200"
+                                                                                    Padding="0"
+                                                                                    HorizontalAlignment="Left">
+                                                                                </Label>
+                                                                                <TextBlock Text="{Binding Anschrift, UpdateSourceTrigger=PropertyChanged}"
+                                                                                    Foreground="{StaticResource AppColorCyan}"
+                                                                                    FontFamily="Antique Olive"
+                                                                                    FontSize="18" Height="26"
+                                                                                    Padding="0" TextWrapping="Wrap"
+                                                                                    HorizontalAlignment="Left">
+                                                                                </TextBlock>
+
+                                                                            </StackPanel>
+                                                                        </Border>
+                                                                    </StackPanel>
+                                                                </StackPanel>
+                                                            </Border>
+                                                            <ControlTemplate.Triggers>
+                                                                <Trigger Property="IsMouseOver" Value="True">
+                                                                    <Setter TargetName="TemplateBorder" Property="Background" Value="AliceBlue"/>
+                                                                </Trigger>
+
+                                                                <Trigger Property="IsSelected" Value="True">
+                                                                    <Setter TargetName="TemplateBorder" Property="BorderThickness" Value="10 0 10 10"/>
+                                                                </Trigger>
+                                                            </ControlTemplate.Triggers>
+                                                        </ControlTemplate>
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </Style>
+                                        </ListBox.ItemContainerStyle>
+                                    </ListBox>
+
+                                    <!--ProgressRing-->
+                                    <mw:ProgressRing 
+                                          IsActive="True"
+                                          Visibility="{Binding IsPageBusy,
+                                          Converter={StaticResource BoolToVisConverter}}"
+                                          VerticalAlignment="Center"
+                                          HorizontalAlignment="Center"
+                                          Height="100" Width="100">
+                                    </mw:ProgressRing>
+                                </Grid>
+
+                            </Grid>
+                        </Border>
+
+                        <!--Grid.Column="1" Chart-->
+                        <Grid Grid.Column="1">
+                            <md:Card Margin="10 0 10 10"
+                                     md:ShadowAssist.ShadowDepth="Depth2" 
+                                     Background="{StaticResource MaterialDesignPaper}">
+                                <Border BorderThickness="10 0 0 0"
+                                         BorderBrush="{StaticResource AppColorCyan}">
+                                    <Border BorderThickness="4"
+                                           BorderBrush="{StaticResource AppColorCyan}"
+                                           CornerRadius="20"
+                                           Background="Transparent"
+                                           Margin="10 0 0 0">
+
+                                        <!--Grid.Column="1"-->
+                                        <Grid Grid.Column="1">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="50"/>
+                                                <RowDefinition Height="480"/>
+                                                <RowDefinition Height="*"/>
+                                            </Grid.RowDefinitions>
+
+                                            <!--STATISTIK-->
+                                            <Grid Grid.Row="0">
+                                                <Label Content="Statistik"
+                                                      FontSize="30" FontWeight="ExtraBold"
+                                                      Foreground="{StaticResource AppColorCyan}"
+                                                      HorizontalAlignment="Center"
+                                                      VerticalAlignment="Center"
+                                                      FontFamily="Antique Olive ComopactPS">
+                                                </Label>
+                                            </Grid>
+
+                                            <!--CartesianChart-->
+                                            <Border Grid.Row="1"
+                                                    Background="{StaticResource MaterialDesignPaper}"
+                                                    CornerRadius="50"
+                                                    Margin="8 2">
+                                                <Grid>
+
+                                                    <lc:CartesianChart Name="BarChart"
+                                                              LegendLocation="Top"    
+                                                              Cursor="Hand"
+                                                              HorizontalAlignment="Stretch"
+                                                              HorizontalContentAlignment="Stretch">
+
+                                                        <lc:CartesianChart.ChartLegend>
+                                                            <lc:DefaultLegend BulletSize="40"
+                                                                     TextBlock.FontSize="40"
+                                                                     TextBlock.FontWeight="ExtraBold"
+                                                                     TextBlock.Foreground="{StaticResource AppColorCyan}"/>
+                                                        </lc:CartesianChart.ChartLegend>
+
+                                                        <lc:CartesianChart.DataTooltip>
+                                                            <lc:DefaultTooltip BulletSize="50"
+                                                                       SelectionMode="OnlySender"
+                                                                       FontSize="30"/>
+                                                        </lc:CartesianChart.DataTooltip>
+
+                                                        <lc:CartesianChart.AxisX>
+                                                            <lc:Axis Name="BarAxisX" Title="Auftragnr."
+                                                                      FontSize="30"
+                                                                      FontWeight="ExtraBold"
+                                                                      Foreground="Black">
+                                                            </lc:Axis>
+                                                            <!--<LC:Axis ShowLabels ="False"/>-->
+                                                        </lc:CartesianChart.AxisX>
+
+                                                        <lc:CartesianChart.AxisY>
+                                                            <lc:Axis Name="BarAxisY"
+                                                                      FontSize="30"
+                                                                      FontWeight="ExtraBold"
+                                                                      Foreground="Black"
+                                                                      MinValue="0">
+                                                            </lc:Axis>
+                                                        </lc:CartesianChart.AxisY>
+                                                    </lc:CartesianChart>
+
+                                                    <!--ProgressRing-->
+                                                    <mw:ProgressRing 
+                                                              IsActive="True"
+                                                              Visibility="{Binding IsPageBusy,
+                                                              Converter={StaticResource BoolToVisConverter}}"
+                                                              VerticalAlignment="Center"
+                                                              HorizontalAlignment="Center"
+                                                              Height="200" Width="200">
+                                                    </mw:ProgressRing>
+                                                </Grid>
+                                            </Border>
+
+                                            <!--UMSÄTZE-->
+                                            <StackPanel Orientation="Vertical" Grid.Row="2" Margin="10 0 0 0">
+                                                <!--UMSATZ Header-->
+                                                <Label Content="Umsatz:"
+                                                       FontWeight="ExtraBold"
+                                                       FontFamily="roboto"
+                                                       FontSize="60"
+                                                       Padding="0"
+                                                       HorizontalAlignment="Left">
+                                                </Label>
+                                                <!--UMSATZ-->
+                                                <TextBlock Text="{Binding TotalUmsatz, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0} EURO}"
+                                                         Foreground="{StaticResource AppColorCyan}" 
+                                                         FontFamily="Antique Olive"
+                                                         FontSize="50" MinWidth="200"
+                                                         Padding="0"
+                                                         TextAlignment="Left"
+                                                         HorizontalAlignment="Left">
+                                                </TextBlock>
+                                            </StackPanel>
+
+                                        </Grid>
+
+                                    </Border>
+                                </Border>
+                            </md:Card>
+                        </Grid>
+                    </Grid>
+                </mw:MetroTabItem>
+            </mw:MetroAnimatedTabControl>
         </Grid>
     </Grid>
 </UserControl>

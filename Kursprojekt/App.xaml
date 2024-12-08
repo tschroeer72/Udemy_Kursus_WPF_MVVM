@@ -454,6 +454,128 @@
                 <Setter Property="md:HintAssist.Foreground" Value="{StaticResource AppColorCyan}"/>
             </Style>
 
+            <!--SCROLLBARS-->
+            <Style TargetType="ScrollBar" BasedOn="{StaticResource MaterialDesignScrollBar}">
+                <Setter Property="Background" Value="Transparent"/>
+                <Setter Property="Width" Value="22"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="ScrollBar">
+                            <Border Name="ScrollBarMainBorder"
+                                    BorderThickness="1"
+                                    BorderBrush="{DynamicResource AppColorCyan}" 
+                                    CornerRadius="20"
+                                    Background="White" 
+                                    Padding="1">
+                                <Grid Background="Transparent">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
+                                    <!--//RepeatButton ScrollUp-->
+                                    <RepeatButton x:Name="RBtnScrollUp" Grid.Row="0" 
+                                         Height="28" Width="18"
+                                         BorderThickness="0"                                               
+                                         Style="{StaticResource MaterialDesignFloatingActionDarkButton}"
+                                         Command="ScrollBar.LineUpCommand">
+                                        <md:PackIcon Kind="ChevronUp" Foreground="White"/>
+                                    </RepeatButton>
+
+                                    <!--//Track : Hat ein Thumb, IncreaseRepeatButton und DecreaseRepeatButton  -->
+                                    <Track x:Name="PART_Track" Grid.Row="1" IsDirectionReversed="true">
+                                        <Track.DecreaseRepeatButton>
+                                            <RepeatButton x:Name="TrackScrollUp"                                                         
+                                                 Opacity="0" Focusable="False"
+                                                 Command="ScrollBar.LineUpCommand">
+                                            </RepeatButton>
+                                        </Track.DecreaseRepeatButton>
+
+                                        <Track.Thumb>
+                                            <Thumb x:Name="ScrollBarThumb">
+                                                <Thumb.Style>
+                                                    <Style TargetType="Thumb">
+                                                        <Setter Property="Cursor" Value="Hand"/>
+                                                        <Setter Property="Template">
+                                                            <Setter.Value>
+                                                                <ControlTemplate>
+                                                                    <Border CornerRadius="20">
+                                                                        <Border.Style>
+                                                                            <Style TargetType="Border">
+                                                                                <Setter Property="Background" Value="{DynamicResource AppColorCyan}"/>
+                                                                                <Style.Triggers>
+                                                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                                                        <Setter Property="Background" Value="{DynamicResource AppColorCyanHover}"/>
+                                                                                    </Trigger>
+                                                                                </Style.Triggers>
+                                                                            </Style>
+                                                                        </Border.Style>
+                                                                    </Border>
+                                                                </ControlTemplate>
+                                                            </Setter.Value>
+                                                        </Setter>
+                                                    </Style>
+                                                </Thumb.Style>
+                                            </Thumb>
+                                        </Track.Thumb>
+
+                                        <Track.IncreaseRepeatButton>
+                                            <RepeatButton x:Name="TrackScrollDown"
+                                                 Command="ScrollBar.LineDownCommand"
+                                                 Opacity="0" Focusable="False">
+                                            </RepeatButton>
+                                        </Track.IncreaseRepeatButton>
+                                    </Track>
+
+                                    <!--//RepeatButton ScrollDown-->
+                                    <RepeatButton x:Name="RBtnScrollDown" Grid.Row="2"
+                                        Height="30" Width="18"
+                                        BorderThickness="0"                                                   
+                                        Style="{StaticResource MaterialDesignFloatingActionDarkButton}"
+                                        Command="ScrollBar.LineDownCommand">
+                                        <md:PackIcon Kind="ChevronDown" Foreground="White" />
+                                    </RepeatButton>
+                                </Grid>
+                            </Border>
+
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsEnabled" Value="False">
+                                    <Setter TargetName="ScrollBarMainBorder" 
+                                            Property="Visibility" Value="Collapsed"/>
+                                </Trigger>
+
+                                <!--Horizontal ScrollBar-->
+                                <Trigger Property="Orientation" Value="Horizontal">
+                                    <Setter TargetName="ScrollBarMainBorder" Property="LayoutTransform">
+                                        <Setter.Value>
+                                            <RotateTransform Angle="-90"/>
+                                        </Setter.Value>
+                                    </Setter>
+
+                                    <Setter TargetName="PART_Track" Property="LayoutTransform">
+                                        <Setter.Value>
+                                            <RotateTransform Angle="-90"/>
+                                        </Setter.Value>
+                                    </Setter>
+
+                                    <Setter Property="Width" Value="Auto"/>
+                                    <Setter Property="Height" Value="22"/>
+
+                                    <Setter TargetName="RBtnScrollUp"    Property="Command" Value="ScrollBar.LineLeftCommand"/>
+                                    <Setter TargetName="TrackScrollUp"   Property="Command" Value="ScrollBar.LineLeftCommand"/>
+
+                                    <Setter TargetName="RBtnScrollDown"  Property="Command" Value="ScrollBar.LineRightCommand"/>
+                                    <Setter TargetName="TrackScrollDown" Property="Command" Value="ScrollBar.LineRightCommand"/>
+
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+
         </ResourceDictionary>
     </Application.Resources>
 </Application>

@@ -122,7 +122,7 @@ public partial class HomeViewModel : BaseViewModel
     [RelayCommand]
     void SelectPreviousHaus(int iSelIndex)
     {
-        if (Haeuser is null || Haeuser.Count == 0) return;
+        if (Haeuser == null || Haeuser.Count == 0) return;
 
         int indexTo;
         if (iSelIndex > 0) //Nicht das erste Item
@@ -142,7 +142,7 @@ public partial class HomeViewModel : BaseViewModel
     [RelayCommand]
     void SelectNextHaus(int iParam)
     {
-        if (Haeuser is null || Haeuser.Count == 0) return;
+        if (Haeuser == null || Haeuser.Count == 0) return;
 
         int indexTo;
         if (iParam < Haeuser.Count - 1)
@@ -167,7 +167,7 @@ public partial class HomeViewModel : BaseViewModel
             Message = "";
 
 
-            if (Haus is null)
+            if (Haus == null)
             {
                 Message = $"Wählen Sie ein Haus aus!";
                 return;
@@ -225,7 +225,7 @@ public partial class HomeViewModel : BaseViewModel
         {
             Message = "";
 
-            if (Haus is null)
+            if (Haus == null)
             {
                 Message = $"Wählen Sie ein Haus aus!";
                 return;
