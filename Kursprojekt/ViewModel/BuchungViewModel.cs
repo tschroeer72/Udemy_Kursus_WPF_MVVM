@@ -21,8 +21,8 @@ public partial class BuchungViewModel :BaseViewModel
 
     public ObservableCollection<Buchung> Buchungen { get; } = new();
     public ObservableCollection<Buchung> BuchungenBackup { get; } = new();
-    public ObservableCollection<Haus> VerkaufteHäuser { get; } = new();
-    public ObservableCollection<Haus> VerkaufteHäuserBackup { get; } = new();
+    public ObservableCollection<Haus> VerkaufteHaeuser { get; } = new();
+    public ObservableCollection<Haus> VerkaufteHaeuserBackup { get; } = new();
     public IMapper Mapper { get; }
 
     public BuchungViewModel(IMapper mapper)
@@ -61,27 +61,22 @@ public partial class BuchungViewModel :BaseViewModel
             Buchungen.Clear();
             BuchungenBackup.Clear();
 
-            VerkaufteHäuser.Clear();
-            VerkaufteHäuserBackup.Clear();
+            VerkaufteHaeuser.Clear();
+            VerkaufteHaeuserBackup.Clear();
 
-            if (BuchungLst is not null)
-            {
+            if (BuchungLst != null)
                 foreach (var buchung in BuchungLst)
                 {
                     Buchungen.Add(buchung);
                     BuchungenBackup.Add(buchung);
                 }
-            }
 
-            if (HausLst is not null)
-            {
+            if (HausLst != null)
                 foreach (var haus in HausLst)
                 {
-                    VerkaufteHäuser.Add(haus);
-                    VerkaufteHäuserBackup.Add(haus);
+                    VerkaufteHaeuser.Add(haus);
+                    VerkaufteHaeuserBackup.Add(haus);
                 }
-            }
-
         }
         finally
         {
@@ -137,10 +132,10 @@ public partial class BuchungViewModel :BaseViewModel
         try
         {
             IsPageBusy = true;
-            List<BarChartDto> BarChartDtoLst = new();
+            List<BarChartDto> lstBarChart = new();
             TotalUmsatz = 0;
 
-            foreach (var haus in VerkaufteHäuser)
+            foreach (var haus in VerkaufteHaeuser)
             {
                 BarChartDto barChartDto = new()
                 {
@@ -148,11 +143,11 @@ public partial class BuchungViewModel :BaseViewModel
                     HausPreis = haus.Preis
                 };
 
-                BarChartDtoLst.Add(barChartDto);
+                lstBarChart.Add(barChartDto);
                 TotalUmsatz += haus.Preis;
             }
 
-            DelSchowBarChartData?.Invoke(BarChartDtoLst);
+            DelSchowBarChartData?.Invoke(lstBarChart);
         }
         finally
         {
@@ -169,7 +164,7 @@ public partial class BuchungViewModel :BaseViewModel
             if (IsPageBusy) return;
             Message = "";
 
-            if (Buchung is null)
+            if (Buchung == null)
             {
                 Message = $"Wählen Sie ein Buchung aus!";
                 return;
@@ -177,9 +172,8 @@ public partial class BuchungViewModel :BaseViewModel
 
             //Buchung suchen
             IsPageBusy = true;
-            var buchung = await DBUnit.Buchung.GetFirstOrDefaultAsync(filter: b => b.ID == Buchung.ID,
-                                                                                     includeProperties: nameof(Haus));
-            if (buchung is null)
+            var buchung = await DBUnit.Buchung.GetFirstOrDefaultAsync(filter: b => b.ID == Buchung.ID, includeProperties: nameof(Haus));
+            if (buchung == null)
             {
                 Message = $"Die Buchung wurde schon storniert. Bitte aktualisieren Sie die Daten";
                 return;
@@ -188,8 +182,7 @@ public partial class BuchungViewModel :BaseViewModel
             IsPageBusy = false;
             if (buchung.Bearbeiter != UserManager.LoginUserInfos.LoginUser.Email)
             {
-                var erg = DelShowConfirmationWindow?.Invoke($"Die Buchung wurde von {buchung.Bearbeiter} angelegt! {Environment.NewLine}" +
-                    $"Wollen Sie sich ummelden?");
+                var erg = DelShowConfirmationWindow?.Invoke($"Die Buchung wurde von {buchung.Bearbeiter} angelegt! {Environment.NewLine}" + $"Wollen Sie sich ummelden?");
                 if (erg != true) return;
 
                 DelShowLoginView?.Invoke(false);
@@ -197,8 +190,8 @@ public partial class BuchungViewModel :BaseViewModel
             }
 
             //Buchen stornieren
-            var JaNein = DelShowConfirmationWindow?.Invoke($"Wollen Sie das Haus Verkaufen?") ?? false;
-            if (JaNein)
+            var bolJaNein = DelShowConfirmationWindow?.Invoke($"Wollen Sie das Haus Verkaufen?") ?? false;
+            if (bolJaNein)
             {
                 IsPageBusy = true;
                 var resp = await DBUnit.Buchung.DeleteByIDAsync(buchung.ID);
@@ -211,14 +204,13 @@ public partial class BuchungViewModel :BaseViewModel
                 //Update Haus IsFrei Property
                 buchung.Haus.IstVerkauft = true;
                 buchung.Haus.VerkaufDatum = DateTime.Now;
-                var Updresp = await DBUnit.Haus.UpdateAsync(buchung.Haus);
-                if (!Updresp.Success)
+                var respUpdate = await DBUnit.Haus.UpdateAsync(buchung.Haus);
+                if (!respUpdate.Success)
                 {
-                    Message = Updresp.Message;
+                    Message = respUpdate.Message;
                 }
 
                 DelShowMainInfoFlyout?.Invoke($"Die Buchung wurde zum Verkauf geändert.");
-
             }
         }
         finally
@@ -237,7 +229,7 @@ public partial class BuchungViewModel :BaseViewModel
             if (IsPageBusy) return;
             Message = "";
 
-            if (Buchung is null)
+            if (Buchung == null)
             {
                 Message = $"Wählen Sie ein Buchung aus!";
                 return;
@@ -251,12 +243,12 @@ public partial class BuchungViewModel :BaseViewModel
             }
 
             //Haus aus der Buchung bekommen für ein Update später
-            Haus Bhaus = Mapper.Map<Haus>(Buchung.Haus);
+            Haus hausBuchung = Mapper.Map<Haus>(Buchung.Haus);
 
             //Buchung suchen
             IsPageBusy = true;
-            var Resp = await DBUnit.Buchung.GetFirstOrDefaultAsync(filter: b => b.ID == Buchung.ID);
-            if (Resp is null)
+            var resp = await DBUnit.Buchung.GetFirstOrDefaultAsync(filter: b => b.ID == Buchung.ID);
+            if (resp is null)
             {
                 Message = $"Die Buchung wurde schon storniert. Bitte aktualisieren Sie die Daten";
                 return;
@@ -266,8 +258,7 @@ public partial class BuchungViewModel :BaseViewModel
             IsPageBusy = false;
             if (Buchung.Bearbeiter != UserManager.LoginUserInfos.LoginUser.Email)
             {
-                var erg = DelShowConfirmationWindow?.Invoke($"Die Buchung wurde von {Buchung.Bearbeiter} angelegt! {Environment.NewLine}" +
-                    $"Wollen Sie sich ummelden?");
+                var erg = DelShowConfirmationWindow?.Invoke($"Die Buchung wurde von {Buchung.Bearbeiter} angelegt! {Environment.NewLine}" + $"Wollen Sie sich ummelden?");
                 if (erg != true) return;
 
                 DelShowLoginView?.Invoke(false);
@@ -275,23 +266,23 @@ public partial class BuchungViewModel :BaseViewModel
             }
 
             //Buchen stornieren (Löschen)
-            var JaNein = DelShowConfirmationWindow?.Invoke($"Wollen Sie die Buchung stornieren?") ?? false;
-            if (JaNein)
+            var bolJaNein = DelShowConfirmationWindow?.Invoke($"Wollen Sie die Buchung stornieren?") ?? false;
+            if (bolJaNein)
             {
                 IsPageBusy = true;
-                var resp = await DBUnit.Buchung.DeleteByIDAsync(Buchung.ID);
-                if (!resp.Success)
+                var respStorno = await DBUnit.Buchung.DeleteByIDAsync(Buchung.ID);
+                if (!respStorno.Success)
                 {
-                    Message = resp.Message;
+                    Message = respStorno.Message;
                     return;
                 }
 
                 //Update Haus IsFrei Property
-                Bhaus.IstReserviert = false;
-                var Updresp = await DBUnit.Haus.UpdateAsync(Bhaus);
-                if (!Updresp.Success)
+                hausBuchung.IstReserviert = false;
+                var respUpdate = await DBUnit.Haus.UpdateAsync(hausBuchung);
+                if (!respUpdate.Success)
                 {
-                    Message = Updresp.Message;
+                    Message = respUpdate.Message;
                 }
 
                 DelShowMainInfoFlyout?.Invoke($"Die Buchung wurde storniert.");
@@ -302,7 +293,6 @@ public partial class BuchungViewModel :BaseViewModel
             IsPageBusy = false;
             await LoadAndSetData();
         }
-
     }
 
 
@@ -313,36 +303,27 @@ public partial class BuchungViewModel :BaseViewModel
         {
             if (IsPageBusy) return;
             IsPageBusy = true;
-            List<Haus> VerkaufteHäuserLst = new();
+            List<Haus> lstVerkaufteHaeuser = new();
             if (!string.IsNullOrEmpty(VerkaufFilterText))
             {
-                var hLst = await Task.Run(() => VerkaufteHäuser.Where(h => h.AuftragID.Contains(VerkaufFilterText)));
+                var hLst = await Task.Run(() => VerkaufteHaeuser.Where(h => h.AuftragID.Contains(VerkaufFilterText)));
 
-                VerkaufteHäuserLst.AddRange(hLst);
+                lstVerkaufteHaeuser.AddRange(hLst);
             }
 
-            VerkaufteHäuser.Clear();
+            VerkaufteHaeuser.Clear();
 
-            if (VerkaufteHäuserLst.Count > 0)
-            {
-                foreach (var haus in VerkaufteHäuserLst)
-                {
-                    VerkaufteHäuser.Add(haus);
-                }
-            }
+            if (lstVerkaufteHaeuser.Count > 0)
+                foreach (var haus in lstVerkaufteHaeuser)
+                    VerkaufteHaeuser.Add(haus);
             else
-            {
-                foreach (var haus in VerkaufteHäuserBackup)
-                {
-                    VerkaufteHäuser.Add(haus);
-                }
-            }
+                foreach (var haus in VerkaufteHaeuserBackup)
+                    VerkaufteHaeuser.Add(haus);
         }
         finally
         {
             IsPageBusy = false;
         }
-
     }
 
     async partial void OnBuchungFilterTextChanged(string value)
@@ -351,30 +332,22 @@ public partial class BuchungViewModel :BaseViewModel
         {
             if (IsPageBusy) return;
             IsPageBusy = true;
-            List<Buchung> BuchungLst = new();
+            List<Buchung> lstBuchung = new();
             if (!string.IsNullOrEmpty(BuchungFilterText))
             {
                 var hLst = await Task.Run(() => Buchungen.Where(b => b.Haus.AuftragID.Contains(BuchungFilterText)));
 
-                BuchungLst.AddRange(hLst);
+                lstBuchung.AddRange(hLst);
             }
 
             Buchungen.Clear();
 
-            if (BuchungLst.Count > 0)
-            {
-                foreach (var buchung in BuchungLst)
-                {
+            if (lstBuchung.Count > 0)
+                foreach (var buchung in lstBuchung)
                     Buchungen.Add(buchung);
-                }
-            }
             else
-            {
                 foreach (var buchung in BuchungenBackup)
-                {
                     Buchungen.Add(buchung);
-                }
-            }
         }
         finally
         {

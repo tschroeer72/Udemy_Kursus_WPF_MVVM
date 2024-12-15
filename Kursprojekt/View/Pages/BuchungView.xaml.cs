@@ -59,7 +59,6 @@ public partial class BuchungView : UserControl
             CharData.Add(iBarChartDtoLst[i].HausPreis);
         }
 
-
         BarSerieCollection.Add(new ColumnSeries
         {
             Title = $"PREIS",
@@ -70,7 +69,6 @@ public partial class BuchungView : UserControl
             LabelsPosition = BarLabelPosition.Top,
             Fill = color
         });
-
 
         BarAxisX.Labels = Labels;
         BarChart.Series = BarSerieCollection;

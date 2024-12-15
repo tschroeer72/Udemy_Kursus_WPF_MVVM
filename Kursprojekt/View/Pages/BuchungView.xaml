@@ -599,7 +599,7 @@
                                 <!-- ListBox-->
                                 <Grid Grid.Row="1">
                                     <!--ListBox-->
-                                    <ListBox ItemsSource="{Binding VerkaufteHäuser}" 
+                                    <ListBox ItemsSource="{Binding VerkaufteHaeuser}" 
                                          SelectedItem="{Binding Haus}"
                                          ScrollViewer.HorizontalScrollBarVisibility="Disabled">
                                         <!--ItemContainerStyle-->
